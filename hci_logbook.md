@@ -10,7 +10,7 @@ Work carried out by:
 **Team:**
 - Student 1: [Rodrigo Moço, 108939] 
 - Student 2; [Luís Pereira, 108770]
-- Student 3: [Name and Number]
+- Student 3: [Leonardo Luís, 114093]
 - Student 4: [Nil Silva, 113836]
 
 ---
