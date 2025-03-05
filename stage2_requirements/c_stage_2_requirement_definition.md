@@ -11,22 +11,22 @@
 ### Summary 
 | Attribute        | Details                                       |
 | ---------------- | --------------------------------------------- |
-| **Photo**        | ![Bob](/stage2_requirements/personas/Bob.png)                 |
+| **Photo**        | ![Bob /100](/stage2_requirements/personas/bob.png)                 |
 | **Name**         | Bob                                           |
 | **Age**          | 22                                            |
 | **Occupation**   | Student at DETI                          |
 | **Location**     | Aveiro, Portugal                              |
-| **Goals**        | Wants  to  represent  DETI  with  stylishand comfortable merchandise        |
+| **Goals**        | Wants  to  represent  DETI  with  stylish and comfortable merchandise        |
 | **Pain Points**  | Finds  it  hard  to  get  cool  and  well-designed university merchandise   |
 | **Motivation**   | Bob wants to wear something that reflects his passion for technology and his pride in being a DETI student |
-| **Full Profile** | [📄 Read More](/stage2_requirements/personas/bob.md) |
+| **Full Profile** | [📄 Read More](/stage2_requirements/personas/Bob.md) |
 
 ---
 ## Persona: Rita 
 ### Summary 
 | Attribute        | Details                                       |
 | ---------------- | --------------------------------------------- |
-| **Photo**        | ![Rita](/stage2_requirements/personas/rita.png)            |
+| **Photo**        | ![Rita /100](/stage2_requirements/personas/rita.png)            |
 | **Name**         | Rita                               |
 | **Age**          | 23                                |
 | **Occupation**   | Student at DETI                          |
