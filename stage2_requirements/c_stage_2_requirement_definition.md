@@ -11,7 +11,7 @@
 ### Summary 
 | Attribute        | Details                                       |
 | ---------------- | --------------------------------------------- |
-| **Photo**        | ![Persona Name\|100](Bob.png)                 |
+| **Photo**        | ![Persona Name\|100](personas/Bob.png)                 |
 | **Name**         | Bob                                           |
 | **Age**          | 22                                            |
 | **Occupation**   | Student at DETI                          |
@@ -19,14 +19,14 @@
 | **Goals**        | Wants  to  represent  DETI  with  stylishand comfortable merchandise        |
 | **Pain Points**  | Finds  it  hard  to  get  cool  and  well-designed university merchandise   |
 | **Motivation**   | Bob wants to wear something that reflects his passion for technology and his pride in being a DETI student |
-| **Full Profile** | [📄 Read More](bob.md) |
+| **Full Profile** | [📄 Read More](personas/bob.md) |
 
 ---
 ## Persona: Rita 
 ### Summary 
 | Attribute        | Details                                       |
 | ---------------- | --------------------------------------------- |
-| **Photo**        | ![Persona Name](rita.png)            |
+| **Photo**        | ![Persona Name](personas/rita.png)            |
 | **Name**         | Rita                               |
 | **Age**          | 23                                |
 | **Occupation**   | Student at DETI                          |
@@ -34,7 +34,7 @@
 | **Goals**        | Keep track of inventory in a simple andefficient way.          |
 | **Pain Points**  | Lack of an integrated system to manage inventory and sales efficiently              |
 | **Motivation**   | Rita wants a streamlined system to manage merchandise stock efficiently               |
-| **Full Profile** | [📄 Read More](rita.md) |
+| **Full Profile** | [📄 Read More](personas/rita.md) |
 
 ---
 
