@@ -47,16 +47,15 @@
 
 ## Scenario 1: Bob wants to buy the LECI team kit
 
-[Bob is a tech lover with a strong passion for sports, especially football. When he joined UA, he looked for ways to continue playing while managing his studies. After some research, he discovered the LECI team and Taça UA. Without hesitation, he joined the team and has been playing since the beginning of his University journey.] 
+[Maria had always loved modern art, but she often found museum visits overwhelming—so many exhibits, so much information, and little guidance on where to start. Today, she was visiting a contemporary art museum that had recently introduced an **interactive guide**.  ]
 
-[This year, the team changed its kits, and to compete, every player is required to buy the new one. Because of that, Bob needed to purchase it.]
+[As she entered the museum, Maria received a notification on her phone, reminding her to launch the app. She opened it and was greeted with a personalized welcome screen. The system, aware of her general interests in **digital media and abstract art**, suggested a self-guided tour tailored to her preferences.  ]
 
-[To do so, he visited the DETI merch website, aiming to find the team kit. When he opened the website, he filtered his search by degree, selecting only LECI. However, after seeing a wide variety of LECI related products, he refined his search further, this time using the "Team kit" filter.]
+[Curious, Maria followed the suggested path. As she approached the first painting, the guide vibrated slightly—a prompt that additional content was available. Holding up the guide, she saw an **overlay** appear on the screen, revealing a time-lapse animation of the artist creating the piece. A small **audio clip** played, explaining the artist’s thought process and influences. Maria found this fascinating; it was as if the artwork was coming to life in front of her.  ]
 
-[Finally, he found the product that he was looking for and he concluded his purchase, selecting the most convenient payment method for him at the moment.]
+[As she continued her tour, Maria **bookmarked** her favorite pieces, leaving notes about what she found intriguing. The system, recognizing her engagement, suggested another exhibit nearby featuring similar themes. Midway through her visit, she received a pop-up asking if she’d like a **short quiz** on the artworks she had explored, offering an interactive way to reflect on what she had learned.  ]
 
----
-
+## Scenario 2: 
 
 # Requirements
 
