@@ -65,7 +65,7 @@ To fix this, Rita accesses the stock management panel on the website. She update
 
 Thanks to the updated stock system, students now have real-time availability information, preventing unnecessary frustration.
 
-## Scenario 3: Personalized buying
+## Scenario 3: Personalizaçao de roupa que vai a votacao
 
 ## Scenario 4: kits de aluviao p um curso especifico (so quem faz parte do curso que pode comprar)
 
