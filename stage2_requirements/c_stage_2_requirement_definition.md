@@ -65,6 +65,7 @@ To fix this, Rita accesses the stock management panel on the website. She update
 
 Thanks to the updated stock system, students now have real-time availability information, preventing unnecessary frustration.
 
+## Scenario 3: Personalized buying
 
 
 # Requirements
