@@ -1,4 +1,4 @@
-# ![Persona Name](personas/persona1.jpeg)  
+# ![Rita](/stage2_requirements/personas/rita.png)  
 **Name:** Rita  
 **Age:** 23 
 **Occupation:** Student Committee Member & Informatics Student at DETI, University of Aveiro 
