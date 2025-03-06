@@ -14,9 +14,8 @@
 
 | **Competitor**    | **Description**                             | Information repository              |
 | ----------------- | ------------------------------------------- | ----------------------------------- |
-| [Amazon Shoes]    | [Online platform selling shoe laces]        | [[Competitor Analysis AmazonShoes]] |
-| [Fnac Atacadores] | [Smartphone app to buy and sell shoe laces] |                                     |
-TrendyFashion  |Online store selling women’s clothing and accessories                                             |   [[Competitor Analysis Template TrendyFashion.md]]                                  |
+| [Harvard Official Store]    | [Online platform selling Harvard University merchandise]        | [[Competitor Analysis Harvard]] |                                     |
+TrendyFashion  |Online store selling women’s clothing and accessories                                             |   [[Competitor Analysis Template TrendyFashion]]                                  |
 
 
 
@@ -45,7 +44,7 @@ TrendyFashion  |Online store selling women’s clothing and accessories         
 
 >	After the individual analysis by each expert, all results should be gathered in a consensus table. If an expert has not found any of the problems found by other experts, they should analyse it, at this point, and give it a severity.
 
-| **Issue**       | **Expert 1** | Expert 2 | Expert 3 | Recommendations                             |
+| **Issue**       | **Expert Rodrigo Moço** | Expert 2 | Expert 3 | Recommendations                             |
 | --------------- | ------------ | -------- | -------- | ------------------------------------------- |
 | Something wrong | 3            | 1        | 0        | Something could be done to the button to... |
 | Another thing   | 4            | 3        | 4        | Other thing to recommend                    |
@@ -63,21 +62,17 @@ TrendyFashion  |Online store selling women’s clothing and accessories         
 
 [Which tasks did you select and why. What are the subtasks entailed for each ]
 
+[Task selected of buying a product in our website to briefly document the whole process.]
 
-| Task                        | Subtasks                               |
-| --------------------------- | -------------------------------------- |
-| **1. Buyng a grammar book** | Search for available grammar books     |
-|                             | Identify a specific book from the list |
-|                             | Add the selected book to the cart      |
-|                             | Proceeed to checkout                   |
+
 
 
 | Task                          | Subtasks                                |
 | ----------------------------- | --------------------------------------- |
-| **1. Booking a train ticket** | Select departure and destination cities |
-|                               | Choose travel date and time             |
-|                               | Pick a seat (if applicable)             |
-|                               | Confirm booking and make payment        |
+| **1. Buy DETI memorabilia** | Select DETI product |
+|                               | Choose method of payment           |
+|                               | Login( if buying )             |
+|                               | Confirm transaction and see timeline with package status        |
 
 
 #### Results
