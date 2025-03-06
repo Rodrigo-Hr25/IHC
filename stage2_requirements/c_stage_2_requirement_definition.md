@@ -67,6 +67,9 @@ Thanks to the updated stock system, students now have real-time availability inf
 
 ## Scenario 3: Personalized buying
 
+## Scenario 4: kits de aluviao p um curso especifico (so quem faz parte do curso que pode comprar)
+
+
 
 # Requirements
 
