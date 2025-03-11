@@ -55,7 +55,15 @@ To do so, he visited the DETI merch website, aiming to find the team kit. When h
 
 Finally, he found the product that he was looking for and he concluded his purchase, selecting the most convenient payment method for him at the moment.
 
+## Scenario 2: Rita has to update the stock
 
+Rita is a dedicated student committee member responsible for managing the stock of merchandise of the LEI course.
+
+One day, Rita receives multiple messages from students asking about the availability of hoodies. She checks the DETI merch website and realizes that the stock is sold out.
+
+To fix this, Rita contacts the supplier to reorder more hoodies based on the current demand.
+
+Thanks to the updated stock system, students now have real-time availability information, preventing unnecessary frustration.
 
 ## Scenario 3: Personalizaçao de roupa que vai a votacao
 
