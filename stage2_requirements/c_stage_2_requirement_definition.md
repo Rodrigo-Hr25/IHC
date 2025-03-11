@@ -57,6 +57,10 @@ Finally, he found the product that he was looking for and he concluded his purch
 
 
 
+## Scenario 3: Personalizaçao de roupa que vai a votacao
+
+## Scenario 4: kits de aluviao p um curso especifico (so quem faz parte do curso que pode comprar)
+
 
 
 # Requirements
