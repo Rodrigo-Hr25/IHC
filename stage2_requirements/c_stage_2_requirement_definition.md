@@ -13,7 +13,7 @@
 | ---------------- | --------------------------------------------- |
 | **Photo**        | ![Bob /100](/stage2_requirements/personas/bob.png)                 |
 | **Name**         | Bob                                           |
-| **Age**          | 22                                            |
+| **Age**          | 18                                           |
 | **Occupation**   | Student at DETI                          |
 | **Location**     | Aveiro, Portugal                              |
 | **Goals**        | Wants  to  represent  DETI  with  stylish and comfortable merchandise        |
@@ -65,9 +65,23 @@ To fix this, Rita contacts the supplier to reorder more hoodies based on the cur
 
 Thanks to the updated stock system, students now have real-time availability information, preventing unnecessary frustration.
 
-## Scenario 3: Personalizaçao de roupa que vai a votacao
+## Scenario 3: Custom Clothing Design Contest
 
-## Scenario 4: kits de aluviao p um curso especifico (so quem faz parte do curso que pode comprar)
+Rita is a creative student with a passion for graphic design. When he found out that the DETI merch store was organizing a contest to create a new custom hoodie design, he didn’t hesitate to participate.
+
+The contest allowed any student to submit their own design, and the best ones would be voted on by the DETI community. Rita worked hard on his proposal and submitted it through the website.
+
+After the submission period ended, voting was opened to all students. Rita was thrilled to see his design among the most popular ones. At the end of the voting process, the winning design was chosen and added to the official DETI merch store.
+
+Now, any student can purchase the hoodie featuring the winning design.
+
+## Scenario 4: Buying the Aluvião Kit for Faina
+
+Bob is a first-year LECI student, looking forward to experience one of the most iconic traditions of his course: Faina. He knows that to fully participate, he needs the official Aluvião Kit, which is exclusively available to LECI students.
+
+Excited, Bob visits the DETI merch website to purchase the kit. However, before being able to add the item to his cart, he is prompted to log in to verify his student status. After logging in with his university credentials, the system confirms that he is enrolled in LECI, granting him access to purchase the kit.
+
+With the verification completed, Bob proceeds with the order, selecting his preferred payment method. Now, he is ready to take part in Faina, fully equipped with the traditional Aluvião Kit, feeling a deeper connection to his course’s history and traditions.
 
 
 
