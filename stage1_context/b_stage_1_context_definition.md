@@ -80,7 +80,7 @@ Consensus: Not applicable, as evaluations were conducted individually by each ex
 
 | **Issue**       | **Harvard Official Store** | **TrendyFashion** | Recommendations                             |
 | --------------- | ------------ | -------- | ------------------------------------------- |
-| Lack of status indicator when products are loadingg | 3            | 2        | Include a progress bar or loading icon to clearly show the system is updating/filtering the product list. |
+| Lack of status indicator when products are loading | 3            | 2        | Include a progress bar or loading icon to clearly show the system is updating/filtering the product list. |
 | Another thing   | 3            | 4        | Harvard lacks tracking updates; TrendyFashion provides tracking but with occasional delays.                    |
 | Technical terms in checkout flow             | 2             | 1         | Harvard's jargon is manageable; TrendyFashion excels in using intuitive terms. |
 |  Non-intuitive product category labels | 3 		| 2 				|     Harvard's categories are confusing; TrendyFashion has a cleaner and simpler structure.
