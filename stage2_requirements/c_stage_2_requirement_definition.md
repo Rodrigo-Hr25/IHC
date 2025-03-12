@@ -13,7 +13,7 @@
 | ---------------- | --------------------------------------------- |
 | **Photo**        | ![Bob /100](/stage2_requirements/personas/bob.png)                 |
 | **Name**         | Bob                                           |
-| **Age**          | 22                                            |
+| **Age**          | 18                                            |
 | **Occupation**   | Student at DETI                          |
 | **Location**     | Aveiro, Portugal                              |
 | **Goals**        | Wants  to  represent  DETI  with  stylish and comfortable merchandise        |
