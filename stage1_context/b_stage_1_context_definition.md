@@ -107,20 +107,25 @@ Task: [This is the task]
 ### Interview List 
 | Date       | Participant / Role | Key Insights                                                    | Link to Notes                |     |
 | ---------- | ------------------ | --------------------------------------------------------------- | ---------------------------- | --- |
-| 03-09-2000 | Bob / student      | Does most things on paper and would require a complete solution | [📄 Notes](interview-Bob.md) |     |
-| ...        |                    |                                                                 |                              |     |
+| 03-03-2025 | Bob / student      | Wants to represent DETI with stylish and comfortable merchandise Desires an easy and seamless online shopping experience with various payment options | [📄 Notes](interview-Bob.md) |     |
+| 10/03/2025        | Rita / student committee member                   | Needs a simple and efficient way to track inventory Wants a streamlined system to manage merchandise stock efficientl                                                          |                              |     |
 
 ### Common Themes & Patterns 
 
 - **Recurring Problems:** 
-	- Issue 1
-	- Issue 2
+	- Difficulty finding DETI merchandise with appealing designs.
+	- Lack of an organized website with products available for purchase.
+	- Difficulty tracking stock levels, leading to stock shortages or excess.
+	- Lack of an integrated system to efficiently manage inventory and sales.
 - **Frequently Used Tools:** 
-	- Tool 1
-	- Tool 2
+	- Product comparison websites.
+	- Filters to narrow down searches.
+	- Review websites to compare products.
 - **Desired Features / Solutions:** 
-	- Feature 1
-	- Feature 2
+	- A simplified system to efficiently manage merchandise stock.
+	- A website with DETI merchandise.
+	- Good filters to help users find what they are looking for.
+	- More product information.
 - --- 
 
 
