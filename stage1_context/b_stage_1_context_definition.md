@@ -60,12 +60,13 @@ TrendyFashion  |Online store selling women’s clothing and accessories         
 
 #### Method
 [Briefly described  the method you used for the Cognitive Walkthrough analysis. ]
+For the Cognitive Walkthrough analysis, we used a step-by-step evaluation approach to assess the usability of the DETI merchandise online store from the perspective of a user trying to complete a specific task. The method involves observing the user’s thought process at each step to determine if they can easily understand what to do, if they know they are progressing toward the goal, and whether each action they take will lead to a successful outcome. We also identified areas for improvement by reviewing each step of the user journey.
 
 #### Task Selection and Task Analysis
 
 [Which tasks did you select and why. What are the subtasks entailed for each ]
 
-[Task selected of buying a product in our website to briefly document the whole process.]
+[Task selected of buying a product in our website to briefly document the whole processs as this is a key process for users interacting with an e-commerce platform.]
 
 
 
@@ -99,7 +100,35 @@ Task: [This is the task]
 
 ## B.2a. Method
 
-[What approach was followed to talk with users; what kind of users were considered. What was the goal of the interviews? What were the questions considered?]
+Approach:
+
+The interviews were conducted informally. The goal was to understand the user experience when navigating an online store. The questions were adapted to each case.
+Types of users considered:
+
+    DETI students (Department of Electronics, Telecommunications, and Informatics) at the University of Aveiro: Bob, a Computer Science student, and Rita, a member of the student committee and Informatics student.
+    Online shoppers: Bob is a "Online Shopper.
+    Users of the online store of Harvard University.
+
+Objective of the interviews:
+
+    Understand the user experience when navigating an online store.
+    Identify challenges, expectations, and improvements.
+    Understand the current state of users in the addressed domain, how they manage their tasks, and the challenges they face.
+    Gather feedback and expectations from users.
+
+Questions considered:
+The questions were designed to discover the objectives, difficulties, strategies, improvements, and ideal features for an online store.
+
+Examples of questions:
+
+    What is the main goal you are trying to achieve when visiting this online store?
+    What are the biggest difficulties or frustrations you face when using the online store?
+    Is there anything you usually do to workaround those problems, or any strategies you use while shopping online?
+    What do you think the store could improve to make the shopping experience easier or more pleasant for you?
+    What would be an ideal feature or resource you would like to see in the online store to improve your experience?
+    Would you use a DETI/UA merch website?
+
+The interviews also included questions about the tools and methods users currently use, their frustrations and limitations, and their expectations for a new approach. For example, they were asked about the tools they use, like price comparison sites and reviews, and what they would like those tools to have, such as a reviews section with real photos from real customers.
 ## B.2b. Results
 
 >	This section tracks all informal user interviews, summarizing key insights and linking to detailed notes for each session. 
