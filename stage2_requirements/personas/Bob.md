@@ -1,6 +1,6 @@
 # ![Bob](/stage2_requirements/personas/bob.png)  
 **Name:** Bob 
-**Age:** 22 
+**Age:** 18 
 **Occupation:** Computer Science Student at DETI, University of Aveiro 
 **Location:** Aveiro, Portugal
 
