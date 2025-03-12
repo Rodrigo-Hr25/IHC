@@ -44,11 +44,14 @@ TrendyFashion  |Online store selling women’s clothing and accessories         
 
 >	After the individual analysis by each expert, all results should be gathered in a consensus table. If an expert has not found any of the problems found by other experts, they should analyse it, at this point, and give it a severity.
 
-| **Issue**       | **Expert Rodrigo Moço** | Expert 2 | Expert 3 | Recommendations                             |
-| --------------- | ------------ | -------- | -------- | ------------------------------------------- |
-| Something wrong | 3            | 1        | 0        | Something could be done to the button to... |
-| Another thing   | 4            | 3        | 4        | Other thing to recommend                    |
-| ...             |              |          |          |                                             |
+| **Issue**       | **Harvard Official Store** | **TrendyFashion** | Recommendations                             |
+| --------------- | ------------ | -------- | ------------------------------------------- |
+| Lack of status indicator when products are loadingg | 3            | 2        | Include a progress bar or loading icon to clearly show the system is updating/filtering the product list. |
+| Another thing   | 3            | 4        | Harvard lacks tracking updates; TrendyFashion provides tracking but with occasional delays.                    |
+| Technical terms in checkout flow             | 2             | 1         | Harvard's jargon is manageable; TrendyFashion excels in using intuitive terms. |
+|  Non-intuitive product category labels | 3 		| 2 				|     Harvard's categories are confusing; TrendyFashion has a cleaner and simpler structure.
+|    Inconsistent “Back” button in purchase sub-flows |    4          | 3           |      Harvard's 'Back' button is missing in key steps; TrendyFashion has a clear 'Back' option but lacks prominence.
+|No direct option to cancel or refund orders |    4       |   2          |  Harvard requires a lengthy customer support process; TrendyFashion offers an easy in-app cancellation option.
 
 
 
@@ -81,10 +84,10 @@ Task: [This is the task]
 
 | Step # | Task/Action to Perform | Will User Know What to do at this step? (Yes/No) | Notes | If the user does the right thing, will they know it is progressing towards goal? (Yes/No) | Notes | Is Action Successful? (Yes/No) | Suggestions for Improvement |     |
 | ------ | ---------------------- | ------------------------------------------------ | ----- | ----------------------------------------------------------------------------------------- | ----- | ------------------------------ | --------------------------- | --- |
-| 1      | [Step 1 description]   | [Yes/No]                                         |       | [Yes/No]                                                                                  |       | [Yes/No]                       | [Suggestion 1]              |     |
-| 2      | [Step 2 description]   | [Yes/No]                                         |       | [Yes/No]                                                                                  |       | [Yes/No]                       | [Suggestion 2]              |     |
-| 3      | [Step 3 description]   | [Yes/No]                                         |       | [Yes/No]                                                                                  |       | [Yes/No]                       | [Suggestion 3]              |     |
-| ...    | [Further steps]        | [Yes/No]                                         |       | [Yes/No]                                                                                  |       | [Yes/No]                       | [Suggestions]               |     |
+| 1      | [Select product]   | [Yes]                                         |    Harvard's categories are unclear; TrendyFashion’s are clear.   | [Yes]                                                                                  | Harvard needs better product grouping.      | [Yes]                       | [Improve Harvard’s product categories.]              |     |
+| 2      | [Choose method of payment]   | [No]                                         |   Harvard’s payment flow is confusing; TrendyFashion offers clearer instructions.    | [No]                                                                                  |      Harvard lacks payment confirmation | [No]                       | [Add payment success confirmation in Harvard.]              |     |
+| 3      | [Login (if buying)]   | [No]                                         |    Harvard’s login requirements are inconsistent; TrendyFashion provides clear login options.   | [No]                                                                                  |  Harvard’s login redirects cause confusion.     | [No]                       | [Clarify login steps in Harvard’s platform.]              |     |
+| 4    | [Confirm transaction]        | [No]                                         |    Harvard provides no timeline tracking; TrendyFashion offers clear updates.   | [No]                                                                                  |  Harvard lacks progress feedback.     | [No]                       | [Add visual progress tracking to Harvard’s platform.]               |     |
 
 
 
@@ -104,20 +107,25 @@ Task: [This is the task]
 ### Interview List 
 | Date       | Participant / Role | Key Insights                                                    | Link to Notes                |     |
 | ---------- | ------------------ | --------------------------------------------------------------- | ---------------------------- | --- |
-| 03-09-2000 | Bob / student      | Does most things on paper and would require a complete solution | [📄 Notes](interview-Bob.md) |     |
-| ...        |                    |                                                                 |                              |     |
+| 03-03-2025 | Bob / student      | Wants to represent DETI with stylish and comfortable merchandise Desires an easy and seamless online shopping experience with various payment options | [📄 Notes](interview-Bob.md) |     |
+| 10/03/2025        | Rita / student committee member                   | Needs a simple and efficient way to track inventory Wants a streamlined system to manage merchandise stock efficientl                                                          |                              |     |
 
 ### Common Themes & Patterns 
 
 - **Recurring Problems:** 
-	- Issue 1
-	- Issue 2
+	- Difficulty finding DETI merchandise with appealing designs.
+	- Lack of an organized website with products available for purchase.
+	- Difficulty tracking stock levels, leading to stock shortages or excess.
+	- Lack of an integrated system to efficiently manage inventory and sales.
 - **Frequently Used Tools:** 
-	- Tool 1
-	- Tool 2
+	- Product comparison websites.
+	- Filters to narrow down searches.
+	- Review websites to compare products.
 - **Desired Features / Solutions:** 
-	- Feature 1
-	- Feature 2
+	- A simplified system to efficiently manage merchandise stock.
+	- A website with DETI merchandise.
+	- Good filters to help users find what they are looking for.
+	- More product information.
 - --- 
 
 

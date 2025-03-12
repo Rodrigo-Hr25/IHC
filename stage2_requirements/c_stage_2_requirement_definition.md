@@ -65,36 +65,70 @@ To fix this, Rita contacts the supplier to reorder more hoodies based on the cur
 
 Thanks to the updated stock system, students now have real-time availability information, preventing unnecessary frustration.
 
-## Scenario 3: Custom Clothing Design Contest
+## Scenario 3: Clothing personalization that goes to a vote
+Description: A group of students from DETI wants to create a personalized t-shirt for their course. They have some design ideas but can't decide which one is best.
+Steps:
+1.The students access the DETI merch store website.
+2.They navigate to the clothing personalization section.
+3.They submit their designs for public voting within the DETI community.
+4.The platform allows other DETI students to vote on the submitted designs.
+5.After a voting period, the most voted design is selected for production and made available for purchase in the store.
+Objective: To allow students to actively participate in the creation of merchandise, increasing the sense of community and pride in the department.
 
-Rita is a creative student with a passion for graphic design. When he found out that the DETI merch store was organizing a contest to create a new custom hoodie design, he didn’t hesitate to participate.
+## Scenario 4: Alumni kits for a specific course (only those who are part of the course can buy)
+Description: The alumni association of Informatics Engineering (LEI) wants to offer an exclusive kit to its members. This kit can only be purchased by those who prove they are alumni of the course.
+Steps:
+1.A student accesses the DETI merch store website.
+2.They navigate to the alumni kits section and select the LEI kit.
+3.The system requests authentication through the University of Aveiro credentials or another alumni verification method.
+4.After verification, the student can add the kit to the cart and complete the purchase.
+5.The system ensures that only users authenticated as LEI alumni can purchase the kit.
 
-The contest allowed any student to submit their own design, and the best ones would be voted on by the DETI community. Rita worked hard on his proposal and submitted it through the website.
-
-After the submission period ended, voting was opened to all students. Rita was thrilled to see his design among the most popular ones. At the end of the voting process, the winning design was chosen and added to the official DETI merch store.
-
-Now, any student can purchase the hoodie featuring the winning design.
-
-## Scenario 4: Buying the Aluvião Kit for Faina
-
-Bob is a first-year LECI student, looking forward to experience one of the most iconic traditions of his course: Faina. He knows that to fully participate, he needs the official Aluvião Kit, which is exclusively available to LECI students.
-
-Excited, Bob visits the DETI merch website to purchase the kit. However, before being able to add the item to his cart, he is prompted to log in to verify his student status. After logging in with his university credentials, the system confirms that he is enrolled in LECI, granting him access to purchase the kit.
-
-With the verification completed, Bob proceeds with the order, selecting his preferred payment method. Now, he is ready to take part in Faina, fully equipped with the traditional Aluvião Kit, feeling a deeper connection to his course’s history and traditions.
-
+Objective: To offer exclusive products to alumni, strengthening ties with the university and the department, ensuring that only members of that course can purchase the kit.
 
 
 # Requirements
 
 
-
-
-
 ## C.1. Functional requirements
+
+Product Management:
+    ◦Allow Rita to add, remove, and update products in the catalog.
+    ◦Allow Rita to set the stock of each product and receive notifications when the stock is low.
+    ◦Allow products to be categorized by course (LECI, MEI, etc.) and type (clothing, accessories, etc.).
+
+Product Purchase:
+    ◦Allow users to browse the product catalog, search for specific products, and filter the results.
+    ◦Allow users to add products to the shopping cart and complete the purchase.
+    ◦Integrate different payment methods (credit card, MB Way, etc.).
+    ◦Allow users to view order history and delivery status.
+User Management:
+    ◦Allow users to create an account and log in.
+    ◦Possibility to log in with the University of Aveiro credentials.
+Personalization:
+    ◦Allow the personalization of products (e.g., adding the name or number to a shirt).
+Authentication:
+    ◦Integrate with university systems for authentication.
 
 
 ## C.2. Non-functional requirements
+
+Usability:
+    ◦The interface must be intuitive and easy to use.
+    ◦The website must be responsive and accessible on different devices (desktop, mobile).
+Performance:
+    ◦The website must load quickly.
+    ◦The checkout process must be quick and efficient.
+Safety:
+    ◦Protect user data and ensure transaction security.
+Availability:
+    ◦The website must be available 24/7.
+Scalability:
+    ◦The system must be able to handle a large number of users and products.
+Maintenance:
+    ◦The system must be easy to maintain and update.
+Branding:
+    ◦Maintain the DETI visual identity in all products and on the website interface.
 
 
 ---
