@@ -5,7 +5,7 @@
 **Location:** Aveiro, Portugal
 
 ## Background  
-Bob is a 22-year-old Computer Science student at the University of Aveiro (DETI). Passionate about technology, coding, and the university environment, he enjoys being part of the DETI community. Whether he’s working on group projects, attending lectures, or participating in organized events, he takes pride in his department and wants to show that through his style. He also plays for the LECI football team and he is very passionate about sports.
+Bob is a 18-year-old Computer Science student at the University of Aveiro (DETI). Passionate about technology, coding, and the university environment, he enjoys being part of the DETI community. Whether he’s working on group projects, attending lectures, or participating in organized events, he takes pride in his department and wants to show that through his style. He also plays for the LECI football team and he is very passionate about sports.
 
 ## Daily Life  
 Bob’s day starts with early morning lectures, followed by coding sessions at the university library or the department’s lab. He frequently collaborates with classmates on assignments and enjoys discussing tech trends. His free time is often spent gaming, watching football games and programming.
