@@ -5,7 +5,7 @@
 **Location:** Aveiro, Portugal 
 
 ## Background  
-Rita is a 23-year-old student at DETI, University of Aveiro, and an active member of the student committee. She is responsible for managing the stock of merchandise for the Informatics Engineering course, ensuring that students can easily purchase their desired items. Passionate about organization and efficiency, she wants to streamline the inventory management process to avoid stock shortages and delays. She is also really into designing and fashion.
+Rita is a 23-year-old student at DETI, University of Aveiro, and an active member of the student committee. She is responsible for managing the stock of merchandise for the Informatics Engineering course, ensuring that students can easily purchase their desired items. Passionate about organization and efficiency, she wants to streamline the inventory management process to avoid stock shortages and delays. She also loves designing and using her creativity.
 
 ## Daily Life  
 Rita balances her studies with her responsibilities in the student committee. Between classes and assignments, she checks stock levels, coordinates with suppliers, and updates product availability. She often communicates with students to address their inquiries and ensures that popular items are restocked on time. Additionally, she collaborates with the team to plan merch sales and promotional events.
