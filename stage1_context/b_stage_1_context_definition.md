@@ -78,7 +78,7 @@ Consensus: Not applicable, as evaluations were conducted individually by each ex
 
 >	After the individual analysis by each expert, all results should be gathered in a consensus table. If an expert has not found any of the problems found by other experts, they should analyse it, at this point, and give it a severity.
 
-| **Issue**       | **David** | **Bob** | **Luís** | **Recommendations**                             |
+| **Issue**       | **Rodrigo** | **Leonardo** | **Luís** | **Recommendations**                             |
 | --------------- | --------- | -------- | --------- | ------------------------------------------------ |
 | Lack of status indicator when products are loading | 3        |    2 | 3 | Include a progress bar or loading icon to clearly show the system is updating/filtering the product list.  |
 | Missing delivery status updates   |            3 | 4           |           3 | Harvard lacks tracking updates; TrendyFashion provides tracking but with occasional delays. |
