@@ -80,12 +80,12 @@ Consensus: Not applicable, as evaluations were conducted individually by each ex
 
 | **Issue**       | **David** | **Bob** | **Luís** | **Recommendations**                             |
 | --------------- | --------- | -------- | --------- | ------------------------------------------------ |
-| Lack of status indicator when products are loading | 3 | 2 | 3 | Include a progress bar or loading icon to clearly show the system is updating/filtering the product list. |
-| Missing delivery status updates | 3 | 4 | 3 | Harvard lacks tracking updates; TrendyFashion provides tracking but with occasional delays. |
-| Technical terms in checkout flow | 2 | 1 | 2 | Harvard's jargon is manageable; TrendyFashion excels in using intuitive terms. |
-| Non-intuitive product category labels | 3 | 2 | 3 | Harvard's categories are confusing; TrendyFashion has a cleaner and simpler structure. |
-| Inconsistent “Back” button in purchase sub-flows | 4 | 3 | 3 | Harvard's 'Back' button is missing in key steps; TrendyFashion has a clear 'Back' option but lacks prominence. |
-| No direct option to cancel or refund orders | 4 | 2 | 4 | Harvard requires a lengthy customer support process; TrendyFashion offers an easy in-app cancellation option. |
+| Lack of status indicator when products are loading | 3        |    2 | 3 | Include a progress bar or loading icon to clearly show the system is updating/filtering the product list.  |
+| Missing delivery status updates   |            3 | 4           |           3 | Harvard lacks tracking updates; TrendyFashion provides tracking but with occasional delays. |
+| Technical terms in checkout flow  |     2 |   1    | 2    | Harvard's jargon is manageable; TrendyFashion excels in using intuitive terms.  |
+| Non-intuitive product category labels  |      3 |      2    |   3    | Harvard's categories are confusing; TrendyFashion has a cleaner and simpler structure. |
+| Inconsistent “Back” button in purchase sub-flows |   4    |   3     |    3     | Harvard's 'Back' button is missing in key steps; TrendyFashion has a clear 'Back' option but lacks prominence.           |
+| No direct option to cancel or refund orders  |    4   |   2   |    4     | Harvard requires a lengthy customer support process; TrendyFashion offers an easy in-app cancellation option. |
 
 
 ---
