@@ -3,6 +3,7 @@ from app_org import db
 from app_org.models import User
 from app_org.models import Product
 from app_org.models import Category
+from app_org.models import Course
 from werkzeug.security import generate_password_hash
 
 database = Blueprint('database', __name__)
@@ -49,6 +50,19 @@ def create_users():
         print(e)
         return jsonify({'message': 'Error creating users!'})
 
+@database.route('/generate/courses', methods=['GET'])
+def create_courses():
+    db.session.execute('DELETE FROM course')
+    db.session.commit()
+    courses = [
+        {'name': 'Engenharia de Computadores e Informática'},
+        {'name': 'Engenharia Informática'},
+        {'name': 'Ciência da Computação'}
+    ]
+    db.session.bulk_insert_mappings(Course, courses)
+    db.session.commit()
+    return jsonify({'message': 'Courses created successfully!'})
+
 @database.route('/generate/products', methods=['GET'])
 def create_products():
     db.session.execute('DELETE FROM product')
@@ -59,7 +73,10 @@ def create_products():
         'price': 3,
         'image': 'mug.png',
         'category_id': 1,
-        'has_stock': True
+        'has_stock': True,
+        'course_id': 1,
+        'size': 'N/A',
+        'color': 'Branco'
         },{
         'name': 'Speaker',
         'description': 'A personalized Deti Speaker',
@@ -90,7 +107,10 @@ def create_products():
         'price': 25,
         'image': 'sweat.png',
         'category_id': 2,
-        'has_stock': True
+        'has_stock': True,
+        'course_id': 2,
+        'size': 'L',
+        'color': 'Preto'
         },
       {
         'name': 'T-Shirt',
@@ -135,5 +155,6 @@ def create_all():
     create_users()
     create_categories()
     create_products()
+    create_courses()
     # create_cart()
     return jsonify({'message': 'All created successfully!'})

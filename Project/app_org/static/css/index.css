@@ -1,8 +1,24 @@
-
 header {
     background-color: #333;
     color: white;
     padding: 20px;
+    text-align: center;
+}
+
+.page-container {
+    display: flex;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.filters-column {
+    width: 250px;
+    padding-right: 20px;
+    position: sticky;
+    top: 20px;
+    align-self: flex-start;
+    height: fit-content;
 }
 
 .product-container {
@@ -10,33 +26,54 @@ header {
     justify-content: space-around;
     flex-wrap: wrap;
     margin: 20px auto;
+    max-width: 1200px;
 }
 
 .product {
-    margin:10px;
-    padding: 10px;
+    margin: 10px;
+    padding: 15px;
     border-radius: 10px;
-    width: 320px;
-    border: 1px solid #ccc;
-    background-color: #181818;
+    width: 300px;
+    border: 1px solid #444;
+    background-color: #222;
+    color: white;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+}
+
+.product:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(245, 90, 0, 0.3);
 }
 
 .product img {
     max-width: 100%;
+    border-radius: 5px;
 }
 
-.price {
+.card-title {
+    color: white;
+    margin: 10px 0;
+    font-size: 1.2rem;
+}
+
+.card-price {
     font-weight: bold;
     color: #f55a00;
+    font-size: 1.3rem;
+    margin: 10px 0;
 }
 
 .view-product {
     background-color: #f55a00;
     color: #ffffff;
-    border: 0px solid #ffffff;
+    border: none;
     padding: 10px 15px;
     cursor: pointer;
     transition: background-color 0.3s;
+    border-radius: 5px;
+    width: 100%;
+    margin: 5px 0;
 }
 
 .view-product:hover {
@@ -44,33 +81,132 @@ header {
 }
 
 .add-to-cart {
-    background-color: #f55a00;
+    background-color: #333;
     color: #ffffff;
-    border: 0px solid #ffffff;
+    border: none;
     padding: 10px 15px;
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-top: 20px;
+    margin-top: 5px;
+    border-radius: 5px;
+    width: 100%;
 }
 
 .add-to-cart:hover {
-    background-color: #ff3300;
+    background-color: #f55a00;
 }
 
 .add-to-favorites {
-    background-color :transparent; 
-    color: #ffff; 
+    background-color: transparent;
+    color: #ccc;
     border: none;
-    border-radius: 10px;
-    padding: 5px 10px;
+    border-radius: 50%;
+    padding: 8px;
     cursor: pointer;
-    margin-right: 15px;
-    transition: background-color 0.3s;
+    font-size: 1.5rem;
+    transition: color 0.3s;
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }
+
 .add-to-favorites:hover {
+    color: #f55a00;
+}
+
+.filter-container {
+    background-color: #222;
+    padding: 20px;
     border-radius: 10px;
-    color: #fff;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.filter-container h3 {
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #444;
+    color: #f55a00;
+}
+
+.filter-section {
+    margin-bottom: 15px;
+}
+
+.filter-section h4 {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #ddd;
+}
+
+.filter-section ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.filter-section li {
+    margin-bottom: 5px;
+    color: #ccc;
+}
+
+.price-range {
+    margin-top: 10px;
+}
+
+.price-range p {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #ccc;
+}
+
+.reset-filters {
+    background-color: #f55a00;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+.reset-filters:hover {
     background-color: #ff3300;
 }
 
+/* Estilos dos inputs dos filtros */
+.filter-section input[type="checkbox"],
+.filter-section input[type="radio"] {
+    margin-right: 8px;
+}
 
+.filter-section input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    background-color: #333;
+    border: 1px solid #444;
+    color: white;
+    border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+    .page-container {
+        flex-direction: column;
+    }
+    
+    .filters-column {
+        width: 100%;
+        padding-right: 0;
+        position: static;
+    }
+    
+    .product-container {
+        justify-content: center;
+    }
+    
+    .filter-container {
+        margin: 20px auto;
+    }
+}
