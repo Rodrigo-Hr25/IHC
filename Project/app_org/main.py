@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 from flask_login import login_user, logout_user, login_required, current_user
-from app_org.models import User, Product
+from app_org.models import User, Product, Category, Course
 from app_org import db
 from flask import request, redirect, url_for
 main = Blueprint('main', __name__)
@@ -9,9 +9,51 @@ main = Blueprint('main', __name__)
 @main.route('/', methods=['GET'])
 @login_required
 def index():
-    user=User.query.filter_by(id=current_user.id).first()
-    products = Product.query.all()
-    return render_template('index.html',user=user, products=products)
+    user = User.query.filter_by(id=current_user.id).first()
+
+    stock = request.args.get('stock')
+    price_min = request.args.get('price_min')
+    price_max = request.args.get('price_max')
+    categories = request.args.getlist('categories') 
+    courses = request.args.getlist('courses')
+    sizes = request.args.getlist('sizes') 
+    colors = request.args.getlist('colors') 
+
+    query = Product.query
+
+    if stock == 'in':
+        query = query.filter_by(has_stock=True)
+    elif stock == 'out':
+        query = query.filter_by(has_stock=False)
+
+    if price_min:
+        query = query.filter(Product.price >= float(price_min))
+    if price_max:
+        query = query.filter(Product.price <= float(price_max))
+
+    if categories:
+        query = query.filter(Product.category_id.in_(categories))
+
+    if courses:
+        query = query.filter(Product.course_id.in_(courses))
+
+    if sizes:
+        query = query.filter(Product.size.in_(sizes))
+
+    if colors:
+        query = query.filter(Product.color.in_(colors))
+
+    products = query.all()
+
+    all_categories = Category.query.all()
+    all_courses = Course.query.all()
+    all_sizes = db.session.query(Product.size).distinct().all()
+    all_colors = db.session.query(Product.color).distinct().all()
+
+    return render_template('index.html', user=user, products=products,
+                           categories=all_categories, courses=all_courses,
+                           sizes=[s[0] for s in all_sizes if s[0]], 
+                           colors=[c[0] for c in all_colors if c[0]])
 
 
 @main.route('/' , methods=['POST'])

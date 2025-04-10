@@ -23,16 +23,22 @@ class User(db.Model, UserMixin):
     def default_username(self):
         self.first_name = self.username
         
+class Course(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
 
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    description= db.Column(db.String(1000))
+    description = db.Column(db.String(1000))
     price = db.Column(db.Float, nullable=False)
     image = db.Column(db.String(20), nullable=False, default='default_image.png')
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
-    category= db.relationship('Category', backref=db.backref('products', lazy=True))
+    category = db.relationship('Category', backref=db.backref('products', lazy=True))
     has_stock = db.Column(db.Boolean, default=True)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=True)
+    size = db.Column(db.String(10), nullable=True)
+    color = db.Column(db.String(20), nullable=True)
 
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
