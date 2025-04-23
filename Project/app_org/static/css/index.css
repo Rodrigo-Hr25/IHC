@@ -175,7 +175,6 @@ header {
     background-color: #ff3300;
 }
 
-/* Estilos dos inputs dos filtros */
 .filter-section input[type="checkbox"],
 .filter-section input[type="radio"] {
     margin-right: 8px;

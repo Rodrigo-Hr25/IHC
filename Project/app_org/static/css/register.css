@@ -6,26 +6,27 @@ body {
     margin: 0;
 }
 
-.checkout-container {
+.register-container {
     display: flex;
     justify-content: center;
-    padding: 40px 20px;
+    align-items: center;
     min-height: 80vh;
+    padding: 40px 20px;
 }
 
-.checkout-form {
-    max-width: 600px;
+.log {
+    max-width: 400px;
     width: 100%;
     background: linear-gradient(135deg, #333, #222);
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     padding: 30px;
+    text-align: center;
 }
 
-.checkout-form h1 {
-    font-size: 2.5rem;
+.log h2 {
+    font-size: 1.8rem;
     font-weight: 600;
-    text-align: center;
     margin-bottom: 30px;
     color: #f55a00;
     text-transform: uppercase;
@@ -34,18 +35,20 @@ body {
 
 .form-group {
     margin-bottom: 20px;
+    text-align: left;
 }
 
 .form-group label {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 8px;
     font-size: 1rem;
     font-weight: 500;
     margin-bottom: 8px;
     color: #d0d0d0;
 }
 
-.form-group input,
-.form-group textarea {
+.form-group input {
     width: 100%;
     padding: 12px;
     border: 1px solid #555;
@@ -57,24 +60,16 @@ body {
     transition: border-color 0.3s ease, background 0.3s ease;
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
+.form-group input:focus {
     border-color: #f55a00;
     background-color: #3a3a3a;
 }
 
-.form-group textarea {
-    resize: vertical;
-    min-height: 100px;
+.form-group input::placeholder {
+    color: #a0a0a0;
 }
 
-.form-group input#credit-card,
-.form-group input#expiry,
-.form-group input#cvv {
-    font-family: 'Courier New', Courier, monospace;
-}
-
-.checkout-form button {
+.btn-register {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -93,13 +88,30 @@ body {
     transition: background 0.3s ease, transform 0.2s ease;
 }
 
-.checkout-form button:hover {
+.btn-register:hover {
     background: linear-gradient(45deg, #ff8c00, #f55a00);
     transform: translateY(-2px);
 }
 
-.checkout-form button:active {
+.btn-register:active {
     transform: translateY(0);
+}
+
+.login-link {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #a0a0a0;
+}
+
+.login-link a {
+    color: #f55a00;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.login-link a:hover {
+    color: #ff8c00;
 }
 
 .alert {
@@ -116,21 +128,24 @@ body {
 }
 
 @media (max-width: 576px) {
-    .checkout-form {
+    .log {
         padding: 20px;
     }
 
-    .checkout-form h1 {
-        font-size: 2rem;
+    .log h2 {
+        font-size: 1.5rem;
     }
 
-    .form-group input,
-    .form-group textarea {
+    .form-group input {
         font-size: 0.9rem;
     }
 
-    .checkout-form button {
+    .btn-register {
         font-size: 0.9rem;
         padding: 12px;
+    }
+
+    .login-link {
+        font-size: 0.8rem;
     }
 }

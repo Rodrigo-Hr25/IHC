@@ -33,7 +33,7 @@ margin-right: auto;
 }
 
 .navbar .navbar-nav .nav-item {
-  margin-right: 5px; /* Adjust this value to control the space between buttons */
+  margin-right: 5px;
 }
 
 .navbar .navbar-nav .nav-link {

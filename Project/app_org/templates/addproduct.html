@@ -5,7 +5,6 @@
 {%endblock%}
 
 <body>
-        <!-- Field for server messages-->
         {%for message in get_flashed_messages()%}
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
             {{message}}
@@ -13,7 +12,6 @@
         </div>
 		{%endfor%}
 
-<!-- Form to add products -->
 <div class="checkout-container">
     <div class="checkout-form">
         <h1>Add Product</h1>
