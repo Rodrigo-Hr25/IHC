@@ -1,15 +1,19 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from app_org.models import User, Product, Category, Course
 from app_org import db
 from flask import request, redirect, url_for
-main = Blueprint('main', __name__)
+import os
 
+main = Blueprint('main', __name__)
 
 @main.route('/', methods=['GET'])
 @login_required
 def index():
     user = User.query.filter_by(id=current_user.id).first()
+    
+    if user.isAdmin:
+        return redirect(url_for('main.admin'))
 
     stock = request.args.get('stock')
     price_min = request.args.get('price_min')
@@ -55,13 +59,66 @@ def index():
                            sizes=[s[0] for s in all_sizes if s[0]], 
                            colors=[c[0] for c in all_colors if c[0]])
 
-
-@main.route('/' , methods=['POST'])
+@main.route('/', methods=['POST'])
 @login_required
 def index_post():
+    user = User.query.filter_by(id=current_user.id).first()
+    if user.isAdmin:
+        return redirect(url_for('main.admin'))
+    
     products = Product.query.all()
     return render_template('index.html', products=products)
 
+@main.route('/admin', methods=['GET'])
+@login_required
+def admin():
+    user = User.query.filter_by(id=current_user.id).first()
+    if not user.isAdmin:
+        return redirect(url_for('main.index'))
+
+    stock = request.args.get('stock')
+    price_min = request.args.get('price_min')
+    price_max = request.args.get('price_max')
+    categories = request.args.getlist('categories') 
+    courses = request.args.getlist('courses')
+    sizes = request.args.getlist('sizes') 
+    colors = request.args.getlist('colors') 
+
+    query = Product.query
+
+    if stock == 'in':
+        query = query.filter_by(has_stock=True)
+    elif stock == 'out':
+        query = query.filter_by(has_stock=False)
+
+    if price_min:
+        query = query.filter(Product.price >= float(price_min))
+    if price_max:
+        query = query.filter(Product.price <= float(price_max))
+
+    if categories:
+        query = query.filter(Product.category_id.in_(categories))
+
+    if courses:
+        query = query.filter(Product.course_id.in_(courses))
+
+    if sizes:
+        query = query.filter(Product.size.in_(sizes))
+
+    if colors:
+        query = query.filter(Product.color.in_(colors))
+
+    products = query.all()
+
+    all_categories = Category.query.all()
+    all_courses = Course.query.all()
+    all_sizes = db.session.query(Product.size).distinct().all()
+    all_colors = db.session.query(Product.color).distinct().all()
+
+    return render_template('indexAdmin.html', user=user, products=products,
+                           categories=all_categories, courses=all_courses,
+                           sizes=[s[0] for s in all_sizes if s[0]], 
+                           colors=[c[0] for c in all_colors if c[0]])
 
 @main.route('/product/<int:product_id>', methods=['GET'])
 @login_required
@@ -71,15 +128,74 @@ def product(product_id):
         return render_template('404.html')
     return render_template('product.html', product=product)
 
+@main.route('/product_admin/<int:product_id>', methods=['GET'])
+@login_required
+def product_admin(product_id):
+    user = User.query.filter_by(id=current_user.id).first()
+    if not user.isAdmin:
+        return redirect(url_for('main.index'))
+    product = Product.query.filter_by(id=product_id).first()
+    if not product:
+        return render_template('404.html')
+    return render_template('productAdmin.html', product=product)
+
+@main.route('/edit_product/<int:product_id>', methods=['GET'])
+@login_required
+def edit_product(product_id):
+    user = User.query.filter_by(id=current_user.id).first()
+    if not user.isAdmin:
+        return redirect(url_for('main.index'))
+    product = Product.query.filter_by(id=product_id).first()
+    if not product:
+        return render_template('404.html')
+    return render_template('editProduct.html', product=product)
+
+@main.route('/update_product/<int:product_id>', methods=['POST'])
+@login_required
+def update_product(product_id):
+    user = User.query.filter_by(id=current_user.id).first()
+    if not user.isAdmin:
+        return redirect(url_for('main.index'))
+    product = Product.query.get_or_404(product_id)
+    product.name = request.form.get('name')
+    product.description = request.form.get('description')
+    product.price = float(request.form.get('price'))
+    product.Quantity = int(request.form.get('quantity'))
+    category_name = request.form.get('category')
+    category = Category.query.filter_by(name=category_name).first()
+    if category:
+        product.category_id = category.id
+    else:
+        flash('Category not found. Please ensure the category exists.', 'warning')
+        return redirect(url_for('main.edit_product', product_id=product.id))
+    db.session.commit()
+    flash('Product updated successfully!', 'success')
+    return redirect(url_for('main.edit_product', product_id=product.id))
+
+@main.route('/upload_image/<int:product_id>', methods=['POST'])
+@login_required
+def upload_image(product_id):
+    user = User.query.filter_by(id=current_user.id).first()
+    if not user.isAdmin:
+        return redirect(url_for('main.index'))
+    product = Product.query.get_or_404(product_id)
+    image = request.files.get('image')
+    if image and (image.filename.endswith('.png') or image.filename.endswith('.jpeg')):
+        image.save(os.path.join('app_org/static/assets', image.filename))
+        product.image = image.filename
+        db.session.commit()
+        flash('Image updated successfully!', 'success')
+    else:
+        flash('Please upload a .png or .jpeg image.', 'warning')
+    return redirect(url_for('main.edit_product', product_id=product.id))
 
 @main.route('/addproduct', methods=['GET'])
 @login_required
 def add_product():
-    user=User.query.filter_by(id=current_user.id).first()
-    if user.isAdmin == False:
+    user = User.query.filter_by(id=current_user.id).first()
+    if not user.isAdmin:
         return redirect(url_for('main.index'))
-    else:
-        return render_template('addproduct.html')
+    return render_template('addproduct.html')
 
 @main.route('/addproduct', methods=['POST'])
 @login_required

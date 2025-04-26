@@ -32,6 +32,7 @@ class Product(db.Model):
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(1000))
     price = db.Column(db.Float, nullable=False)
+    Quantity = db.Column(db.Integer, nullable=False, default=0)
     image = db.Column(db.String(20), nullable=False, default='default_image.png')
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
     category = db.relationship('Category', backref=db.backref('products', lazy=True))

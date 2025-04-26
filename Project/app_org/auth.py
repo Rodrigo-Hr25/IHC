@@ -10,7 +10,9 @@ auth  = Blueprint('auth', __name__)
 
 @auth.route('/login')
 def login():
-    if current_user.is_authenticated:
+    if current_user.is_authenticated and current_user.is_admin:
+        return redirect(url_for('main.indexAdmin'))
+    elif current_user.is_authenticated and not current_user.is_admin:
         return redirect(url_for('main.index'))
     else:
         return render_template('login.html')

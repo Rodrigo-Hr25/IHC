@@ -33,6 +33,10 @@ def create_users():
         'email': 'user2@ua.pt',
         'password': generate_password_hash('password2', method='sha256'),
         'first_name': 'user',
+        'isAdmin': False,
+        'phone_number': '987654321',
+        'image': 'default.png',
+        'address': 'Aveiro',
         'failed_login_attempts': 0,
     },{
         'username': 'lucifer666',
@@ -74,6 +78,7 @@ def create_products():
         'image': 'mug.png',
         'category_id': 1,
         'has_stock': True,
+        'Quantity': 10,
         'course_id': 1,
         'size': 'N/A',
         'color': 'Branco'
@@ -83,7 +88,8 @@ def create_products():
         'price': 20,
         'image': 'speaker.png',
         'category_id': 1,
-        'has_stock': True
+        'has_stock': True,
+        'Quantity': 10
         },
       {
         'name': 'Mousepad',
@@ -91,7 +97,8 @@ def create_products():
         'price': 5,
         'image': 'mousepad.png',
         'category_id': 1,
-        'has_stock': False
+        'has_stock': False,
+        'Quantity': 0
         },
       {
         'name': 'Bag',
@@ -99,7 +106,8 @@ def create_products():
         'price': 2,
         'image': 'bag.png',
         'category_id': 1,
-        'has_stock': True
+        'has_stock': True,
+        'Quantity': 5
         },
       {
         'name': 'Sweatshirt',
@@ -108,6 +116,7 @@ def create_products():
         'image': 'sweat.png',
         'category_id': 2,
         'has_stock': True,
+        'Quantity': 12,
         'course_id': 2,
         'size': 'L',
         'color': 'Preto'
@@ -118,7 +127,8 @@ def create_products():
         'price': 15,
         'image': 'tshirt.png',
         'category_id': 2,
-        'has_stock': True
+        'has_stock': True,
+        'Quantity': 1
         },  
         ]
     try:    
