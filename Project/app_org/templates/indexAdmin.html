@@ -2,7 +2,6 @@
 
 {% block styles %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/indexAdmin.css') }}" />
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -18,6 +17,7 @@
 
     <div class="page-container">
         <div class="filters-column">
+            {% set filter_action='main.admin' %}
             {% include '_filters.html' %}
         </div>
 
@@ -34,7 +34,7 @@
                         <p>{{ product.description }}</p>
                         <p class="card-price">{{ product.price | int }}€</p>
                         <div class="quantity-display">
-                            <span>Quantidade: {{ product.Quantity | int }}</span>
+                            <span>Quantidade: {{ product.quantity | int }}</span>
                         </div>
                         <form action="/product_admin/{{ product.id }}" method="GET">
                             <button class="view-product">View Product</button>

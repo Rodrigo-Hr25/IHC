@@ -10,7 +10,7 @@
 
 {% block content %}
     <!-- Incluir Navbar -->
-    {% include 'navbar.html' %}
+    {% include 'navbarAdmin.html' %}
 
     <!-- Mensagens Flash -->
     {% for message in get_flashed_messages() %}
@@ -31,11 +31,12 @@
                 <h3 class="mb-3">{{ product.category.name }}</h3>
                 <p class="mb-3"><b>Description: </b>{{ product.description }}</p>
                 <p class="mb-3 price">Price: {{ product.price | int }}€</p>
-                <p class="mb-3 quantity">Available Quantity: {{ product.Quantity | int }}</p>
+                <p class="mb-3 quantity">Available Quantity: {{ product.quantity | int }}</p>
                 <form action="/edit_product/{{ product.id }}" method="GET">
                     <button type="submit" class="edit-product">
                         <i class='bx bx-edit'></i> Edit Product
                     </button>
+                    
                     <button type="button" class="custom-button btn-back" onclick="history.back()">
                         <i class='bx bx-arrow-back'></i> Back
                     </button>

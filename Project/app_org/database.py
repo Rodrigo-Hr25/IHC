@@ -1,9 +1,6 @@
-from flask import Blueprint,jsonify
+from flask import Blueprint, jsonify
 from app_org import db
-from app_org.models import User
-from app_org.models import Product
-from app_org.models import Category
-from app_org.models import Course
+from app_org.models import User, Product, Category, Course
 from werkzeug.security import generate_password_hash
 
 database = Blueprint('database', __name__)
@@ -38,7 +35,7 @@ def create_users():
         'image': 'default.png',
         'address': 'Aveiro',
         'failed_login_attempts': 0,
-    },{
+    }, {
         'username': 'lucifer666',
         'email': 'lucifer666@ua.pt',
         'password': generate_password_hash('hell', method='sha256'),
@@ -71,74 +68,75 @@ def create_courses():
 def create_products():
     db.session.execute('DELETE FROM product')
     db.session.commit()
-    products= [{
+    products = [{
         'name': 'Mug',
         'description': 'Coffee Break',
         'price': 3,
         'image': 'mug.png',
         'category_id': 1,
-        'has_stock': True,
-        'Quantity': 10,
+        'quantity': 10,
         'course_id': 1,
         'size': 'N/A',
         'color': 'Branco'
-        },{
+    }, {
         'name': 'Speaker',
         'description': 'A personalized Deti Speaker',
         'price': 20,
         'image': 'speaker.png',
         'category_id': 1,
-        'has_stock': True,
-        'Quantity': 10
-        },
-      {
+        'quantity': 10,
+        'course_id': None,
+        'size': 'N/A',
+        'color': 'N/A'
+    }, {
         'name': 'Mousepad',
         'description': 'A personalized Deti Mousepad',
         'price': 5,
         'image': 'mousepad.png',
         'category_id': 1,
-        'has_stock': False,
-        'Quantity': 0
-        },
-      {
+        'quantity': 0,
+        'course_id': None,
+        'size': 'N/A',
+        'color': 'N/A'
+    }, {
         'name': 'Bag',
         'description': 'A personalized Deti Bag',
         'price': 2,
         'image': 'bag.png',
         'category_id': 1,
-        'has_stock': True,
-        'Quantity': 5
-        },
-      {
+        'quantity': 5,
+        'course_id': None,
+        'size': 'N/A',
+        'color': 'N/A'
+    }, {
         'name': 'Sweatshirt',
         'description': 'A personalized Deti Sweatshirt',
         'price': 25,
         'image': 'sweat.png',
         'category_id': 2,
-        'has_stock': True,
-        'Quantity': 12,
+        'quantity': 12,
         'course_id': 2,
         'size': 'L',
         'color': 'Preto'
-        },
-      {
+    }, {
         'name': 'T-Shirt',
         'description': 'A personalized Deti T-Shirt',
         'price': 15,
         'image': 'tshirt.png',
         'category_id': 2,
-        'has_stock': True,
-        'Quantity': 1
-        },  
-        ]
-    try:    
+        'quantity': 1,
+        'course_id': None,
+        'size': 'N/A',
+        'color': 'N/A'
+    }]
+    try:
         db.session.bulk_insert_mappings(Product, products)
         db.session.commit()
-        return jsonify({'message': 'Products created successfully!'})  
+        return jsonify({'message': 'Products created successfully!'})
     except Exception as e:
         print(e)
         return jsonify({'message': 'Error creating products!'})
-    
+
 @database.route('/generate/categories', methods=['GET'])
 def create_categories():
     db.session.execute('DELETE FROM category')
@@ -157,7 +155,6 @@ def create_categories():
     except Exception as e:
         print(e)
         return jsonify({'message': 'Error creating categories!'})
-    
 
 @database.route('/generate/all', methods=['GET'])
 def create_all():
@@ -166,5 +163,4 @@ def create_all():
     create_categories()
     create_products()
     create_courses()
-    # create_cart()
     return jsonify({'message': 'All created successfully!'})

@@ -1,40 +1,83 @@
-{%extends 'base.html'%}
+{% extends 'base.html' %}
 
-{%block styles%}
-<link rel="stylesheet" href="{{ url_for('static',filename='css/addproduct.css') }}">
-{%endblock%}
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/addproduct.css') }}">
+{% endblock %}
 
-<body>
-        {%for message in get_flashed_messages()%}
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            {{message}}
+{% block content %}
+<div class="add-product-container">
+    <header>
+        <h1>Add New Product</h1>
+    </header>
+
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning" role="alert">
+            {{ message }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-		{%endfor%}
+    {% endfor %}
 
-<div class="checkout-container">
-    <div class="checkout-form">
-        <h1>Add Product</h1>
-        <form action="/cart/checkout/confirm" method="POST">
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Category:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="address">Description:</label>
-                <textarea id="address" name="address" rows="4" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="credit-card">Preço:</label>
-                <input type="text" id="credit-card" name="credit-card" required>
-            </div>
-            <button type="submit">Add Product</button>
-        </form>
-    </div>
+    <form action="/addproduct" method="POST" enctype="multipart/form-data" class="add-product-form">
+        <div class="form-group">
+            <label for="name">Product Name:</label>
+            <input type="text" id="name" name="name" required placeholder="Enter product name">
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" rows="4" placeholder="Enter product description"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="price">Price (€):</label>
+            <input type="number" id="price" name="price" step="0.01" required placeholder="Enter price">
+        </div>
+
+        <div class="form-group">
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" required placeholder="Enter quantity">
+        </div>
+
+        <div class="form-group">
+            <label for="category_id">Category:</label>
+            <select id="category_id" name="category_id" required>
+                <option value="" disabled selected>Select a category</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="course_id">Associated Course (Optional):</label>
+            <select id="course_id" name="course_id">
+                <option value="">None</option>
+                {% for course in courses %}
+                    <option value="{{ course.id }}">{{ course.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="size">Size (Optional):</label>
+            <input type="text" id="size" name="size" placeholder="e.g., S, M, L, or N/A">
+        </div>
+
+        <div class="form-group">
+            <label for="color">Color (Optional):</label>
+            <input type="text" id="color" name="color" placeholder="e.g., Black, White, or N/A">
+        </div>
+
+        <div class="form-group">
+            <label for="image">Product Image:</label>
+            <input type="file" id="image" name="image" accept=".png,.jpeg" required>
+            <small class="form-text">Accepted formats: .png, .jpeg</small>
+        </div>
+        <div class="form-actions">
+            <button class="back-btn" onclick="history.back()">Back</button>
+            <button type="submit" class="submit-btn">Add Product</button>
+        </div>
+        
+    </form>
 </div>
-{%endblock%}
-</body>
+{% endblock %}

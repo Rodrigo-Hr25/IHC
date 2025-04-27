@@ -1,4 +1,4 @@
-<form method="GET" action="{{ url_for('main.index') }}" class="filter-form">
+<form method="GET" action="{{ url_for(filter_action) }}" class="filter-form">
     <h3>Filtrar Produtos</h3>
     
     <div class="filter-section">
@@ -36,7 +36,6 @@
         {% endfor %}
     </div>
 
-    <!-- Filtro de Cursos -->
     <div class="filter-section">
         <h4>Cursos</h4>
         {% for course in courses %}
