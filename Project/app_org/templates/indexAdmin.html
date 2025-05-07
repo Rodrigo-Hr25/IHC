@@ -15,11 +15,11 @@
         <h1>DETI MERCH</h1>
     </header>
 
-    <div class="page-container">
-        <div class="filters-column">
-            {% set filter_action='main.admin' %}
-            {% include '_filters.html' %}
-        </div>
+    <div class="page-container" style="display: flex; justify-content: flex-start; margin-left: 0; padding: 0 20px; width: 100%;">
+        <div class="filters-column" style="margin: 0; margin-right: 10px;">
+          {% set filter_action='main.index' %}
+          {% include '_filters.html' %}
+        </div>  
 
         <div class="products-center">
             <div class="row product-container">
