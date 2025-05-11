@@ -1,4 +1,3 @@
-/* Estilo geral da página */
 body {
     background-color: #2d2d2d;
     font-family: 'Poppins', sans-serif;
@@ -11,7 +10,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 80vh; 
+    min-height: 80vh;
     padding: 40px 20px;
 }
 
@@ -27,12 +26,12 @@ body {
 
 /* Container interno do produto */
 .product-details {
-    background-color: #3a3a3a; 
+    background-color: #3a3a3a;
     border-radius: 15px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
     padding: 30px;
     display: flex;
-    gap: 40px; 
+    gap: 40px;
     max-width: 900px;
     width: 100%;
     transition: transform 0.3s ease;
@@ -42,12 +41,16 @@ body {
     transform: translateY(-5px);
 }
 
-/* Estilo da secção de imagem */
+/* Imagem com texto sobreposto */
+.image-section {
+    position: relative;
+}
+
 .image-section img {
     width: 100%;
     max-width: 300px;
     height: auto;
-    border-radius: 10px; 
+    border-radius: 10px;
     border: 2px solid #555;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -57,14 +60,33 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
-/* Estilo da seção de texto */
+#custom-preview-text {
+    position: absolute;
+    top: 35%; /* ajusta se necessário */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 400;
+    text-align: center;
+    pointer-events: none;
+    max-width: 80%;
+    word-wrap: break-word;
+    white-space: nowrap;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    display: none; /* escondido por padrão */
+}
+
+
+
+
+/* Texto */
 .text-section {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-/* Estilo dos textos */
 .text-section h1 {
     font-size: 2.2rem;
     font-weight: 600;
@@ -92,7 +114,7 @@ body {
     color: #f55a00;
 }
 
-/* Estilo dos botões */
+/* Botões */
 .text-section form button {
     width: 100%;
     max-width: 200px;
@@ -122,7 +144,7 @@ body {
     transform: translateY(0);
 }
 
-/* Estilo das mensagens flash */
+/* Flash messages */
 .alert {
     max-width: 900px;
     margin: 20px auto;
@@ -136,7 +158,7 @@ body {
     filter: invert(1);
 }
 
-/* Estilo para os selects de tamanho e cor */
+/* Select dropdowns */
 select.form-control {
     background-color: #4a4a4a;
     color: #ffffff;

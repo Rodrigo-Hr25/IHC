@@ -9,10 +9,8 @@
 {% endblock %}
 
 {% block content %}
-    <!-- Incluir Navbar -->
     {% include 'navbar.html' %}
 
-    <!-- Mensagens Flash -->
     {% for message in get_flashed_messages() %}
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
             {{ message }}
@@ -20,11 +18,11 @@
         </div>
     {% endfor %}
 
-    <!-- Container do Produto -->
     <div class="product-container">
         <div class="row product-details">
-            <div class="col-md-6 image-section">
+            <div class="col-md-6 image-section position-relative">
                 <img id="product-image" src="{{ url_for('static', filename='assets/' + product.image) }}" alt="{{ product.name }}" class="img-fluid">
+                <div id="custom-preview-text" style="display: none;"></div>
             </div>
             <div class="col-md-6 text-section">
                 <h1 class="mb-3">{{ product.name }}</h1>
@@ -49,6 +47,9 @@
                             <option value="Blue">Blue</option>
                             <option value="Purple">Purple</option>
                         </select>
+
+                        <label for="custom_text">Personalized Text:</label>
+                        <input type="text" name="custom_text" id="custom_text" class="form-control mb-3" maxlength="30" placeholder="Ex: 3º ano ECI">
                     {% endif %}
 
                     <button type="submit" class="add-to-cart">
@@ -66,7 +67,6 @@
     </div>
 
     {% if product.name == 'Sweatshirt' %}
-    <!-- Script para atualizar imagem dinamicamente -->
     <script>
         function updateImage() {
             const color = document.getElementById("color").value;
@@ -81,6 +81,22 @@
 
             img.src = imageMap[color] || "{{ url_for('static', filename='assets/sweat.png') }}";
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const input = document.getElementById("custom_text");
+            const preview = document.getElementById("custom-preview-text");
+
+            input.addEventListener("input", () => {
+                const text = input.value.trim();
+                if (text) {
+                    preview.textContent = text;
+                    preview.style.display = "block";
+                } else {
+                    preview.textContent = "";
+                    preview.style.display = "none";
+                }
+            });
+        });
     </script>
     {% endif %}
 {% endblock %}
