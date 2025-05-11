@@ -70,11 +70,15 @@ or (Windows):
 pip install -r requirements.txt
 ```
 
+(Se não der fazer isto:)
+dos2unix run.sh
+chmod +x run.sh
+
 4. Run the application:
 
 
 ```bash
-./run.sh app_org <PORT>
+./run.sh app_org 8000
 ```
 or:
 ```bash
@@ -84,7 +88,7 @@ or:
 &emsp;&emsp;In Windows use instead:
 
 ```bash
-.\run.bat app_org <PORT>
+.\run.bat app_org 8000
 ```
 or:
 ```bash

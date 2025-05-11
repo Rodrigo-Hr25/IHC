@@ -135,3 +135,25 @@ body {
 .alert .btn-close {
     filter: invert(1);
 }
+
+/* Estilo para os selects de tamanho e cor */
+select.form-control {
+    background-color: #4a4a4a;
+    color: #ffffff;
+    border: 1px solid #777;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+select.form-control:focus {
+    border-color: #f55a00;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(245, 90, 0, 0.5);
+}
+
+select.form-control option {
+    background-color: #3a3a3a;
+    color: #ffffff;
+}
