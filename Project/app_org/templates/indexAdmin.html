@@ -39,6 +39,9 @@
                         <form action="/product_admin/{{ product.id }}" method="GET">
                             <button class="view-product">View Product</button>
                         </form>
+                        <form action="/delete_product/{{ product.id }}" method="POST">
+                            <button class="delete-product">Eliminar</button>
+                        </form>
                     </div>
                     {% if loop.index % 3 == 0 and not loop.last %}
                         </div>

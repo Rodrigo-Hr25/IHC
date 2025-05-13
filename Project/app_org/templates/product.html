@@ -31,26 +31,28 @@
                 <p class="mb-3 price">Price: {{ product.price | int }}€</p>
 
                 <form id="product-form" action="/cart/add/{{ product.id }}" method="POST">
-                    {% if product.name == 'Sweatshirt' %}
-                        <label for="size">Size:</label>
-                        <select name="size" id="size" class="form-control mb-3">
-                            <option value="S">S</option>
-                            <option value="M">M</option>
-                            <option value="L" selected>L</option>
-                            <option value="XL">XL</option>
-                        </select>
+                    {% if product.has_size %}
+                    <label for="size">Size:</label>
+                    <select name="size" id="size" class="form-control mb-3">
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L" selected>L</option>
+                        <option value="XL">XL</option>
+                    </select>
+                    {% endif %}
 
+                    {% if product.has_color %}
                         <label for="color">Color:</label>
                         <select name="color" id="color" class="form-control mb-3" onchange="updateImage()">
-                            <option value="Grey">Grey</option>
-                            <option value="Green">Green</option>
-                            <option value="Blue">Blue</option>
-                            <option value="Purple">Purple</option>
+                            <option value="Grey" {% if product.color == 'Grey' %}selected{% endif %}>Grey</option>
+                            <option value="Green" {% if product.color == 'Green' %}selected{% endif %}>Green</option>
+                            <option value="Blue" {% if product.color == 'Blue' %}selected{% endif %}>Blue</option>
+                            <option value="Purple" {% if product.color == 'Purple' %}selected{% endif %}>Purple</option>
                         </select>
-
-                        <label for="custom_text">Personalized Text:</label>
-                        <input type="text" name="custom_text" id="custom_text" class="form-control mb-3" maxlength="30" placeholder="Ex: 3º ano ECI">
                     {% endif %}
+
+                    <label for="custom_text">Personalized Text (Optional):</label>
+                    <input type="text" name="custom_text" id="custom_text" class="form-control mb-3" maxlength="30" placeholder="Ex: 3º ano ECI">
 
                     <button type="submit" class="add-to-cart">
                         <i class='bx bx-cart-add'></i> Add to Cart
@@ -66,7 +68,7 @@
         </div>
     </div>
 
-    {% if product.name == 'Sweatshirt' %}
+    {% if product.has_color %}
     <script>
         function updateImage() {
             const color = document.getElementById("color").value;

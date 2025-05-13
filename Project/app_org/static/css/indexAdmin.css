@@ -95,6 +95,22 @@ header {
     background-color: #ff3300;
 }
 
+.delete-product {
+    background-color: #d9534f;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 5px;
+    width: 100%;
+    margin: 5px 0;
+}
+
+.delete-product:hover {
+    background-color: #c9302c;
+}
+
 .add-to-cart {
     background-color: #333;
     color: #ffffff;

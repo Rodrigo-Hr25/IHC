@@ -231,8 +231,10 @@ def add_product_post():
         course_id = int(course_id)
     else:
         course_id = None
-    size = request.form.get('size', 'N/A')
-    color = request.form.get('color', 'N/A')
+    has_size = request.form.get('has_size') == 'true' 
+    has_color = request.form.get('has_color') == 'true'
+    size = request.form.get('size', 'N/A') if has_size else 'N/A'
+    color = request.form.get('color', 'N/A') if has_color else 'N/A' 
     image = request.files.get('image')
 
     if not image or not (image.filename.endswith('.png') or image.filename.endswith('.jpeg')):
@@ -250,6 +252,8 @@ def add_product_post():
         image=image_filename,
         category_id=category_id,
         course_id=course_id,
+        has_size=has_size,
+        has_color=has_color,
         size=size,
         color=color
     )
@@ -278,9 +282,7 @@ def contests():
     if user.isAdmin:
         return redirect(url_for('main.concurso'))
     
-    # Buscar todas as submissões aprovadas e ordená-las por número de votos (decrescente)
     submissions = Submission.query.filter_by(approved=True).order_by(Submission.votes.desc()).all()
-    # Verificar quais submissões o usuário já votou
     user_votes = Vote.query.filter_by(user_id=user.id).all()
     voted_submission_ids = {vote.submission_id for vote in user_votes}
     return render_template('contests.html', user=user, submissions=submissions, voted_submission_ids=voted_submission_ids)
@@ -297,13 +299,11 @@ def vote_submission(submission_id):
         flash('This submission is not available for voting.', 'warning')
         return redirect(url_for('main.contests'))
 
-    # Verificar se o usuário já votou nesta submissão
     existing_vote = Vote.query.filter_by(user_id=user.id, submission_id=submission_id).first()
     if existing_vote:
         flash('You have already voted for this submission.', 'warning')
         return redirect(url_for('main.contests'))
 
-    # Registrar o voto
     vote = Vote(user_id=user.id, submission_id=submission_id)
     submission.votes += 1
     db.session.add(vote)
@@ -358,7 +358,6 @@ def concurso():
     if not user.isAdmin:
         return redirect(url_for('main.index'))
     
-    # Buscar todas as submissões aprovadas e ordená-las por número de votos (decrescente)
     submissions = Submission.query.filter_by(approved=True).order_by(Submission.votes.desc()).all()
     return render_template('contestsAdmin.html', user=user, submissions=submissions)
 

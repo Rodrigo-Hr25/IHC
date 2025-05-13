@@ -39,6 +39,8 @@ class Product(db.Model):
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=True)
     size = db.Column(db.String(10), nullable=True, default='N/A')
     color = db.Column(db.String(20), nullable=True, default='N/A')
+    has_size = db.Column(db.Boolean, default=False)
+    has_color = db.Column(db.Boolean, default=False)
 
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)

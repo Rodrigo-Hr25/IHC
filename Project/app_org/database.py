@@ -76,8 +76,10 @@ def create_products():
         'category_id': 1,
         'quantity': 10,
         'course_id': 1,
+        'has_size': False,
+        'has_color': False,
         'size': 'N/A',
-        'color': 'Branco'
+        'color': 'N/A'
     }, {
         'name': 'Speaker',
         'description': 'A personalized Deti Speaker',
@@ -86,6 +88,8 @@ def create_products():
         'category_id': 1,
         'quantity': 10,
         'course_id': None,
+        'has_size': False,
+        'has_color': False,
         'size': 'N/A',
         'color': 'N/A'
     }, {
@@ -96,6 +100,8 @@ def create_products():
         'category_id': 1,
         'quantity': 0,
         'course_id': None,
+        'has_size': False,
+        'has_color': False,
         'size': 'N/A',
         'color': 'N/A'
     }, {
@@ -106,6 +112,8 @@ def create_products():
         'category_id': 1,
         'quantity': 5,
         'course_id': None,
+        'has_size': False,
+        'has_color': False,
         'size': 'N/A',
         'color': 'N/A'
     }, {
@@ -116,6 +124,8 @@ def create_products():
         'category_id': 2,
         'quantity': 12,
         'course_id': 2,
+        'has_size': True,
+        'has_color': True,
         'size': 'L',
         'color': 'Preto'
     }, {
@@ -126,8 +136,10 @@ def create_products():
         'category_id': 2,
         'quantity': 1,
         'course_id': None,
-        'size': 'N/A',
-        'color': 'N/A'
+        'has_size': True,
+        'has_color': True,
+        'size': 'M',
+        'color': 'White'
     }]
     try:
         db.session.bulk_insert_mappings(Product, products)

@@ -59,13 +59,23 @@
         </div>
 
         <div class="form-group">
-            <label for="size">Size (Optional):</label>
-            <input type="text" id="size" name="size" placeholder="e.g., S, M, L, or N/A">
+            <label>
+                <input type="checkbox" id="has_size" name="has_size" value="true"> Product has size
+            </label>
+            <div id="size_input" style="display: none; margin-top: 5px;">
+                <label for="size">Size:</label>
+                <input type="text" id="size" name="size" placeholder="e.g., S, M, L, or N/A">
+            </div>
         </div>
 
         <div class="form-group">
-            <label for="color">Color (Optional):</label>
-            <input type="text" id="color" name="color" placeholder="e.g., Black, White, or N/A">
+            <label>
+                <input type="checkbox" id="has_color" name="has_color" value="true"> Product has color
+            </label>
+            <div id="color_input" style="display: none; margin-top: 5px;">
+                <label for="color">Color:</label>
+                <input type="text" id="color" name="color" placeholder="e.g., Black, White, or N/A">
+            </div>
         </div>
 
         <div class="form-group">
@@ -77,7 +87,17 @@
             <button class="back-btn" onclick="history.back()">Back</button>
             <button type="submit" class="submit-btn">Add Product</button>
         </div>
-        
     </form>
 </div>
+
+{% block scripts %}
+<script>
+    document.getElementById('has_size').addEventListener('change', function() {
+        document.getElementById('size_input').style.display = this.checked ? 'block' : 'none';
+    });
+    document.getElementById('has_color').addEventListener('change', function() {
+        document.getElementById('color_input').style.display = this.checked ? 'block' : 'none';
+    });
+</script>
+{% endblock %}
 {% endblock %}
