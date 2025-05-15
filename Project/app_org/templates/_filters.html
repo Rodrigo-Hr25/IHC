@@ -2,14 +2,14 @@
     <h3>Filtrar Produtos</h3>
     
     <div class="filter-section">
-        <h4>Estoque</h4>
+        <h4>Stock</h4>
         <div class="filter-option">
             <input type="radio" id="stock_in" name="stock" value="in" {% if request.args.get('stock') == 'in' %}checked{% endif %}>
-            <label for="stock_in">Em estoque</label>
+            <label for="stock_in">Em stock</label>
         </div>
         <div class="filter-option">
             <input type="radio" id="stock_out" name="stock" value="out" {% if request.args.get('stock') == 'out' %}checked{% endif %}>
-            <label for="stock_out">Fora de estoque</label>
+            <label for="stock_out">Fora de stock</label>
         </div>
         <div class="filter-option">
             <input type="radio" id="stock_all" name="stock" value="" {% if not request.args.get('stock') %}checked{% endif %}>
