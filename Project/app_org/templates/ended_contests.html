@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/contests.css') }}">
+{% endblock %}
+
+{% block content %}
+{% include 'navbar.html' %}
+<div class="contests-container">
+    <header>
+        <h1>Ended Contests and Winners</h1>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="flash {{ category }}">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    {% if not ended_contests %}
+    <p>No ended contests to display.</p>
+    {% else %}
+    {% for contest in ended_contests %}
+    <div class="ended-contest">
+        <h2>{{ contest.name }}</h2>
+        <div class="submissions-grid">
+            {% for submission in (contest.submissions | selectattr('approved') | list | sort(reverse=True, attribute='votes'))[:3] %}
+            <div class="submission {% if loop.index0 == 0 %}first{% elif loop.index0 == 1 %}second{% elif loop.index0 == 2 %}third{% endif %}">
+                <div class="position-label">{{ loop.index0 + 1 }}{% if loop.index0 == 0 %}st{% elif loop.index0 == 1 %}nd{% elif loop.index0 == 2 %}rd{% else %}th{% endif %} Place</div>
+                <img src="{{ url_for('static', filename='assets/' + submission.image) }}" alt="Submission T-shirt">
+                <h3 class="submission-title">{{ submission.name | default('T-shirt Submission') }}</h3>
+                <p class="submission-description">{{ submission.description | default('A custom T-shirt design') }}</p>
+                <p class="submission-votes">Votes: {{ submission.votes }}</p>
+            </div>
+            {% endfor %}
+            {% if not (contest.submissions | selectattr('approved') | list) %}
+                <p>No approved submissions for this contest.</p>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <div class="action-buttons">
+        <button class="back-btn" onclick="history.back()">Back</button>
+    </div>
+</div>
+{% endblock %}

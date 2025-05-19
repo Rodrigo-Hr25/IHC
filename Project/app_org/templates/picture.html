@@ -8,7 +8,7 @@
 {% include 'navbar.html' %}
 <div class="submit-container">
     <header>
-        <h1>Submit Your T-shirt Design</h1>
+        <h1>Submit Your Design</h1>
     </header>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -21,13 +21,13 @@
 
     <form action="/submit_design" method="POST" enctype="multipart/form-data" class="submit-form">
         <div class="form-group">
-            <label for="name">Design Name (Optional):</label>
-            <input type="text" id="name" name="name" placeholder="Enter design name">
+            <label for="name">Designer Name :</label>
+            <input type="text" id="name" name="name" placeholder="Enter design name" required>
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label for="description">Description (Optional):</label>
             <textarea id="description" name="description" placeholder="Enter a description"></textarea>
-        </div>
+        </div> -->
         <div class="form-group">
             <label for="image">Upload Image (PNG only):</label>
             <input type="file" id="image" name="image" accept=".png" required>

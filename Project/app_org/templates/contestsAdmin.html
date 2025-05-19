@@ -6,33 +6,48 @@
 
 {% block content %}
 {% include 'navbarAdmin.html' %}
+{% for contest in contests %}
 <div class="contests-container">
     <header>
-        <h1>Contest</h1>
+        <h1>{{ contest.name }}</h1>
     </header>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     {% for category, message in messages %}
-    <div class="flash {{ category }}">{{ message }}</div>
+    {% set message_parts = message.split('||') %}
+    {% set message_text = message_parts[0] %}
+    {% set message_contest_id = message_parts[1] if message_parts|length > 1 else None %}
+    {% if message_contest_id and message_contest_id | int == contest.id %}
+    <div class="flash {{ category }}">{{ message_text }}</div>
+    {% endif %}
     {% endfor %}
     {% endif %}
     {% endwith %}
 
     <div class="submissions-grid">
-        {% for submission in submissions %}
+        {% for submission in contest.submissions %}
         {% if submission.approved %}
-        <div class="submission">
+        <div class="submission {% if not contest.is_active and loop.index0 == 0 %}first{% elif not contest.is_active and loop.index0 == 1 %}second{% elif not contest.is_active and loop.index0 == 2 %}third{% endif %}" data-votes="{{ submission.votes if not contest.is_active else 0 }}">
+            {% if not contest.is_active %}
             <div class="position-label">{{ loop.index0 + 1 }}{% if loop.index0 == 0 %}st{% elif loop.index0 == 1 %}nd{% elif loop.index0 == 2 %}rd{% else %}th{% endif %} Place</div>
+            {% endif %}
             <img src="{{ url_for('static', filename='assets/' + submission.image) }}" alt="Submission T-shirt">
             <h2 class="submission-title">{{ submission.name | default('T-shirt Submission') }}</h2>
             <p class="submission-description">{{ submission.description | default('A custom T-shirt design') }}</p>
             <div class="submission-actions">
-                <button class="vote-btn" disabled>Votes: {{ submission.votes }}</button>
+                {% if contest.is_active %}
+                    <button class="vote-btn" disabled>Pending Votes</button>
+                {% else %}
+                    <button class="vote-btn" disabled>Votes: {{ submission.votes }}</button>
+                {% endif %}
             </div>
         </div>
         {% endif %}
         {% endfor %}
+        {% if not contest.submissions or not (contest.submissions | selectattr('approved') | list) %}
+            <p>No approved submissions for this contest.</p>
+        {% endif %}
     </div>
 
     <div class="action-buttons">
@@ -40,6 +55,39 @@
         <form action="/submit" method="GET" class="submit-form-right">
             <button class="submit-btn">Submissions</button>
         </form>
+        <form action="/end_contest/{{ contest.id }}" method="POST" class="submit-form-right">
+            <button class="submit-btn end-contest-btn">End Contest</button>
+        </form>
     </div>
 </div>
+{% endfor %}
+
+<div class="contests-container">
+    <header>
+        <h1>Create New Contest</h1>
+    </header>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    {% set message_parts = message.split('||') %}
+    {% set message_text = message_parts[0] %}
+    {% set message_contest_id = message_parts[1] if message_parts|length > 1 else None %}
+    {% if not message_contest_id %}
+    <div class="flash {{ category }}">{{ message_text }}</div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <form action="/create_contest" method="POST" class="create-contest-form">
+        <input type="text" name="contest_name" placeholder="Contest Name" required>
+        <button type="submit" class="submit-btn">Create Contest</button>
+    </form>
+</div>
+
+<div class="global-actions">
+    <form action="/ended_contests_admin" method="GET">
+        <button class="submit-btn">View Ended Contests</button>
+    </form>
+</div>
+
 {% endblock %}

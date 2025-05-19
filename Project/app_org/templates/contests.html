@@ -6,9 +6,10 @@
 
 {% block content %}
 {% include 'navbar.html' %}
+{% for contest in contests %}
 <div class="contests-container">
     <header>
-        <h1>Contest</h1>
+        <h1>{{ contest.name }}</h1>
     </header>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -19,28 +20,35 @@
     {% endif %}
     {% endwith %}
 
-    <div class="submissions-grid" id="submissions-grid">
-        {% for submission in submissions %}
+    <div class="submissions-grid" id="submissions-grid-{{ contest.id }}">
+        {% for submission in contest.submissions %}
         {% if submission.approved %}
-        <div class="submission {% if loop.index0 == 0 %}first{% elif loop.index0 == 1 %}second{% elif loop.index0 == 2 %}third{% endif %}" data-votes="{{ submission.votes }}" style="animation-delay: {{ loop.index0 * 0.1 }}s">
+        <div class="submission {% if not contest.is_active and loop.index0 == 0 %}first{% elif not contest.is_active and loop.index0 == 1 %}second{% elif not contest.is_active and loop.index0 == 2 %}third{% endif %}" data-votes="{{ submission.votes if not contest.is_active else 0 }}" style="animation-delay: {{ loop.index0 * 0.1 }}s">
+            {% if not contest.is_active %}
             {% set position_map = ['1st Place', '2nd Place', '3rd Place'] %}
             <div class="position-label">
-                {{ position_map[loop.index0] if loop.index0 < 3 else loop.index0 + 1 ~ 'th Place' }}
+                {{ position_map[loop.index0] if loop.index0 < 3 else (loop.index0 + 1) ~ 'th Place' }}
             </div>
+            {% endif %}
 
             <img src="{{ url_for('static', filename='assets/' + submission.image) }}" alt="Submission T-shirt">
             <h2 class="submission-title">{{ submission.name | default('T-shirt Submission') }}</h2>
             <p class="submission-description">{{ submission.description | default('A custom T-shirt design') }}</p>
             <div class="submission-actions">
-                {% if submission.id in voted_submission_ids %}
-                    <button class="vote-btn voted" disabled>Already Voted ({{ submission.votes }})</button>
+                {% if contest.is_active %}
+                    {% if submission.id in voted_submission_ids %}
+                        <form action="/unvote/{{ submission.id }}" method="POST">
+                            <button class="vote-btn voted">Voted ✓</button>
+                        </form>
+                    {% else %}
+                        <form action="/vote/{{ submission.id }}" method="POST" onsubmit="setTimeout(reorderSubmissionsWithAnimation, 100);">
+                            <button class="vote-btn">Vote</button>
+                        </form>
+                    {% endif %}
                 {% else %}
-                    <form action="/vote/{{ submission.id }}" method="POST" onsubmit="setTimeout(reorderSubmissionsWithAnimation, 100);">
-                        <button class="vote-btn">Vote ✓ ({{ submission.votes }})</button>
-                    </form>
+                    <button class="vote-btn" disabled>Contest Ended</button>
                 {% endif %}
             </div>
-
         </div>
         {% endif %}
         {% endfor %}
@@ -49,13 +57,20 @@
     <div class="action-buttons">
         <button class="back-btn" onclick="history.back()">Back</button>
         <form action="/picture" method="GET" class="submit-form-right">
+            <input type="hidden" name="contest_id" value="{{ contest.id }}">
             <button class="submit-btn">Submit New Design</button>
         </form>
     </div>
 </div>
+{% endfor %}
+
+<div class="global-actions">
+    <form action="{{ url_for('main.ended_contests') }}" method="GET">
+        <button class="submit-btn">View Ended Contests</button>
+    </form>
+</div>
 
 <script>
-// Lightbox logic
 window.addEventListener('DOMContentLoaded', () => {
     const lightbox = document.createElement('div');
     lightbox.id = 'lightbox';
@@ -79,37 +94,40 @@ window.addEventListener('DOMContentLoaded', () => {
 
 <script>
 window.addEventListener('DOMContentLoaded', () => {
-    const submissions = Array.from(document.querySelectorAll('.submission'));
-    const lastPositions = JSON.parse(localStorage.getItem('submissionPositions')) || {};
+    contests.forEach(contest => {
+        const submissions = Array.from(document.querySelectorAll(`#submissions-grid-${contest.id} .submission`));
+        const lastPositions = JSON.parse(localStorage.getItem(`submissionPositions-${contest.id}`)) || {};
 
-    submissions.forEach((sub, index) => {
-        const id = sub.querySelector('form')?.action.split('/vote/')[1];
-        const currentPos = index + 1;
-        const lastPos = lastPositions[id];
+        submissions.forEach((sub, index) => {
+            const id = sub.querySelector('form')?.action.split('/vote/')[1];
+            const currentPos = index + 1;
+            const lastPos = lastPositions[id];
 
-        const label = sub.querySelector('.position-label');
-        const arrow = document.createElement('span');
-        arrow.style.marginLeft = '8px';
+            const label = sub.querySelector('.position-label');
+            const arrow = document.createElement('span');
+            arrow.style.marginLeft = '8px';
 
-        if (lastPos) {
-            if (currentPos < lastPos) {
-                arrow.textContent = '🔼';
-                arrow.title = `Subiu de ${lastPos} para ${currentPos}`;
-            } else if (currentPos > lastPos) {
-                arrow.textContent = '🔽';
-                arrow.title = `Desceu de ${lastPos} para ${currentPos}`;
-            } else {
-                arrow.textContent = '➖';
-                arrow.title = 'Manteve posição';
+            if (lastPos && !contest.is_active) {
+                if (currentPos < lastPos) {
+                    arrow.textContent = '🔼';
+                    arrow.title = `Subiu de ${lastPos} para ${currentPos}`;
+                } else if (currentPos > lastPos) {
+                    arrow.textContent = '🔽';
+                    arrow.title = `Desceu de ${lastPos} para ${currentPos}`;
+                } else {
+                    arrow.textContent = '➖';
+                    arrow.title = 'Manteve posição';
+                }
+                label.appendChild(arrow);
             }
-            label.appendChild(arrow);
-        }
 
-        // Atualizar posições no storage
-        lastPositions[id] = currentPos;
+            if (!contest.is_active) {
+                lastPositions[id] = currentPos;
+            }
+        });
+
+        localStorage.setItem(`submissionPositions-${contest.id}`, JSON.stringify(lastPositions));
     });
-
-    localStorage.setItem('submissionPositions', JSON.stringify(lastPositions));
 });
 </script>
 

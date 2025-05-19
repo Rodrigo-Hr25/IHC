@@ -57,6 +57,12 @@ class Wishlist(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
 
+class Contest(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    is_active = db.Column(db.Boolean, default=True)
+    submissions = db.relationship('Submission', backref='contest', lazy=True)
+
 class Submission(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
@@ -66,6 +72,7 @@ class Submission(db.Model):
     votes = db.Column(db.Integer, default=0)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship('User', backref=db.backref('submissions', lazy=True))
+    contest_id = db.Column(db.Integer, db.ForeignKey('contest.id'), nullable=False)
 
 class Vote(db.Model):
     id = db.Column(db.Integer, primary_key=True)

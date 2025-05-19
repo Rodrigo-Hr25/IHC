@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, flash, request, redirect, url_for
 from flask_login import login_user, logout_user, login_required, current_user
-from app_org.models import User, Product, Category, Course, Submission, Vote
+from app_org.models import User, Product, Category, Course, Submission, Vote, Contest
 from app_org import db
 import os
 
@@ -66,7 +66,7 @@ def index_post():
         return redirect(url_for('main.admin'))
     
     products = Product.query.all()
-    return render_template('index.html', products=products)
+    return render_template('index.html', user=user, products=products)
 
 @main.route('/admin', methods=['GET'])
 @login_required
@@ -212,7 +212,7 @@ def add_product():
         return redirect(url_for('main.index'))
     categories = Category.query.all()
     courses = Course.query.all()
-    return render_template('addproduct.html', categories=categories, courses=courses)
+    return render_template('addproduct.html', user=user, categories=categories, courses=courses)
 
 @main.route('/addproduct', methods=['POST'])
 @login_required
@@ -282,10 +282,20 @@ def contests():
     if user.isAdmin:
         return redirect(url_for('main.concurso'))
     
-    submissions = Submission.query.filter_by(approved=True).order_by(Submission.votes.desc()).all()
-    user_votes = Vote.query.filter_by(user_id=user.id).all()
-    voted_submission_ids = {vote.submission_id for vote in user_votes}
-    return render_template('contests.html', user=user, submissions=submissions, voted_submission_ids=voted_submission_ids)
+    contests = Contest.query.filter_by(is_active=True).all()
+    voted_submission_ids = [vote.submission_id for vote in Vote.query.filter_by(user_id=user.id).join(Submission).join(Contest).filter(Contest.is_active == True).all()]
+    
+    return render_template('contests.html', user=user, contests=contests, voted_submission_ids=voted_submission_ids)
+
+@main.route('/ended_contests', methods=['GET'])
+@login_required
+def ended_contests():
+    user = User.query.filter_by(id=current_user.id).first()
+    if user.isAdmin:
+        return redirect(url_for('main.ended_contests_admin'))
+    
+    ended_contests = Contest.query.filter_by(is_active=False).all()
+    return render_template('ended_contests.html', ended_contests=ended_contests)
 
 @main.route('/vote/<int:submission_id>', methods=['POST'])
 @login_required
@@ -295,14 +305,20 @@ def vote_submission(submission_id):
         return redirect(url_for('main.concurso'))
     
     submission = Submission.query.get_or_404(submission_id)
-    if not submission.approved:
+    if not submission.approved or not submission.contest.is_active:
         flash('This submission is not available for voting.', 'warning')
         return redirect(url_for('main.contests'))
 
-    existing_vote = Vote.query.filter_by(user_id=user.id, submission_id=submission_id).first()
+    existing_vote = Vote.query.filter_by(user_id=user.id).join(Submission).filter(Submission.contest_id == submission.contest_id).first()
     if existing_vote:
-        flash('You have already voted for this submission.', 'warning')
-        return redirect(url_for('main.contests'))
+        if existing_vote.submission_id != submission_id:
+            previous_submission = Submission.query.get(existing_vote.submission_id)
+            previous_submission.votes -= 1
+            db.session.delete(existing_vote)
+            db.session.commit()
+        else:
+            flash('You have already voted for this submission.', 'warning')
+            return redirect(url_for('main.contests'))
 
     vote = Vote(user_id=user.id, submission_id=submission_id)
     submission.votes += 1
@@ -311,13 +327,39 @@ def vote_submission(submission_id):
     flash('Your vote has been recorded!', 'success')
     return redirect(url_for('main.contests'))
 
+@main.route('/unvote/<int:submission_id>', methods=['POST'])
+@login_required
+def unvote_submission(submission_id):
+    user = User.query.filter_by(id=current_user.id).first()
+    if user.isAdmin:
+        return redirect(url_for('main.concurso'))
+    
+    submission = Submission.query.get_or_404(submission_id)
+    if not submission.approved or not submission.contest.is_active:
+        flash('This submission is not available for unvoting.', 'warning')
+        return redirect(url_for('main.contests'))
+
+    existing_vote = Vote.query.filter_by(user_id=user.id, submission_id=submission_id).first()
+    if not existing_vote:
+        flash('You have not voted for this submission.', 'warning')
+        return redirect(url_for('main.contests'))
+
+    submission.votes -= 1
+    db.session.delete(existing_vote)
+    db.session.commit()
+    flash('Your vote has been retracted!', 'success')
+    return redirect(url_for('main.contests'))
+
 @main.route('/picture', methods=['GET'])
 @login_required
 def picture():
     user = User.query.filter_by(id=current_user.id).first()
     if user.isAdmin:
         return redirect(url_for('main.concurso'))
-    return render_template('picture.html', user=user)
+    
+    active_contest = Contest.query.filter_by(is_active=True).order_by(Contest.id.desc()).first()
+    
+    return render_template('picture.html', user=user, active_contest=active_contest)
 
 @main.route('/submit_design', methods=['POST'])
 @login_required
@@ -329,6 +371,12 @@ def submit_design():
     name = request.form.get('name')
     description = request.form.get('description')
     image = request.files.get('image')
+
+    active_contest = Contest.query.filter_by(is_active=True).order_by(Contest.id.desc()).first()
+    
+    if not active_contest:
+        flash('There are no active contests at the moment. Please wait for a new contest to be created.', 'warning')
+        return redirect(url_for('main.picture'))
 
     if not image or not image.filename.endswith('.png'):
         flash('Please upload a .png image.', 'warning')
@@ -343,7 +391,8 @@ def submit_design():
         image=image_filename,
         user_id=user.id,
         approved=False,
-        votes=0
+        votes=0,
+        contest_id=active_contest.id
     )
 
     db.session.add(submission)
@@ -358,8 +407,18 @@ def concurso():
     if not user.isAdmin:
         return redirect(url_for('main.index'))
     
-    submissions = Submission.query.filter_by(approved=True).order_by(Submission.votes.desc()).all()
-    return render_template('contestsAdmin.html', user=user, submissions=submissions)
+    contests = Contest.query.filter_by(is_active=True).all()
+    return render_template('contestsAdmin.html', user=user, contests=contests)
+
+@main.route('/ended_contests_admin', methods=['GET'])
+@login_required
+def ended_contests_admin():
+    user = User.query.filter_by(id=current_user.id).first()
+    if not user.isAdmin:
+        return redirect(url_for('main.ended_contests'))
+    
+    ended_contests = Contest.query.filter_by(is_active=False).all()
+    return render_template('ended_contestsAdmin.html', ended_contests=ended_contests)
 
 @main.route('/submit', methods=['GET'])
 @login_required
@@ -395,3 +454,34 @@ def reject_submission(submission_id):
     db.session.commit()
     flash('Submission rejected successfully!', 'success')
     return redirect(url_for('main.submit'))
+
+@main.route('/end_contest/<int:contest_id>', methods=['POST'])
+@login_required
+def end_contest(contest_id):
+    user = User.query.filter_by(id=current_user.id).first()
+    if not user.isAdmin:
+        return redirect(url_for('main.index'))
+    
+    contest = Contest.query.get_or_404(contest_id)
+    contest.is_active = False
+    db.session.commit()
+    flash(f'Contest {contest.name} has been ended successfully!||{contest_id}', 'success')
+    return redirect(url_for('main.concurso'))
+
+@main.route('/create_contest', methods=['POST'])
+@login_required
+def create_contest():
+    user = User.query.filter_by(id=current_user.id).first()
+    if not user.isAdmin:
+        return redirect(url_for('main.index'))
+    
+    name = request.form.get('contest_name')
+    if not name:
+        flash('Please provide a contest name.', 'warning')
+        return redirect(url_for('main.concurso'))
+    
+    contest = Contest(name=name, is_active=True)
+    db.session.add(contest)
+    db.session.commit()
+    flash(f'Contest {name} created successfully!||{contest.id}', 'success')
+    return redirect(url_for('main.concurso'))

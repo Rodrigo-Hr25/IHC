@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 from app_org import db
-from app_org.models import User, Product, Category, Course
+from app_org.models import User, Product, Category, Course, Contest, Submission
 from werkzeug.security import generate_password_hash
 
 database = Blueprint('database', __name__)
@@ -49,7 +49,7 @@ def create_users():
         return jsonify({'message': 'Users created successfully!'})
     except Exception as e:
         print(e)
-        return jsonify({'message': 'Error creating users!'})
+        return jsonify({'message': 'Error creating users!'}), 500
 
 @database.route('/generate/courses', methods=['GET'])
 def create_courses():
@@ -147,7 +147,7 @@ def create_products():
         return jsonify({'message': 'Products created successfully!'})
     except Exception as e:
         print(e)
-        return jsonify({'message': 'Error creating products!'})
+        return jsonify({'message': 'Error creating products!'}), 500
 
 @database.route('/generate/categories', methods=['GET'])
 def create_categories():
@@ -166,7 +166,7 @@ def create_categories():
         return jsonify({'message': 'Categories created successfully!'})
     except Exception as e:
         print(e)
-        return jsonify({'message': 'Error creating categories!'})
+        return jsonify({'message': 'Error creating categories!'}), 500
 
 @database.route('/generate/all', methods=['GET'])
 def create_all():
