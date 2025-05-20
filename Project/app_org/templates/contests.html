@@ -25,6 +25,24 @@
     {% endif %}
     {% endwith %}
 
+    <!-- Contest Rules Section -->
+    <div class="rules-section">
+        <button class="rules-toggle-btn" onclick="toggleRules(this)">Contest Rules <span class="toggle-icon">▼</span></button>
+        <div class="rules-content">
+            <h3>Official Contest Rules</h3>
+            <ul>
+                <li><strong>Eligibility:</strong> Participants must be registered users of the platform.</li>
+                <li><strong>Submission Limit:</strong> Only one submission per user per contest is allowed.</li>
+                <li><strong>Originality:</strong> Designs must be original and not infringe on any copyrights or trademarks.</li>
+                <li><strong>Content Guidelines:</strong> Submissions must be appropriate and not contain offensive content.</li>
+                <li><strong>Voting:</strong> Each user can vote for only one submission per contest. You can change your vote by unvoting and voting for another submission.</li>
+                <li><strong>Contest Duration:</strong> The contest ends when the admin closes it. Winners are determined by the highest number of votes.</li>
+                <li><strong>Prizes:</strong> The top 3 winners may have their designs printed and receive store credit (prizes subject to admin discretion).</li>
+                <li><strong>Disqualification:</strong> The admin reserves the right to disqualify submissions that violate these rules.</li>
+            </ul>
+        </div>
+    </div>
+
     <div class="submissions-grid" id="submissions-grid-{{ contest.id }}">
         {% set approved_submissions = contest.submissions.filter_by(approved=True).all() | list %}
         {% for submission in approved_submissions[:3] %}
@@ -138,6 +156,20 @@ window.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem(`submissionPositions-${contest.id}`, JSON.stringify(lastPositions));
     });
 });
+</script>
+
+<script>
+function toggleRules(button) {
+    const content = button.nextElementSibling;
+    const icon = button.querySelector('.toggle-icon');
+    if (content.style.display === 'block') {
+        content.style.display = 'none';
+        icon.textContent = '▼';
+    } else {
+        content.style.display = 'block';
+        icon.textContent = '▲';
+    }
+}
 </script>
 
 {% endblock %}
