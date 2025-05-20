@@ -61,7 +61,7 @@ class Contest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     is_active = db.Column(db.Boolean, default=True)
-    submissions = db.relationship('Submission', backref='contest', lazy=True)
+    submissions = db.relationship('Submission', backref='contest', lazy=True, cascade="all, delete-orphan")
 
 class Submission(db.Model):
     id = db.Column(db.Integer, primary_key=True)

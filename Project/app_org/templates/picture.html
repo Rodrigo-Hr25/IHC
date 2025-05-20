@@ -4,36 +4,108 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/picture.css') }}">
 {% endblock %}
 
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.querySelector('.submit-form');
+        const fileInput = document.querySelector('input[type="file"]');
+        const preview = document.getElementById('image-preview');
+        const submitBtn = document.querySelector('.submit-btn');
+        const description = document.querySelector('textarea[name="description"]');
+        const counter = document.getElementById('char-counter');
+
+        // Image Preview
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file && file.type.match('image/png')) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.style.display = 'none';
+                alert('Please upload a valid PNG image.');
+            }
+        });
+
+        // Character Counter
+        description.addEventListener('input', () => {
+            const remaining = 500 - description.value.length;
+            counter.textContent = `${remaining} characters remaining`;
+            if (remaining < 0) {
+                counter.style.color = '#dc3545';
+            } else {
+                counter.style.color = '#ddd';
+            }
+        });
+
+        // Form Submission Feedback
+        form.addEventListener('submit', (e) => {
+            if (!form.checkValidity()) {
+                e.preventDefault();
+                alert('Please fill all fields correctly.');
+                return;
+            }
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+            setTimeout(() => {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Design';
+            }, 2000); // Simulate upload delay
+        });
+    });
+</script>
+{% endblock %}
+
 {% block content %}
 {% include 'navbar.html' %}
-<div class="submit-container">
+<div class="contests-container">
     <header>
-        <h1>Submit Your Design</h1>
+        <h1>Submit a Design</h1>
     </header>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     {% for category, message in messages %}
-    <div class="flash {{ category }}">{{ message }}</div>
+    <div class="flash {{ category }}" role="alert">
+        {{ message }}
+    </div>
     {% endfor %}
     {% endif %}
     {% endwith %}
 
-    <form action="/submit_design" method="POST" enctype="multipart/form-data" class="submit-form">
-        <div class="form-group">
-            <label for="name">Designer Name :</label>
-            <input type="text" id="name" name="name" placeholder="Enter design name" required>
-        </div>
-        <!-- <div class="form-group">
-            <label for="description">Description (Optional):</label>
-            <textarea id="description" name="description" placeholder="Enter a description"></textarea>
-        </div> -->
-        <div class="form-group">
-            <label for="image">Upload Image (PNG only):</label>
-            <input type="file" id="image" name="image" accept=".png" required>
+    {% if not active_contests %}
+    <p class="no-contests" role="alert">No active contests available. Please contact an admin.</p>
+    {% else %}
+    <p class="contest-info">Select a contest to submit your design:</p>
+    <form action="/submit_design" method="POST" enctype="multipart/form-data" class="submit-form" novalidate>
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="contest_id">Contest:</label>
+                <select name="contest_id" id="contest_id" required aria-required="true">
+                    {% for contest in active_contests %}
+                    <option value="{{ contest.id }}">{{ contest.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="name">Design Name:</label>
+                <input type="text" name="name" id="name" required aria-required="true" maxlength="100">
+            </div>
+            <div class="form-group">
+                <label for="image">Upload Image (PNG only):</label>
+                <input type="file" name="image" id="image" accept=".png" required aria-required="true">
+                <figure id="image-preview" class="image-preview" style="display: none;">
+                    <img src="" alt="Design Preview">
+                    <figcaption>Preview of your uploaded design</figcaption>
+                </figure>
+            </div>
         </div>
         <button type="submit" class="submit-btn">Submit Design</button>
     </form>
+    {% endif %}
 
     <div class="action-buttons">
         <button class="back-btn" onclick="history.back()">Back</button>

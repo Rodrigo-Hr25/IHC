@@ -15,7 +15,12 @@
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     {% for category, message in messages %}
-    <div class="flash {{ category }}">{{ message }}</div>
+    {% set message_parts = message.split('||') %}
+    {% set message_text = message_parts[0] %}
+    {% set message_contest_id = message_parts[1] if message_parts|length > 1 else None %}
+    {% if message_contest_id and message_contest_id | int == contest.id %}
+    <div class="flash {{ category }}">{{ message_text }}</div>
+    {% endif %}
     {% endfor %}
     {% endif %}
     {% endwith %}
@@ -53,17 +58,16 @@
         {% endfor %}
     </div>
 
-    <div class="action-buttons">
-        <button class="back-btn" onclick="history.back()">Back</button>
-        <form action="/picture" method="GET" class="submit-form-right">
-            <input type="hidden" name="contest_id" value="{{ contest.id }}">
-            <button class="submit-btn">Submit New Design</button>
-        </form>
-    </div>
+
 </div>
 {% endfor %}
 
+
+
 <div class="global-actions">
+    <form action="/picture" method="GET">
+        <button class="submit-btn">Submit New Design</button>
+    </form>
     <form action="{{ url_for('main.ended_contests') }}" method="GET">
         <button class="submit-btn">View Ended Contests</button>
     </form>
