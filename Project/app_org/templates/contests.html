@@ -33,7 +33,6 @@
 
             <img src="{{ url_for('static', filename='assets/' + submission.image) }}" alt="Submission T-shirt">
             <h2 class="submission-title">{{ submission.name | default('T-shirt Submission') }}</h2>
-            <p class="submission-description">{{ submission.description | default('A custom T-shirt design') }}</p>
             <div class="submission-actions">
                 {% if contest.is_active %}
                     {% if submission.id in voted_submission_ids %}

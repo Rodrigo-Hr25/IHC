@@ -31,7 +31,6 @@
                 <div class="position-label">{{ loop.index0 + 1 }}{% if loop.index0 == 0 %}st{% elif loop.index0 == 1 %}nd{% elif loop.index0 == 2 %}rd{% else %}th{% endif %} Place</div>
                 <img src="{{ url_for('static', filename='assets/' + submission.image) }}" alt="Submission T-shirt">
                 <h3 class="submission-title">{{ submission.name | default('T-shirt Submission') }}</h3>
-                <p class="submission-description">{{ submission.description | default('A custom T-shirt design') }}</p>
                 <p class="submission-votes">Votes: {{ submission.votes }}</p>
             </div>
             {% endfor %}
