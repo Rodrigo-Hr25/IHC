@@ -43,7 +43,9 @@
     {% endif %}
 
     <div class="action-buttons">
-        <button class="back-btn" onclick="history.back()">Back</button>
+        <a href="{{ url_for('main.contests') }}">
+            <button class="back-btn">Back</button>
+        </a>
     </div>
 </div>
 {% endblock %}

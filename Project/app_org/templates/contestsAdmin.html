@@ -7,7 +7,7 @@
 {% block content %}
 {% include 'navbarAdmin.html' %}
 {% for contest in contests %}
-<div class="contests-container">
+<div class="contests-container" data-contest-id="{{ contest.id }}">
     <header>
         <h1>{{ contest.name }} (Contest ID: {{ contest.id }})</h1>
     </header>
@@ -25,12 +25,9 @@
     {% endif %}
     {% endwith %}
 
-    <div class="submissions-grid">
-        {% for submission in contest.submissions %}
-        {% if submission.approved %}
-        {% if submission.contest_id != contest.id %}
-            <p style="color: red;">Error: Submission {{ submission.id }} belongs to contest {{ submission.contest_id }}, not contest {{ contest.id }}!</p>
-        {% endif %}
+    <div class="submissions-grid" id="submissions-grid-{{ contest.id }}">
+        {% set approved_submissions = contest.submissions.filter_by(approved=True).all() | list %}
+        {% for submission in approved_submissions[:3] %}
         <div class="submission {% if not contest.is_active and loop.index0 == 0 %}first{% elif not contest.is_active and loop.index0 == 1 %}second{% elif not contest.is_active and loop.index0 == 2 %}third{% endif %}" data-votes="{{ submission.votes if not contest.is_active else 0 }}">
             {% if not contest.is_active %}
             <div class="position-label">{{ loop.index0 + 1 }}{% if loop.index0 == 0 %}st{% elif loop.index0 == 1 %}nd{% elif loop.index0 == 2 %}rd{% else %}th{% endif %} Place</div>
@@ -39,20 +36,24 @@
             <h2 class="submission-title">{{ submission.name | default('T-shirt Submission') }}</h2>
             <div class="submission-actions">
                 {% if contest.is_active %}
-                    <button class="vote-btn" disabled>Pending Votes</button>
+                    <button class="vote-btn" disabled>Votes {{ submission.votes }}</button>
                 {% else %}
                     <button class="vote-btn" disabled>Votes: {{ submission.votes }}</button>
                 {% endif %}
             </div>
         </div>
-        {% endif %}
         {% endfor %}
-        {% if not contest.submissions or not (contest.submissions | selectattr('approved') | list) %}
+        {% if not approved_submissions %}
             <p>No approved submissions for this contest.</p>
         {% endif %}
     </div>
 
     <div class="action-buttons">
+        {% if approved_submissions | length > 3 %}
+        <a href="{{ url_for('main.contest_designs', contest_id=contest.id) }}">
+            <button class="back-btn">View More</button>
+        </a>
+        {% endif %}
         <form action="/submit" method="GET" class="submit-form-right">
             <input type="hidden" name="contest_id" value="{{ contest.id }}">
             <button class="submit-btn">Submissions</button>

@@ -9,7 +9,6 @@
 {% include 'navbar.html' %}
 
 {% block content %}
-    <!-- Mensagens Flash -->
     {% for message in get_flashed_messages() %}
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
             {{ message }}
@@ -17,7 +16,6 @@
         </div>
     {% endfor %}
 
-    <!-- Seção Principal -->
     <main class="profile-container">
         <h1 class="page-title">Edit Your Profile</h1>
         <div class="profile-box">
@@ -63,6 +61,7 @@
                 </section>
 
                 <button type="submit" class="btn-save"><i class="bx bx-save"></i> Save Changes</button>
+                <button type="button" class="back-btn" onclick="history.back()">Back</button>
             </form>
         </div>
     </main>

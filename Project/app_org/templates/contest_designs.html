@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/contests.css') }}">
+{% endblock %}
+
+{% block content %}
+{% if is_admin %}
+    {% include 'navbarAdmin.html' %}
+{% else %}
+    {% include 'navbar.html' %}
+{% endif %}
+
+<div class="contests-container">
+    <header>
+        <h1>All Designs for {{ contest.name }}</h1>
+    </header>
+
+    <div class="submissions-grid">
+        {% if submissions %}
+            {% for submission in submissions | sort(reverse=True, attribute='votes') %}
+            <div class="submission {% if not contest.is_active and loop.index0 == 0 %}first{% elif not contest.is_active and loop.index0 == 1 %}second{% elif not contest.is_active and loop.index0 == 2 %}third{% endif %}" data-votes="{{ submission.votes if not contest.is_active else 0 }}">
+                {% if not contest.is_active %}
+                <div class="position-label">{{ loop.index0 + 1 }}{% if loop.index0 == 0 %}st{% elif loop.index0 == 1 %}nd{% elif loop.index0 == 2 %}rd{% else %}th{% endif %} Place</div>
+                {% endif %}
+                <img src="{{ url_for('static', filename='assets/' + submission.image) }}" alt="Submission T-shirt">
+                <h2 class="submission-title">{{ submission.name | default('T-shirt Submission') }}</h2>
+                <div class="submission-actions">
+                    {% if is_admin %}
+                        {% if contest.is_active %}
+                            <button class="vote-btn" disabled>Votes {{ submission.votes }}</button>
+                        {% else %}
+                            <button class="vote-btn" disabled>Votes: {{ submission.votes }}</button>
+                        {% endif %}
+                    {% else %}
+                        {% if contest.is_active %}
+                            {% if submission.id in (voted_submission_ids | default([])) %}
+                                <form action="/unvote/{{ submission.id }}" method="POST">
+                                    <button class="vote-btn voted">Voted ✓</button>
+                                </form>
+                            {% else %}
+                                <form action="/vote/{{ submission.id }}" method="POST">
+                                    <button class="vote-btn">Vote</button>
+                                </form>
+                            {% endif %}
+                        {% else %}
+                            <button class="vote-btn" disabled>Contest Ended</button>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No approved submissions for this contest.</p>
+        {% endif %}
+    </div>
+
+    <div class="action-buttons">
+        {% if is_admin %}
+            <a href="{{ url_for('main.concurso') }}">
+                <button class="back-btn">Back</button>
+            </a>
+        {% else %}
+            <a href="{{ url_for('main.contests') }}">
+                <button class="back-btn">Back</button>
+            </a>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+    const lightbox = document.createElement('div');
+    lightbox.id = 'lightbox';
+    document.body.appendChild(lightbox);
+
+    const images = document.querySelectorAll('.submission img');
+    images.forEach(img => {
+        img.addEventListener('click', () => {
+            lightbox.innerHTML = '';
+            const clone = img.cloneNode();
+            lightbox.appendChild(clone);
+            lightbox.style.display = 'flex';
+        });
+    });
+
+    lightbox.addEventListener('click', () => {
+        lightbox.style.display = 'none';
+    });
+});
+</script>
+{% endblock %}

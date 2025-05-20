@@ -198,7 +198,6 @@ h1 {
     box-shadow: 0 0 0 3px rgba(85, 85, 85, 0.3);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .contests-container {
         margin: 20px;

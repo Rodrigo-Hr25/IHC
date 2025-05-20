@@ -5,6 +5,27 @@ body {
     padding: 0;
     color: #fff;
 }
+.back-btn {
+    background-color: #f55a00;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    width: 100px;
+}
+
+.back-btn:hover {
+    background-color: #f55a00;
+    transform: translateY(-2px);
+}
+
+.back-btn:active {
+    transform: translateY(0);
+}
 
 .contests-container {
     max-width: 1200px;

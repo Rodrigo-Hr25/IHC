@@ -7,7 +7,7 @@
 {% block content %}
 {% include 'navbar.html' %}
 {% for contest in contests %}
-<div class="contests-container">
+<div class="contests-container" data-contest-id="{{ contest.id }}">
     <header>
         <h1>{{ contest.name }}</h1>
     </header>
@@ -26,8 +26,8 @@
     {% endwith %}
 
     <div class="submissions-grid" id="submissions-grid-{{ contest.id }}">
-        {% for submission in contest.submissions %}
-        {% if submission.approved %}
+        {% set approved_submissions = contest.submissions.filter_by(approved=True).all() | list %}
+        {% for submission in approved_submissions[:3] %}
         <div class="submission {% if not contest.is_active and loop.index0 == 0 %}first{% elif not contest.is_active and loop.index0 == 1 %}second{% elif not contest.is_active and loop.index0 == 2 %}third{% endif %}" data-votes="{{ submission.votes if not contest.is_active else 0 }}" style="animation-delay: {{ loop.index0 * 0.1 }}s">
             {% if not contest.is_active %}
             {% set position_map = ['1st Place', '2nd Place', '3rd Place'] %}
@@ -54,15 +54,21 @@
                 {% endif %}
             </div>
         </div>
-        {% endif %}
         {% endfor %}
+        {% if not approved_submissions %}
+            <p>No approved submissions for this contest.</p>
+        {% endif %}
     </div>
 
-
+    <div class="action-buttons">
+        {% if approved_submissions | length > 3 %}
+        <a href="{{ url_for('main.contest_designs', contest_id=contest.id) }}">
+            <button class="back-btn">View More</button>
+        </a>
+        {% endif %}
+    </div>
 </div>
 {% endfor %}
-
-
 
 <div class="global-actions">
     <form action="/picture" method="GET">

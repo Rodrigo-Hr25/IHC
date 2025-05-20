@@ -22,7 +22,10 @@ class User(db.Model, UserMixin):
 
     def default_username(self):
         self.first_name = self.username
-        
+
+    submissions = db.relationship('Submission', backref='creator', lazy=True, cascade="all, delete-orphan")
+    votes = db.relationship('Vote', backref='voter', lazy=True, cascade="all, delete-orphan")
+
 class Course(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
@@ -48,20 +51,20 @@ class Category(db.Model):
 
 class Cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
     quantity = db.Column(db.Integer, nullable=False, default=1)
 
 class Wishlist(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
 
 class Contest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     is_active = db.Column(db.Boolean, default=True)
-    submissions = db.relationship('Submission', backref='contest', lazy=True, cascade="all, delete-orphan")
+    submissions = db.relationship('Submission', backref='contest', lazy='dynamic', cascade="all, delete-orphan")
 
 class Submission(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -69,15 +72,16 @@ class Submission(db.Model):
     description = db.Column(db.String(1000))
     image = db.Column(db.String(100), nullable=False)
     approved = db.Column(db.Boolean, default=False)
-    votes = db.Column(db.Integer, default=0)
+    votes = db.Column(db.Integer, default=0) 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    user = db.relationship('User', backref=db.backref('submissions', lazy=True))
+    user = db.relationship('User', backref=db.backref('created_submissions', lazy=True))
     contest_id = db.Column(db.Integer, db.ForeignKey('contest.id'), nullable=False)
+    submission_votes = db.relationship('Vote', backref='related_votes', lazy=True, cascade="all, delete-orphan")
 
 class Vote(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     submission_id = db.Column(db.Integer, db.ForeignKey('submission.id'), nullable=False)
-    user = db.relationship('User', backref=db.backref('user_votes', lazy=True))
-    submission = db.relationship('Submission', backref=db.backref('submission_votes', lazy=True))
+    user = db.relationship('User', backref=db.backref('cast_votes', lazy=True))
+    submission = db.relationship('Submission', backref=db.backref('associated_votes', lazy=True)) 
     __table_args__ = (db.UniqueConstraint('user_id', 'submission_id', name='unique_user_submission_vote'),)

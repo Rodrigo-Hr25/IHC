@@ -14,7 +14,6 @@
         const description = document.querySelector('textarea[name="description"]');
         const counter = document.getElementById('char-counter');
 
-        // Image Preview
         fileInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (file && file.type.match('image/png')) {
@@ -30,7 +29,6 @@
             }
         });
 
-        // Character Counter
         description.addEventListener('input', () => {
             const remaining = 500 - description.value.length;
             counter.textContent = `${remaining} characters remaining`;
@@ -41,7 +39,6 @@
             }
         });
 
-        // Form Submission Feedback
         form.addEventListener('submit', (e) => {
             if (!form.checkValidity()) {
                 e.preventDefault();
@@ -53,7 +50,7 @@
             setTimeout(() => {
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Submit Design';
-            }, 2000); // Simulate upload delay
+            }, 2000);
         });
     });
 </script>
@@ -91,7 +88,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="name">Design Name:</label>
+                <label for="name">Designer Name:</label>
                 <input type="text" name="name" id="name" required aria-required="true" maxlength="100">
             </div>
             <div class="form-group">
@@ -108,7 +105,9 @@
     {% endif %}
 
     <div class="action-buttons">
-        <button class="back-btn" onclick="history.back()">Back</button>
+        <a href="{{ url_for('main.contests') }}">
+            <button class="back-btn">Back</button>
+        </a>
     </div>
 </div>
 {% endblock %}
