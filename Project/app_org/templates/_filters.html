@@ -1,73 +1,213 @@
+<style>
+.filter-form {
+    background-color: #2a2a2a;
+    padding: 1rem;
+    border-radius: 10px;
+    max-width: 350px;
+    font-family: sans-serif;
+    color: #fff;
+    overflow: hidden;
+}
+
+.filter-form h3 {
+    font-size: 1.1rem; /* título mais pequeno */
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.toggle-filters {
+    background: none;
+    border: none;
+    color: #ff6600;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0.5rem 0;
+}
+
+.filter-section {
+    background-color: #1e1e1e;
+    padding: 0.75rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    box-shadow: inset 0 0 4px rgba(0,0,0,0.3);
+}
+
+.filter-section h4 {
+    color: #ff6600;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.filter-option {
+    margin: 5px 0;
+}
+
+.filter-option input {
+    accent-color: #ff6600;
+}
+
+.price-slider {
+    display: flex;
+    flex-direction: column;
+}
+
+#filters-scroll {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+#filters-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+#filters-scroll::-webkit-scrollbar-track {
+    background: #1e1e1e;  /* fundo da track */
+    border-radius: 10px;
+}
+
+#filters-scroll::-webkit-scrollbar-thumb {
+    background-color: #555;  /* cor da barra */
+    border-radius: 10px;
+    border: 2px solid #1e1e1e;  /* margem para parecer embutida */
+}
+
+#filters-scroll::-webkit-scrollbar-thumb:hover {
+    background-color: #888;
+}
+
+
+.extra-filters {
+    display: none;
+}
+
+.extra-filters.show {
+    display: block;
+}
+
+.dots {
+    text-align: center;
+    color: #888;
+    font-size: 1.5rem;
+}
+
+.apply-filters {
+    background-color: #ff6600;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 1rem;
+    transition: background 0.3s;
+}
+
+.apply-filters:hover {
+    background-color: #e65c00;
+}
+
+
+</style>
+
 <form method="GET" action="{{ url_for(filter_action) }}" class="filter-form">
     <h3>Filtrar Produtos</h3>
-    
-    <div class="filter-section">
-        <h4>Stock</h4>
-        <div class="filter-option">
-            <input type="radio" id="stock_in" name="stock" value="in" {% if request.args.get('stock') == 'in' %}checked{% endif %}>
-            <label for="stock_in">Em stock</label>
+
+    <div id="filters-scroll">
+        <div class="filter-section">
+            <h4>Stock</h4>
+            <div class="filter-option">
+                <input type="radio" id="stock_in" name="stock" value="in" {% if request.args.get('stock') == 'in' %}checked{% endif %}>
+                <label for="stock_in">Em stock</label>
+            </div>
+            <div class="filter-option">
+                <input type="radio" id="stock_out" name="stock" value="out" {% if request.args.get('stock') == 'out' %}checked{% endif %}>
+                <label for="stock_out">Fora de stock</label>
+            </div>
+            <div class="filter-option">
+                <input type="radio" id="stock_all" name="stock" value="" {% if not request.args.get('stock') %}checked{% endif %}>
+                <label for="stock_all">Todos</label>
+            </div>
         </div>
-        <div class="filter-option">
-            <input type="radio" id="stock_out" name="stock" value="out" {% if request.args.get('stock') == 'out' %}checked{% endif %}>
-            <label for="stock_out">Fora de stock</label>
+
+        <div class="filter-section">
+            <h4>Preço</h4>
+            <div class="price-slider">
+                <input type="range" name="price_min" id="price-slider" min="0" max="100" step="1"
+                       value="{{ request.args.get('price_min', 15) }}"
+                       oninput="document.getElementById('price-display').innerText = this.value + ' €'">
+                <span id="price-display">{{ request.args.get('price_min', 15) }} €</span>
+            </div>
         </div>
-        <div class="filter-option">
-            <input type="radio" id="stock_all" name="stock" value="" {% if not request.args.get('stock') %}checked{% endif %}>
-            <label for="stock_all">Todos</label>
+
+        <div class="dots" id="dots">...</div>
+
+        <div class="extra-filters" id="extra-filters">
+            <div class="filter-section">
+                <h4>Categorias</h4>
+                {% for category in categories %}
+                <div class="filter-option">
+                    <input type="checkbox" id="cat{{ category.id }}" name="categories" value="{{ category.id }}"
+                           {% if category.id|string in request.args.getlist('categories') %}checked{% endif %}>
+                    <label for="cat{{ category.id }}">{{ category.name }}</label>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="filter-section">
+                <h4>Cursos</h4>
+                {% for course in courses %}
+                <div class="filter-option">
+                    <input type="checkbox" id="course{{ course.id }}" name="courses" value="{{ course.id }}"
+                           {% if course.id|string in request.args.getlist('courses') %}checked{% endif %}>
+                    <label for="course{{ course.id }}">{{ course.name }}</label>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="filter-section">
+                <h4>Tamanhos</h4>
+                {% for size in sizes %}
+                <div class="filter-option">
+                    <input type="checkbox" id="size{{ loop.index }}" name="sizes" value="{{ size }}"
+                           {% if size in request.args.getlist('sizes') %}checked{% endif %}>
+                    <label for="size{{ loop.index }}">{{ size }}</label>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="filter-section">
+                <h4>Cores</h4>
+                {% for color in colors %}
+                <div class="filter-option">
+                    <input type="checkbox" id="color{{ loop.index }}" name="colors" value="{{ color }}"
+                           {% if color in request.args.getlist('colors') %}checked{% endif %}>
+                    <label for="color{{ loop.index }}">{{ color }}</label>
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 
-    <div class="filter-section">
-        <h4>Preço</h4>
-        <div class="price-inputs">
-            <input type="number" name="price_min" value="{{ request.args.get('price_min', '') }}" placeholder="Mínimo" min="0">
-            <input type="number" name="price_max" value="{{ request.args.get('price_max', '') }}" placeholder="Máximo" min="0">
-        </div>
-    </div>
-
-    <div class="filter-section">
-        <h4>Categorias</h4>
-        {% for category in categories %}
-        <div class="filter-option">
-            <input type="checkbox" id="cat{{ category.id }}" name="categories" value="{{ category.id }}"
-                   {% if category.id|string in request.args.getlist('categories') %}checked{% endif %}>
-            <label for="cat{{ category.id }}">{{ category.name }}</label>
-        </div>
-        {% endfor %}
-    </div>
-
-    <div class="filter-section">
-        <h4>Cursos</h4>
-        {% for course in courses %}
-        <div class="filter-option">
-            <input type="checkbox" id="course{{ course.id }}" name="courses" value="{{ course.id }}"
-                   {% if course.id|string in request.args.getlist('courses') %}checked{% endif %}>
-            <label for="course{{ course.id }}">{{ course.name }}</label>
-        </div>
-        {% endfor %}
-    </div>
-
-    <div class="filter-section">
-        <h4>Tamanhos</h4>
-        {% for size in sizes %}
-        <div class="filter-option">
-            <input type="checkbox" id="size{{ loop.index }}" name="sizes" value="{{ size }}"
-                   {% if size in request.args.getlist('sizes') %}checked{% endif %}>
-            <label for="size{{ loop.index }}">{{ size }}</label>
-        </div>
-        {% endfor %}
-    </div>
-
-    <div class="filter-section">
-        <h4>Cores</h4>
-        {% for color in colors %}
-        <div class="filter-option">
-            <input type="checkbox" id="color{{ loop.index }}" name="colors" value="{{ color }}"
-                   {% if color in request.args.getlist('colors') %}checked{% endif %}>
-            <label for="color{{ loop.index }}">{{ color }}</label>
-        </div>
-        {% endfor %}
-    </div>
-
+    <button type="button" class="toggle-filters" onclick="toggleFilters()">Ver mais</button>
     <button type="submit" class="apply-filters">Aplicar Filtros</button>
 </form>
+
+<script>
+function toggleFilters() {
+    const extra = document.getElementById("extra-filters");
+    const dots = document.getElementById("dots");
+    const btn = document.querySelector(".toggle-filters");
+
+    if (extra.classList.contains("show")) {
+        extra.classList.remove("show");
+        dots.style.display = "block";
+        btn.textContent = "Ver mais";
+    } else {
+        extra.classList.add("show");
+        dots.style.display = "none";
+        btn.textContent = "Ver menos";
+    }
+}
+</script>
