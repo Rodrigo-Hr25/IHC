@@ -38,17 +38,24 @@
                                         <div class="info">
                                             <div class="name">{{ product.name }}</div>
                                             <div class="category">{{ product.category.name }}</div>
+                                            {% if product.name.lower() == "sweatshirt" %}
+                                                <div class="details">
+                                                    <span><strong>Cor:</strong> Azul</span><br>
+                                                    <span><strong>Tamanho:</strong> M</span><br>
+                                                    <span><strong>Mensagem:</strong> "LECI 2022"</span>
+                                                </div>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </td>
                                 <td>{{ product.price }}€</td>
                                 <td>
                                     <form action="/cart/update/{{ product.id }}" method="POST">
-                                        <div class="qty">
+                                        <div class="qty" data-product-id="{{ product.id }}">
                                             <button type="button" class="decrease">-</button>
                                             <input type="number" class="quantity" value="{{ quantity }}" name="quantity" min="1">
                                             <button type="button" class="increase">+</button>
-                                            <button type="submit" class="update"><i class="bx bx-check"></i></button>
+        
                                         </div>
                                     </form>
                                 </td>
@@ -92,23 +99,41 @@
                 const decreaseBtn = control.querySelector('.decrease');
                 const increaseBtn = control.querySelector('.increase');
                 const quantityInput = control.querySelector('.quantity');
+                const productId = control.dataset.productId;
+
+                const updateQuantity = (newValue) => {
+                    if (newValue < 1) newValue = 1;
+                    quantityInput.value = newValue;
+
+                    fetch(`/cart/update/${productId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: `quantity=${newValue}`
+                    }).then(response => {
+                        if (response.redirected) {
+                            window.location.href = response.url; // atualiza para refletir novo total
+                        } else {
+                            window.location.reload();
+                        }
+                    });
+                };
 
                 decreaseBtn.addEventListener('click', () => {
                     let value = parseInt(quantityInput.value);
-                    if (value > 1) {
-                        quantityInput.value = value - 1;
-                    }
+                    updateQuantity(value - 1);
                 });
 
                 increaseBtn.addEventListener('click', () => {
                     let value = parseInt(quantityInput.value);
-                    quantityInput.value = value + 1;
+                    updateQuantity(value + 1);
                 });
 
-                quantityInput.addEventListener('input', () => {
-                    if (quantityInput.value < 1) {
-                        quantityInput.value = 1;
-                    }
+                quantityInput.addEventListener('change', () => {
+                    let value = parseInt(quantityInput.value);
+                    updateQuantity(value);
                 });
             });
         });
