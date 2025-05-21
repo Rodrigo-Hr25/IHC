@@ -34,7 +34,12 @@
                             <tr>
                                 <td>
                                     <div class="product">
+                                        {% if 'sweat' in product.name.lower() %}
+                                        <img width="150" height="150" src="{{ url_for('static', filename='assets/sweat3.png') }}" alt="{{ product.name }}">
+                                    {% else %}
                                         <img width="150" height="150" src="{{ url_for('static', filename='assets/' + product.image) }}" alt="{{ product.name }}">
+                                    {% endif %}
+
                                         <div class="info">
                                             <div class="name">{{ product.name }}</div>
                                             <div class="category">{{ product.category.name }}</div>
