@@ -30,14 +30,14 @@
                 <h1 class="mb-3">{{ product.name }}</h1>
                 <h3 class="mb-3">{{ product.category.name }}</h3>
                 <p class="mb-3"><b>Description: </b>{{ product.description }}</p>
-                <p class="mb-3 price">Price: {{ product.price | int }}€</p>
-                <p class="mb-3 quantity">Available Quantity: {{ product.quantity | int }}</p>
+                <p class="mb-3 price">Price: {{ product.price | default(0) | float }}€</p>
+                <p class="mb-3 quantity">Available Quantity: {{ product.quantity | default(0) | int }}</p>
                 <form action="/edit_product/{{ product.id }}" method="GET">
                     <button type="submit" class="edit-product">
                         <i class='bx bx-edit'></i> Edit Product
                     </button>
                     
-                    <button type="button" class="custom-button btn-back" onclick="history.back()">
+                    <button type="button" class="custom-button btn-back" onclick="window.location.href='{{ url_for('main.admin') }}'">
                         <i class='bx bx-arrow-back'></i> Back
                     </button>
                 </form>

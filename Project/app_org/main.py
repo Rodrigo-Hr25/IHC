@@ -6,7 +6,6 @@ import os
 
 main = Blueprint('main', __name__)
 
-
 @main.route('/', methods=['GET'])
 @login_required
 def index():
@@ -153,6 +152,10 @@ def product_admin(product_id):
     product = Product.query.filter_by(id=product_id).first()
     if not product:
         return render_template('404.html')
+    # Ensure quantity is not None
+    if product.quantity is None:
+        product.quantity = 0
+        db.session.commit()
     return render_template('productAdmin.html', product=product)
 
 @main.route('/edit_product/<int:product_id>', methods=['GET'])
@@ -164,6 +167,10 @@ def edit_product(product_id):
     product = Product.query.filter_by(id=product_id).first()
     if not product:
         return render_template('404.html')
+    # Ensure quantity is not None
+    if product.quantity is None:
+        product.quantity = 0
+        db.session.commit()
     return render_template('editProduct.html', product=product)
 
 @main.route('/update_product/<int:product_id>', methods=['POST'])
@@ -176,7 +183,9 @@ def update_product(product_id):
     product.name = request.form.get('name')
     product.description = request.form.get('description')
     product.price = float(request.form.get('price'))
-    product.quantity = int(request.form.get('quantity'))
+    # Ensure quantity is an integer and not None
+    quantity = request.form.get('quantity')
+    product.quantity = int(quantity) if quantity else 0
     category_name = request.form.get('category')
     category = Category.query.filter_by(name=category_name).first()
     if category:
@@ -225,7 +234,7 @@ def add_product_post():
     name = request.form.get('name')
     description = request.form.get('description')
     price = float(request.form.get('price'))
-    quantity = int(request.form.get('quantity'))
+    quantity = int(request.form.get('quantity')) if request.form.get('quantity') else 0
     category_id = int(request.form.get('category_id'))
     course_id = request.form.get('course_id')
     if course_id:

@@ -10,10 +10,8 @@
 {% endblock %}
 
 {% block content %}
-    <!-- Incluir Navbar -->
     {% include 'navbar.html' %}
 
-    <!-- Mensagens Flash -->
     {% for message in get_flashed_messages() %}
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
             {{ message }}
@@ -21,13 +19,13 @@
         </div>
     {% endfor %}
 
-    <!-- Container do Produto -->
     <div class="product-container">
         <div class="row product-details">
             <div class="col-md-6 image-section">
                 <img src="{{ url_for('static', filename='assets/' + product.image) }}" alt="{{ product.name }}" class="img-fluid">
                 <form action="/upload_image/{{ product.id }}" method="POST" enctype="multipart/form-data" class="image-upload">
-                    <input type="file" name="image" accept="image/*" class="form-control">
+                    <label for="image-upload" class="form-label">Change Product Image</label>
+                    <input type="file" id="image-upload" name="image" accept="image/*" class="form-control" title="Choose a new product image" placeholder="Select image file">
                     <button type="submit" class="btn btn-primary mt-2">
                         <i class='bx bx-image-add'></i> Change Photo
                     </button>
@@ -53,12 +51,12 @@
                     </div>
                     <div class="mb-3">
                         <label for="quantity" class="form-label">Available Quantity</label>
-                        <input type="number" class="form-control" id="quantity" name="quantity" value="{{ product.quantity | int }}" required>
+                        <input type="number" class="form-control" id="quantity" name="quantity" value="{{ product.quantity | default(0) | int }}" required>
                     </div>
                     <button type="submit" class="custom-button">
                         <i class='bx bx-save'></i> Save Changes
                     </button>
-                    <button type="button" class="custom-button btn-back" onclick="history.back()">
+                    <button type="button" class="custom-button btn-back" onclick="window.location.href='{{ url_for('main.product_admin', product_id=product.id) }}'">
                         <i class='bx bx-arrow-back'></i> Back
                     </button>
                 </form>

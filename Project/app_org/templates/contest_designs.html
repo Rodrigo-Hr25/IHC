@@ -36,11 +36,11 @@
                         {% if contest.is_active %}
                             {% if submission.id in (voted_submission_ids | default([])) %}
                                 <form action="/unvote/{{ submission.id }}" method="POST">
-                                    <button class="vote-btn voted">Voted ✓</button>
+                                    <button type="submit" class="vote-btn voted">Voted ✓</button>
                                 </form>
                             {% else %}
                                 <form action="/vote/{{ submission.id }}" method="POST">
-                                    <button class="vote-btn">Vote</button>
+                                    <button type="submit" class="vote-btn">Vote</button>
                                 </form>
                             {% endif %}
                         {% else %}
