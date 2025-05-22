@@ -44,7 +44,7 @@ def add_to_cart(product_id):
             print("---------")
         db.session.commit()
         
-    return redirect(url_for('main.index'))
+    return redirect(url_for('cart.cart'))
 
 
 @crt.route('/cart/remove/<int:product_id>', methods=['POST'])

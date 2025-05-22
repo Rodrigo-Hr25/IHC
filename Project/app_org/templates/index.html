@@ -33,6 +33,9 @@
             <h2 class="card-title">{{ product.name }}</h2>
             <p>{{ product.description }}</p>
             <p class="card-price">{{ product.price | int }}€</p>
+            <p class="stock-status {% if product.quantity > 0 %}in-stock{% else %}out-of-stock{% endif %}">
+              {% if product.quantity > 0 %}In Stock{% else %}Out of Stock{% endif %}
+            </p>
             <form action="/product/{{ product.id }}" method="GET">
               <button class="view-product">View Product</button>
             </form>

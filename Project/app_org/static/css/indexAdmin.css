@@ -73,6 +73,19 @@ header {
     margin: 10px 0;
 }
 
+.stock-status {
+    font-size: 1rem;
+    margin: 10px 0;
+}
+
+.stock-status.in-stock {
+    color: #28a745;
+}
+
+.stock-status.out-of-stock {
+    color: #d9534f;
+}
+
 .quantity-display {
     margin: 10px 0;
     color: #ccc;

@@ -65,6 +65,19 @@ header {
     margin: 10px 0;
 }
 
+.stock-status {
+    font-size: 1rem;
+    margin: 10px 0;
+}
+
+.stock-status.in-stock {
+    color: #28a745;
+}
+
+.stock-status.out-of-stock {
+    color: #d9534f;
+}
+
 .view-product {
     background-color: #f55a00;
     color: #ffffff;
@@ -241,50 +254,6 @@ header {
     border-color: #f55a00;
     outline: none;
 }
-
-.sidebar-news {
-    width: 250px;
-    flex-shrink: 0;
-}
-
-.news-card {
-    background-color: #222;
-    border-radius: 12px;
-    padding: 20px;
-    border: 1px solid #444;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    color: white;
-}
-
-.news-card h3 {
-    color: #f55a00;
-    font-size: 1.4rem;
-    margin-bottom: 10px;
-}
-
-.news-card p {
-    font-size: 0.95rem;
-    color: #ccc;
-    margin-bottom: 15px;
-}
-
-.news-button {
-    display: inline-block;
-    background-color: #f55a00;
-    color: white;
-    text-decoration: none;
-    padding: 10px 18px;
-    border-radius: 8px;
-    font-weight: bold;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-.news-button:hover {
-    background-color: #ff3300;
-    transform: scale(1.05);
-}
-
 
 @media (max-width: 768px) {
     .page-container {
