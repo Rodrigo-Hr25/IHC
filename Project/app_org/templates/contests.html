@@ -2,6 +2,19 @@
 
 {% block styles %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/contests.css') }}">
+<style>
+  .contest-status {
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-top: 8px;
+  }
+  .contest-status.active {
+    color: #28a745;
+  }
+  .contest-status.ended {
+    color: #dc3545;
+  }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -10,6 +23,15 @@
 <div class="contests-container" data-contest-id="{{ contest.id }}">
     <header>
         <h1>{{ contest.name }}</h1>
+        {% if contest.end_date %}
+          <p class="contest-status {{ 'active' if contest.is_active else 'ended' }}">
+            {% if contest.is_active %}
+              A decorrer até {{ contest.end_date.strftime('%d/%m/%Y') }}
+            {% else %}
+              Concurso terminou a {{ contest.end_date.strftime('%d/%m/%Y') }}
+            {% endif %}
+          </p>
+        {% endif %}
     </header>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -25,26 +47,26 @@
     {% endif %}
     {% endwith %}
 
-    <!-- Contest Rules Section -->
     <div class="rules-section">
         <button class="rules-toggle-btn" onclick="toggleRules(this)">Contest Rules <span class="toggle-icon">▼</span></button>
         <div class="rules-content">
             <h3>Official Contest Rules</h3>
+            {% if contest.rules %}
             <ul>
-                <li><strong>Eligibility:</strong> Participants must be registered users of the platform.</li>
-                <li><strong>Submission Limit:</strong> Only one submission per user per contest is allowed.</li>
-                <li><strong>Originality:</strong> Designs must be original and not infringe on any copyrights or trademarks.</li>
-                <li><strong>Content Guidelines:</strong> Submissions must be appropriate and not contain offensive content.</li>
-                <li><strong>Voting:</strong> Each user can vote for only one submission per contest. You can change your vote by unvoting and voting for another submission.</li>
-                <li><strong>Contest Duration:</strong> The contest ends when the admin closes it. Winners are determined by the highest number of votes.</li>
-                <li><strong>Prizes:</strong> The top 3 winners may have their designs printed and receive store credit (prizes subject to admin discretion).</li>
-                <li><strong>Disqualification:</strong> The admin reserves the right to disqualify submissions that violate these rules.</li>
+                {% for rule in contest.rules.split('\n') %}
+                {% if rule.strip() %}
+                <li>{{ rule.strip() }}</li>
+                {% endif %}
+                {% endfor %}
             </ul>
+            {% else %}
+            <p>No rules defined for this contest.</p>
+            {% endif %}
         </div>
     </div>
 
     <div class="submissions-grid" id="submissions-grid-{{ contest.id }}">
-        {% set approved_submissions = contest.submissions.filter_by(approved=True).all() | list %}
+        {% set approved_submissions = contest.submissions | selectattr('approved', 'equalto', True) | list %}
         {% for submission in approved_submissions[:3] %}
         <div class="submission {% if not contest.is_active and loop.index0 == 0 %}first{% elif not contest.is_active and loop.index0 == 1 %}second{% elif not contest.is_active and loop.index0 == 2 %}third{% endif %}" data-votes="{{ submission.votes if not contest.is_active else 0 }}" style="animation-delay: {{ loop.index0 * 0.1 }}s">
             {% if not contest.is_active %}
@@ -56,21 +78,11 @@
 
             <img src="{{ url_for('static', filename='assets/' + submission.image) }}" alt="Submission T-shirt">
             <h2 class="submission-title">{{ submission.name | default('T-shirt Submission') }}</h2>
-            <div class="submission-actions">
-                {% if contest.is_active %}
-                    {% if submission.id in voted_submission_ids %}
-                        <form action="/unvote/{{ submission.id }}" method="POST">
-                            <button class="vote-btn voted">Voted ✓</button>
-                        </form>
-                    {% else %}
-                        <form action="/vote/{{ submission.id }}" method="POST" onsubmit="setTimeout(reorderSubmissionsWithAnimation, 100);">
-                            <button class="vote-btn">Vote</button>
-                        </form>
-                    {% endif %}
-                {% else %}
-                    <button class="vote-btn" disabled>Contest Ended</button>
-                {% endif %}
-            </div>
+            {% if contest.is_active %}
+            <p class="submission-votes">Click Vote below to vote</p>
+            {% else %}
+            <p class="submission-votes">Contest Ended</p>
+            {% endif %}
         </div>
         {% endfor %}
         {% if not approved_submissions %}
@@ -81,7 +93,7 @@
     <div class="action-buttons">
         {% if approved_submissions | length > 3 %}
         <a href="{{ url_for('main.contest_designs', contest_id=contest.id) }}">
-            <button class="back-btn">View More</button>
+            <button class="back-btn">Vote</button>
         </a>
         {% endif %}
     </div>
@@ -96,67 +108,6 @@
         <button class="submit-btn">View Ended Contests</button>
     </form>
 </div>
-
-<script>
-window.addEventListener('DOMContentLoaded', () => {
-    const lightbox = document.createElement('div');
-    lightbox.id = 'lightbox';
-    document.body.appendChild(lightbox);
-
-    const images = document.querySelectorAll('.submission img');
-    images.forEach(img => {
-        img.addEventListener('click', () => {
-            lightbox.innerHTML = '';
-            const clone = img.cloneNode();
-            lightbox.appendChild(clone);
-            lightbox.style.display = 'flex';
-        });
-    });
-
-    lightbox.addEventListener('click', () => {
-        lightbox.style.display = 'none';
-    });
-});
-</script>
-
-<script>
-window.addEventListener('DOMContentLoaded', () => {
-    contests.forEach(contest => {
-        const submissions = Array.from(document.querySelectorAll(`#submissions-grid-${contest.id} .submission`));
-        const lastPositions = JSON.parse(localStorage.getItem(`submissionPositions-${contest.id}`)) || {};
-
-        submissions.forEach((sub, index) => {
-            const id = sub.querySelector('form')?.action.split('/vote/')[1];
-            const currentPos = index + 1;
-            const lastPos = lastPositions[id];
-
-            const label = sub.querySelector('.position-label');
-            const arrow = document.createElement('span');
-            arrow.style.marginLeft = '8px';
-
-            if (lastPos && !contest.is_active) {
-                if (currentPos < lastPos) {
-                    arrow.textContent = '🔼';
-                    arrow.title = `Subiu de ${lastPos} para ${currentPos}`;
-                } else if (currentPos > lastPos) {
-                    arrow.textContent = '🔽';
-                    arrow.title = `Desceu de ${lastPos} para ${currentPos}`;
-                } else {
-                    arrow.textContent = '➖';
-                    arrow.title = 'Manteve posição';
-                }
-                label.appendChild(arrow);
-            }
-
-            if (!contest.is_active) {
-                lastPositions[id] = currentPos;
-            }
-        });
-
-        localStorage.setItem(`submissionPositions-${contest.id}`, JSON.stringify(lastPositions));
-    });
-});
-</script>
 
 <script>
 function toggleRules(button) {

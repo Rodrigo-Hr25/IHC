@@ -18,7 +18,7 @@
 
     <div class="submissions-grid">
         {% if submissions %}
-            {% for submission in submissions | sort(reverse=True, attribute='votes') %}
+            {% for submission in submissions %}
             <div class="submission {% if not contest.is_active and loop.index0 == 0 %}first{% elif not contest.is_active and loop.index0 == 1 %}second{% elif not contest.is_active and loop.index0 == 2 %}third{% endif %}" data-votes="{{ submission.votes if not contest.is_active else 0 }}">
                 {% if not contest.is_active %}
                 <div class="position-label">{{ loop.index0 + 1 }}{% if loop.index0 == 0 %}st{% elif loop.index0 == 1 %}nd{% elif loop.index0 == 2 %}rd{% else %}th{% endif %} Place</div>

@@ -17,8 +17,8 @@ def cart():
     user=User.query.get(current_user.id)
     cart = Cart.query.filter_by(user_id=current_user.id).all()
     product_details = [ Product.query.filter_by(id=cart_item.product_id).first() for cart_item in cart ]
-    CartItem = [(Product.query.get(cart_item.product_id), cart_item.quantity) for cart_item in cart]
-    total=sum([product.price*quantity for product,quantity in CartItem])
+    CartItem = [(Product.query.get(cart_item.product_id), cart_item.quantity, cart_item) for cart_item in cart]
+    total = sum([product.price * quantity for product, quantity, cart_item in CartItem])
     print("--------AA")
     print(CartItem)
     print("---------AAAA")
@@ -30,21 +30,35 @@ def cart():
 @crt.route('/cart/add/<int:product_id>', methods=['POST'])
 @login_required
 def add_to_cart(product_id):
-    product=Product.query.get(product_id)
-    if product:
-        cart_item = Cart.query.filter_by(user_id=current_user.id, product_id=product_id).first()
-        if cart_item:
-            flash("Item quantity in cart increased")
-            cart_item.quantity += 1
-        else:
-            cart_item = Cart(user_id=current_user.id, product_id=product_id)
-            db.session.add(cart_item)
-            print("---------")
-            flash("item added to cart")
-            print("---------")
-        db.session.commit()
-        
-    return redirect(url_for('cart.cart'))
+    product = Product.query.get_or_404(product_id)
+
+    # Impedir adicionar se estiver fora de stock
+    if product.quantity <= 0:
+        flash("Este produto está fora de stock e não pode ser adicionado ao carrinho.", "warning")
+        return redirect(url_for('main.index'))
+
+    size = request.form.get('size') if product.has_size else None
+    color = request.form.get('color') if product.has_color else None
+
+    if product.has_size and not size:
+        size = 'M'
+    if product.has_color and not color:
+        color = 'Preto'
+
+    custom_text = request.form.get('custom_text') or ''
+
+    cart_item = Cart(
+        user_id=current_user.id,
+        product_id=product_id,
+        quantity=1,
+        size=size,
+        color=color,
+        custom_text=custom_text
+    )
+    db.session.add(cart_item)
+    db.session.commit()
+    flash("Produto adicionado ao carrinho!", "success")
+    return redirect(url_for('main.index'))
 
 
 @crt.route('/cart/remove/<int:product_id>', methods=['POST'])
@@ -89,7 +103,7 @@ def update_cart(product_id):
 def checkout():
     user=User.query.get(current_user.id)
     cart = Cart.query.filter_by(user_id=current_user.id).all()
-    CartItem = [(Product.query.get(cart_item.product_id), cart_item.quantity) for cart_item in cart]
+    CartItem = [(Product.query.get(cart_item.product_id), cart_item.quantity, cart_item) for cart_item in cart]
     total=sum([product.price*quantity for product,quantity in CartItem])
     return render_template('checkout.html', user=user,total=total)
 

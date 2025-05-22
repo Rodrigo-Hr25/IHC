@@ -44,8 +44,8 @@
                 <i class="bx bx-cart-add"></i>Add to Cart
               </button>
             </form>
-            <form action="/favorites/add/{{ product.id }}" method="POST">
-              <button class="add-to-favorites">★</button>
+            <form class="favorite-form" data-product-id="{{ product.id }}">
+              <button type="button" class="add-to-favorites {% if product in user.wishlist_products %}favorited{% endif %}">♥</button>
             </form>
           </div>
           {% if loop.index % 3 == 0 and not loop.last %}
@@ -58,3 +58,24 @@
     
   </div>
 {% endblock %}
+
+{% block scripts %}
+<script>
+document.querySelectorAll('.favorite-form').forEach(form => {
+  const button = form.querySelector('.add-to-favorites');
+  const productId = form.dataset.productId;
+
+  button.addEventListener('click', () => {
+    fetch(`/favorites/toggle/${productId}`, {
+      method: 'POST'
+    }).then(res => {
+      if (res.ok) {
+        button.classList.toggle('favorited');
+      }
+    });
+  });
+});
+</script>
+{% endblock %}
+
+

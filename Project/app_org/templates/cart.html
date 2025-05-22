@@ -30,26 +30,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for product, quantity in CartItem %}
+                        {% for product, quantity, cart_item in CartItem %}
+
                             <tr>
                                 <td>
                                     <div class="product">
                                         {% if 'sweat' in product.name.lower() %}
                                         <img width="150" height="150" src="{{ url_for('static', filename='assets/sweat3.png') }}" alt="{{ product.name }}">
-                                    {% else %}
+                                        {% else %}
                                         <img width="150" height="150" src="{{ url_for('static', filename='assets/' + product.image) }}" alt="{{ product.name }}">
-                                    {% endif %}
+                                        {% endif %}
 
                                         <div class="info">
                                             <div class="name">{{ product.name }}</div>
                                             <div class="category">{{ product.category.name }}</div>
-                                            {% if product.name.lower() == "sweatshirt" %}
-                                                <div class="details">
-                                                    <span><strong>Cor:</strong> Azul</span><br>
-                                                    <span><strong>Tamanho:</strong> M</span><br>
-                                                    <span><strong>Mensagem:</strong> "LECI 2022"</span>
-                                                </div>
-                                            {% endif %}
+                                            <div class="details">
+                                                {% if cart_item.size %}
+                                                    <span><strong>Tamanho:</strong> {{ cart_item.size }}</span><br>
+                                                {% endif %}
+                                                {% if cart_item.color %}
+                                                    <span><strong>Cor:</strong> {{ cart_item.color }}</span><br>
+                                                {% endif %}
+                                                {% if cart_item.custom_text %}
+                                                    <span><strong>Costumize</strong> {{ cart_item.custom_text }}</span><br>
+                                                {% endif %}
+                                            </div>
                                         </div>
                                     </div>
                                 </td>
@@ -60,7 +65,6 @@
                                             <button type="button" class="decrease">-</button>
                                             <input type="number" class="quantity" value="{{ quantity }}" name="quantity" min="1">
                                             <button type="button" class="increase">+</button>
-        
                                         </div>
                                     </form>
                                 </td>
@@ -119,7 +123,7 @@
                         body: `quantity=${newValue}`
                     }).then(response => {
                         if (response.redirected) {
-                            window.location.href = response.url; // atualiza para refletir novo total
+                            window.location.href = response.url;
                         } else {
                             window.location.reload();
                         }

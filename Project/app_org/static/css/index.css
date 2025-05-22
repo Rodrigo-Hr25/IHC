@@ -255,6 +255,10 @@ header {
     outline: none;
 }
 
+.add-to-favorites.favorited {
+  color: #f55a00;
+}
+
 @media (max-width: 768px) {
     .page-container {
         flex-direction: column;

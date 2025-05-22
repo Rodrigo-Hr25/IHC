@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/contests.css') }}">
+{% endblock %}
+
+{% block content %}
+{% include 'navbarAdmin.html' %}
+
+<div class="contests-container">
+    <header>
+        <h1>Edit Rules for {{ contest.name }}</h1>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="flash {{ category }}">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <form action="{{ url_for('main.update_contest_rules', contest_id=contest.id) }}" method="POST" class="create-contest-form">
+        <textarea name="rules" rows="10" placeholder="Enter contest rules (one per line)" required>{{ contest.rules | default('') }}</textarea>
+        <button type="submit" class="submit-btn">Save Rules</button>
+    </form>
+
+    <div class="action-buttons">
+        <a href="{{ url_for('main.concurso') }}">
+            <button class="back-btn">Back</button>
+        </a>
+    </div>
+</div>
+{% endblock %}

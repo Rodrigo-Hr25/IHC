@@ -19,6 +19,19 @@ def favorite():
     return render_template('favorites.html', user=user, product_details=product_details)
 
 
+@fvt.route('/favorites/toggle/<int:product_id>', methods=['POST'])
+@login_required
+def toggle_favorite(product_id):
+    favorite = Wishlist.query.filter_by(user_id=current_user.id, product_id=product_id).first()
+    if favorite:
+        db.session.delete(favorite)
+    else:
+        new_favorite = Wishlist(user_id=current_user.id, product_id=product_id)
+        db.session.add(new_favorite)
+    db.session.commit()
+    return '', 204
+
+
 @fvt.route('/favorites/add/<int:product_id>', methods=['POST'])
 @login_required
 def add_to_favorites(product_id):

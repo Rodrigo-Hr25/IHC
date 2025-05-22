@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from app_org import db
 from app_org.models import Category, Course, Product, User, Contest, Submission, Vote
 import os
+from datetime import datetime
 
 main = Blueprint('main', __name__)
 
@@ -195,7 +196,8 @@ def update_product(product_id):
         return redirect(url_for('main.edit_product', product_id=product.id))
     db.session.commit()
     flash('Product updated successfully!', 'success')
-    return redirect(url_for('main.edit_product', product_id=product.id))
+    return redirect(url_for('main.admin'))
+
 
 @main.route('/upload_image/<int:product_id>', methods=['POST'])
 @login_required
@@ -379,6 +381,31 @@ def contest_designs(contest_id):
             voted_submission_ids = []
         return render_template('contest_designs.html', contest=contest, submissions=approved_submissions, voted_submission_ids=voted_submission_ids, is_admin=False)
 
+@main.route('/edit_contest_rules/<int:contest_id>', methods=['GET'])
+@login_required
+def edit_contest_rules(contest_id):
+    user = User.query.filter_by(id=current_user.id).first()
+    if not user.isAdmin:
+        return redirect(url_for('main.index'))
+    contest = Contest.query.get_or_404(contest_id)
+    return render_template('edit_contest_rules.html', contest=contest)
+
+@main.route('/update_contest_rules/<int:contest_id>', methods=['POST'])
+@login_required
+def update_contest_rules(contest_id):
+    user = User.query.filter_by(id=current_user.id).first()
+    if not user.isAdmin:
+        return redirect(url_for('main.index'))
+    contest = Contest.query.get_or_404(contest_id)
+    rules = request.form.get('rules')
+    if not rules:
+        flash('Rules cannot be empty.', 'warning')
+        return redirect(url_for('main.edit_contest_rules', contest_id=contest.id))
+    contest.rules = rules
+    db.session.commit()
+    flash('Contest rules updated successfully!', 'success')
+    return redirect(url_for('main.concurso'))
+
 @main.route('/vote/<submission_id>', methods=['POST'])
 @login_required
 def vote(submission_id):
@@ -490,11 +517,15 @@ def create_contest():
         return redirect(url_for('main.index'))
 
     contest_name = request.form.get('contest_name')
+    rules = request.form.get('rules', '')  # Optional rules field
     if not contest_name:
         flash('Contest name is required.', 'warning')
         return redirect(url_for('main.concurso'))
 
-    contest = Contest(name=contest_name, is_active=True)
+    end_date_str = request.form.get('end_date')
+    end_date = datetime.strptime(end_date_str, "%Y-%m-%d").date() if end_date_str else None
+
+    contest = Contest(name=contest_name, is_active=True, rules=rules, end_date=end_date)
     db.session.add(contest)
     db.session.commit()
     flash('Contest created successfully!', 'success')

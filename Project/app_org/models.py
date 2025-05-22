@@ -1,5 +1,6 @@
 from flask_login import UserMixin
 from app_org import db
+from datetime import date
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -13,6 +14,10 @@ class User(db.Model, UserMixin):
     image = db.Column(db.String(20), nullable=False, default='default.png')
     address = db.Column(db.String(100))
     failed_login_attempts = db.Column(db.Integer, default=0)
+    
+    @property
+    def wishlist_products(self):
+        return [item.product for item in self.wishlist]
     
     def increment_failed_login_attempts(self):
         self.failed_login_attempts += 1
@@ -54,6 +59,10 @@ class Cart(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
     quantity = db.Column(db.Integer, nullable=False, default=1)
+    size = db.Column(db.String(10))  # novo
+    color = db.Column(db.String(20))  # novo
+    custom_text = db.Column(db.String(200))  # novo
+
 
 class Wishlist(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -64,7 +73,10 @@ class Contest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     is_active = db.Column(db.Boolean, default=True)
-    submissions = db.relationship('Submission', backref='contest', lazy='dynamic', cascade="all, delete-orphan")
+    rules = db.Column(db.Text, nullable=True, default='') 
+    end_date = db.Column(db.Date, nullable=True)  # 🆕
+    submissions = db.relationship('Submission', backref='contest', lazy=True)
+
 
 class Submission(db.Model):
     id = db.Column(db.Integer, primary_key=True)

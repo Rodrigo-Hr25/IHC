@@ -39,11 +39,11 @@
                         <div class="quantity-display">
                             <span>Quantity: {{ product.quantity | int }}</span>
                         </div>
-                        <form action="/product_admin/{{ product.id }}" method="GET">
-                            <button class="view-product">View Product</button>
+                        <form action="/edit_product/{{ product.id }}" method="GET">
+                            <button class="view-product"><i class='bx bx-edit'></i>Edit Product</button>
                         </form>
                         <form action="/delete_product/{{ product.id }}" method="POST">
-                            <button class="delete-product">Eliminar</button>
+                            <button class="delete-product"><i class="bx bx-trash"></i>Remove</button>
                         </form>
                     </div>
                     {% if loop.index % 3 == 0 and not loop.last %}
