@@ -153,7 +153,6 @@ def product_admin(product_id):
     product = Product.query.filter_by(id=product_id).first()
     if not product:
         return render_template('404.html')
-    # Ensure quantity is not None
     if product.quantity is None:
         product.quantity = 0
         db.session.commit()
@@ -168,7 +167,6 @@ def edit_product(product_id):
     product = Product.query.filter_by(id=product_id).first()
     if not product:
         return render_template('404.html')
-    # Ensure quantity is not None
     if product.quantity is None:
         product.quantity = 0
         db.session.commit()
@@ -184,7 +182,6 @@ def update_product(product_id):
     product.name = request.form.get('name')
     product.description = request.form.get('description')
     product.price = float(request.form.get('price'))
-    # Ensure quantity is an integer and not None
     quantity = request.form.get('quantity')
     product.quantity = int(quantity) if quantity else 0
     category_name = request.form.get('category')
@@ -517,7 +514,7 @@ def create_contest():
         return redirect(url_for('main.index'))
 
     contest_name = request.form.get('contest_name')
-    rules = request.form.get('rules', '')  # Optional rules field
+    rules = request.form.get('rules', '')
     if not contest_name:
         flash('Contest name is required.', 'warning')
         return redirect(url_for('main.concurso'))

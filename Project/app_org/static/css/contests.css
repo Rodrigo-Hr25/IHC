@@ -334,7 +334,6 @@ h1 {
     white-space: nowrap;
 }
 
-/* Rules Section */
 .rules-section {
     margin: 20px 0;
     background: linear-gradient(135deg, #333, #222);
@@ -375,7 +374,7 @@ h1 {
 }
 
 .rules-content {
-    display: none; /* Hidden by default */
+    display: none; 
     padding: 15px;
     background-color: #2d2d2d;
     border-radius: 5px;
@@ -418,11 +417,10 @@ input[type="date"] {
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(1); /* ícone do calendário branco */
+  filter: invert(1); 
 }
 
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .rules-toggle-btn {
         font-size: 0.9rem;

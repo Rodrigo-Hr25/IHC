@@ -9,7 +9,6 @@
 {% include "navbar.html" %}
 
 {% block content %}
-    <!-- Mensagens Flash -->
     {% for message in get_flashed_messages() %}
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
             {{ message }}
@@ -17,7 +16,6 @@
         </div>
     {% endfor %}
 
-    <!-- Secção de Busca -->
     <main class="search-container">
         <h1>Product Search</h1>
         <form id="search-form" method="GET" action="{{ url_for('search.search_products') }}">

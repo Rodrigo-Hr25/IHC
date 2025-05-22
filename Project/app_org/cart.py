@@ -14,17 +14,17 @@ crt= Blueprint('cart', __name__)
 @crt.route('/cart', methods=['GET'])
 @login_required
 def cart():
-    user=User.query.get(current_user.id)
+    user = User.query.get(current_user.id)
     cart = Cart.query.filter_by(user_id=current_user.id).all()
-    product_details = [ Product.query.filter_by(id=cart_item.product_id).first() for cart_item in cart ]
-    CartItem = [(Product.query.get(cart_item.product_id), cart_item.quantity, cart_item) for cart_item in cart]
-    total = sum([product.price * quantity for product, quantity, cart_item in CartItem])
+    product_details = [Product.query.filter_by(id=cart_item.product_id).first() for cart_item in cart]
+    CartItem = [(cart.product, cart.quantity, cart) for cart in current_user.carts]
+    total = sum([product.price * quantity for product, quantity, _ in CartItem])
     print("--------AA")
     print(CartItem)
     print("---------AAAA")
     for product in product_details:
         print(product.image)
-    return render_template('cart.html', user=user, CartItem=CartItem,total=total)
+    return render_template('cart.html', user=user, CartItem=CartItem, total=total)
 
 
 @crt.route('/cart/add/<int:product_id>', methods=['POST'])
@@ -32,7 +32,6 @@ def cart():
 def add_to_cart(product_id):
     product = Product.query.get_or_404(product_id)
 
-    # Impedir adicionar se estiver fora de stock
     if product.quantity <= 0:
         flash("Este produto está fora de stock e não pode ser adicionado ao carrinho.", "warning")
         return redirect(url_for('main.index'))
@@ -101,11 +100,10 @@ def update_cart(product_id):
 @crt.route('/cart/checkout', methods=['POST'])
 @login_required
 def checkout():
-    user=User.query.get(current_user.id)
-    cart = Cart.query.filter_by(user_id=current_user.id).all()
-    CartItem = [(Product.query.get(cart_item.product_id), cart_item.quantity, cart_item) for cart_item in cart]
-    total=sum([product.price*quantity for product,quantity in CartItem])
-    return render_template('checkout.html', user=user,total=total)
+    user = User.query.get(current_user.id)
+    CartItem = [(cart.product, cart.quantity, cart) for cart in current_user.carts]
+    total = sum([product.price * quantity for product, quantity, _ in CartItem])
+    return render_template('checkout.html', user=user, total=total)
 
 
 @crt.route('/cart/checkout/confirm', methods=['POST'])

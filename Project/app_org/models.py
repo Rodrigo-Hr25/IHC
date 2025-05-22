@@ -29,8 +29,8 @@ class User(db.Model, UserMixin):
         self.first_name = self.username
 
     submissions = db.relationship('Submission', backref='creator', lazy=True, cascade="all, delete-orphan")
-    votes = db.relationship('Vote', backref='voter', lazy=True, cascade="all, delete-orphan")
-
+    votes = db.relationship('Vote', backref='voter', lazy=True, cascade="all, delete-orphan")    
+    
 class Course(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
@@ -59,9 +59,11 @@ class Cart(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
     quantity = db.Column(db.Integer, nullable=False, default=1)
-    size = db.Column(db.String(10))  # novo
-    color = db.Column(db.String(20))  # novo
-    custom_text = db.Column(db.String(200))  # novo
+    size = db.Column(db.String(10))
+    color = db.Column(db.String(20))
+    custom_text = db.Column(db.String(200))
+    product = db.relationship('Product', backref='carts', lazy=True)
+    user = db.relationship('User', backref='carts', lazy=True)
 
 
 class Wishlist(db.Model):
