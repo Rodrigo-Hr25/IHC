@@ -16,6 +16,14 @@
         <h1>All Designs for {{ contest.name }}</h1>
     </header>
 
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="flash {{ category }}" role="alert">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
     <div class="submissions-grid">
         {% if submissions %}
             {% for submission in submissions %}
@@ -66,6 +74,13 @@
             </a>
         {% endif %}
     </div>
+    {% if not is_admin and contest.is_active %}
+    <div class="global-actions">
+        <a href="{{ url_for('main.picture', contest_id=contest.id) }}">
+            <button class="submit-btn" aria-label="Submit a new design for {{ contest.name }}">Submit New Design</button>
+        </a>
+    </div>
+    {% endif %}
 </div>
 
 <script>

@@ -60,7 +60,7 @@
 {% include 'navbar.html' %}
 <div class="contests-container">
     <header>
-        <h1>Submit a Design</h1>
+        <h1>Submit a Design for {{ contest.name }}</h1>
     </header>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -73,20 +73,12 @@
     {% endif %}
     {% endwith %}
 
-    {% if not active_contests %}
-    <p class="no-contests" role="alert">No active contests available. Please contact an admin.</p>
+    {% if not contest.is_active %}
+    <p class="no-contests" role="alert">This contest is not active. Please contact an admin.</p>
     {% else %}
-    <p class="contest-info">Select a contest to submit your design:</p>
     <form action="/submit_design" method="POST" enctype="multipart/form-data" class="submit-form" novalidate>
+        <input type="hidden" name="contest_id" value="{{ contest.id }}">
         <div class="form-grid">
-            <div class="form-group">
-                <label for="contest_id">Contest:</label>
-                <select name="contest_id" id="contest_id" required aria-required="true">
-                    {% for contest in active_contests %}
-                    <option value="{{ contest.id }}">{{ contest.name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
             <div class="form-group">
                 <label for="name">Designer Name:</label>
                 <input type="text" name="name" id="name" required aria-required="true" maxlength="100">
@@ -105,7 +97,7 @@
     {% endif %}
 
     <div class="action-buttons">
-        <a href="{{ url_for('main.contests') }}">
+        <a href="{{ url_for('main.contest_designs', contest_id=contest.id) }}">
             <button class="back-btn">Back</button>
         </a>
     </div>

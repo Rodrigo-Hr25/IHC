@@ -311,11 +311,20 @@ def concurso():
 @login_required
 def picture():
     user = User.query.filter_by(id=current_user.id).first()
-    active_contests = Contest.query.filter_by(is_active=True).all()
-    if not active_contests:
-        flash('No active contests available. Please contact an admin.', 'warning')
+    if user.isAdmin:
+        return redirect(url_for('main.concurso'))
+    
+    contest_id = request.args.get('contest_id', type=int)
+    if not contest_id:
+        flash('No contest specified. Please select a contest.', 'warning')
         return redirect(url_for('main.contests'))
-    return render_template('picture.html', active_contests=active_contests)
+    
+    contest = Contest.query.get(contest_id)
+    if not contest or not contest.is_active:
+        flash('Selected contest is not active or does not exist.', 'warning')
+        return redirect(url_for('main.contests'))
+    
+    return render_template('picture.html', contest=contest)
 
 @main.route('/submit_design', methods=['POST'])
 @login_required
@@ -327,22 +336,20 @@ def submit_design():
     name = request.form.get('name')
     description = request.form.get('description')
     image = request.files.get('image')
-    contest_id = request.form.get('contest_id', type=int) 
+    contest_id = request.form.get('contest_id', type=int)
 
-    active_contests = Contest.query.filter_by(is_active=True).all()
-    if not active_contests:
-        flash('No active contests available. Please contact an admin.', 'warning')
-        return redirect(url_for('main.picture'))
+    if not contest_id:
+        flash('No contest specified. Please select a contest.', 'warning')
+        return redirect(url_for('main.contests'))
 
-    if not contest_id or contest_id not in [c.id for c in active_contests]:
-        flash('Invalid contest selection. Please try again.', 'warning')
-        return redirect(url_for('main.picture'))
+    contest = Contest.query.get(contest_id)
+    if not contest or not contest.is_active:
+        flash('Selected contest is not active or does not exist.', 'warning')
+        return redirect(url_for('main.contests'))
 
-    contest = Contest.query.get_or_404(contest_id)
-    
     if not image or not image.filename.endswith('.png'):
         flash('Please upload a .png image.', 'warning')
-        return redirect(url_for('main.picture'))
+        return redirect(url_for('main.picture', contest_id=contest.id))
 
     image_filename = image.filename
     image.save(os.path.join('app_org/static/assets', image_filename))
@@ -359,8 +366,8 @@ def submit_design():
 
     db.session.add(submission)
     db.session.commit()
-    flash('Your design has been submitted for review!||' + str(contest.id), 'success')
-    return redirect(url_for('main.contests'))
+    flash('Your design has been submitted for review!', 'success')
+    return redirect(url_for('main.contest_designs', contest_id=contest.id))
 
 @main.route('/contest/<int:contest_id>/designs', methods=['GET'])
 @login_required
@@ -376,6 +383,7 @@ def contest_designs(contest_id):
             voted_submission_ids = [vote.submission_id for vote in user.votes] if user.votes else []
         except AttributeError:
             voted_submission_ids = []
+        print(f"Rendering contest_designs.html for contest ID: {contest_id}, Name: {contest.name}, Is Active: {contest.is_active}")  # Log para depuração
         return render_template('contest_designs.html', contest=contest, submissions=approved_submissions, voted_submission_ids=voted_submission_ids, is_admin=False)
 
 @main.route('/edit_contest_rules/<int:contest_id>', methods=['GET'])

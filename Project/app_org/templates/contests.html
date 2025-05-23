@@ -91,19 +91,14 @@
     </div>
 
     <div class="action-buttons">
-        {% if approved_submissions | length > 3 %}
         <a href="{{ url_for('main.contest_designs', contest_id=contest.id) }}">
             <button class="back-btn">Vote</button>
         </a>
-        {% endif %}
     </div>
 </div>
 {% endfor %}
 
 <div class="global-actions">
-    <form action="/picture" method="GET">
-        <button class="submit-btn">Submit New Design</button>
-    </form>
     <form action="{{ url_for('main.ended_contests') }}" method="GET">
         <button class="submit-btn">View Ended Contests</button>
     </form>
