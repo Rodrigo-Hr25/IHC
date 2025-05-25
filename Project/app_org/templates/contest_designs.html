@@ -24,6 +24,24 @@
     {% endif %}
     {% endwith %}
 
+    <div class="rules-section">
+        <button class="rules-toggle-btn" onclick="toggleRules(this)">Contest Rules <span class="toggle-icon">▼</span></button>
+        <div class="rules-content">
+            <h3>Official Contest Rules</h3>
+            {% if contest.rules %}
+            <ul>
+                {% for rule in contest.rules.split('\n') %}
+                {% if rule.strip() %}
+                <li>{{ rule.strip() }}</li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>No rules defined for this contest.</p>
+            {% endif %}
+        </div>
+    </div>
+
     <div class="submissions-grid">
         {% if submissions %}
             {% for submission in submissions %}
@@ -103,5 +121,20 @@ window.addEventListener('DOMContentLoaded', () => {
         lightbox.style.display = 'none';
     });
 });
+</script>
+
+
+<script>
+function toggleRules(button) {
+    const content = button.nextElementSibling;
+    const icon = button.querySelector('.toggle-icon');
+    if (content.style.display === 'block') {
+        content.style.display = 'none';
+        icon.textContent = '▼';
+    } else {
+        content.style.display = 'block';
+        icon.textContent = '▲';
+    }
+}
 </script>
 {% endblock %}

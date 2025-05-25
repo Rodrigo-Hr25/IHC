@@ -14,6 +14,24 @@
   .contest-status.ended {
     color: #dc3545;
   }
+  .top-designs-overlay {
+    position: absolute;
+    top: -45px; 
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    z-index: 10;
+    text-align: center;
+    width: 200px;
+  }
+  .submissions-grid {
+    position: relative;
+  }
 </style>
 {% endblock %}
 
@@ -47,25 +65,8 @@
     {% endif %}
     {% endwith %}
 
-    <div class="rules-section">
-        <button class="rules-toggle-btn" onclick="toggleRules(this)">Contest Rules <span class="toggle-icon">▼</span></button>
-        <div class="rules-content">
-            <h3>Official Contest Rules</h3>
-            {% if contest.rules %}
-            <ul>
-                {% for rule in contest.rules.split('\n') %}
-                {% if rule.strip() %}
-                <li>{{ rule.strip() }}</li>
-                {% endif %}
-                {% endfor %}
-            </ul>
-            {% else %}
-            <p>No rules defined for this contest.</p>
-            {% endif %}
-        </div>
-    </div>
-
     <div class="submissions-grid" id="submissions-grid-{{ contest.id }}">
+        <div class="top-designs-overlay">Top 3 Designs</div>
         {% set approved_submissions = contest.submissions | selectattr('approved', 'equalto', True) | list %}
         {% for submission in approved_submissions[:3] %}
         <div class="submission {% if not contest.is_active and loop.index0 == 0 %}first{% elif not contest.is_active and loop.index0 == 1 %}second{% elif not contest.is_active and loop.index0 == 2 %}third{% endif %}" data-votes="{{ submission.votes if not contest.is_active else 0 }}" style="animation-delay: {{ loop.index0 * 0.1 }}s">
@@ -103,19 +104,5 @@
         <button class="submit-btn">View Ended Contests</button>
     </form>
 </div>
-
-<script>
-function toggleRules(button) {
-    const content = button.nextElementSibling;
-    const icon = button.querySelector('.toggle-icon');
-    if (content.style.display === 'block') {
-        content.style.display = 'none';
-        icon.textContent = '▼';
-    } else {
-        content.style.display = 'block';
-        icon.textContent = '▲';
-    }
-}
-</script>
 
 {% endblock %}

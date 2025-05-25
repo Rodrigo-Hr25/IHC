@@ -420,7 +420,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(1); 
 }
 
-
 @media (max-width: 768px) {
     .rules-toggle-btn {
         font-size: 0.9rem;
