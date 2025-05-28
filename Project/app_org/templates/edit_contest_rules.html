@@ -21,8 +21,11 @@
     {% endwith %}
 
     <form action="{{ url_for('main.update_contest_rules', contest_id=contest.id) }}" method="POST" class="create-contest-form">
+        <label for="rules">Contest Rules</label>
         <textarea name="rules" rows="10" placeholder="Enter contest rules (one per line)" required>{{ contest.rules | default('') }}</textarea>
-        <button type="submit" class="submit-btn">Save Rules</button>
+        <label for="end_date">End Date</label>
+        <input type="date" name="end_date" id="end_date" value="{{ contest.end_date.strftime('%Y-%m-%d') if contest.end_date else '' }}" required>
+        <button type="submit" class="submit-btn">Save Changes</button>
     </form>
 
     <div class="action-buttons">

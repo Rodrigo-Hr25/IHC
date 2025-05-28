@@ -108,11 +108,24 @@ def checkout():
 
 @crt.route('/cart/checkout/confirm', methods=['POST'])
 @login_required
-def confirm_checkout():
-    db.session.query(Cart).filter(Cart.user_id == current_user.id).delete()
+def checkout_confirm():
+    user = User.query.filter_by(id=current_user.id).first()
+    
+    name = request.form.get('name')
+    email = request.form.get('email')
+    address = request.form.get('address')
+    credit_card = request.form.get('credit-card')
+    expiry = request.form.get('expiry')
+    cvv = request.form.get('cvv')
+    
+    if not all([name, email, address, credit_card, expiry, cvv]):
+        flash('All fields are required.', 'warning')
+        return redirect(url_for('main.checkout'))
+    
+    Cart.query.filter_by(user_id=user.id).delete()
     db.session.commit()
-    flash("Order confirmed")
-    return redirect(url_for('main.index'))
-
+    
+    flash('Your order has been successfully placed!', 'success')
+    return render_template('order_confirmation.html', user=user)
 
 

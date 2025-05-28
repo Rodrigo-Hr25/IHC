@@ -122,7 +122,7 @@
         </a>
         {% endif %}
         <a href="{{ url_for('main.edit_contest_rules', contest_id=contest.id) }}">
-            <button class="submit-btn">Edit Rules</button>
+            <button class="submit-btn">Edit Contest</button>
         </a>
         <form action="/submit" method="GET" class="submit-form-right">
             <input type="hidden" name="contest_id" value="{{ contest.id }}">

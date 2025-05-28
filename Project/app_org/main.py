@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from app_org import db
 from app_org.models import Category, Course, Product, User, Contest, Submission, Vote
 import os
-from datetime import datetime
+from datetime import date, datetime
 
 main = Blueprint('main', __name__)
 
@@ -403,12 +403,29 @@ def update_contest_rules(contest_id):
         return redirect(url_for('main.index'))
     contest = Contest.query.get_or_404(contest_id)
     rules = request.form.get('rules')
+    end_date_str = request.form.get('end_date')
+    
     if not rules:
         flash('Rules cannot be empty.', 'warning')
         return redirect(url_for('main.edit_contest_rules', contest_id=contest.id))
+    
+    if not end_date_str:
+        flash('End date is required.', 'warning')
+        return redirect(url_for('main.edit_contest_rules', contest_id=contest.id))
+    
+    try:
+        end_date = datetime.strptime(end_date_str, "%Y-%m-%d").date()
+        if end_date < date.today():
+            flash('End date cannot be in the past.', 'warning')
+            return redirect(url_for('main.edit_contest_rules', contest_id=contest.id))
+        contest.end_date = end_date
+    except ValueError:
+        flash('Invalid date format. Please use YYYY-MM-DD.', 'warning')
+        return redirect(url_for('main.edit_contest_rules', contest_id=contest.id))
+    
     contest.rules = rules
     db.session.commit()
-    flash('Contest rules updated successfully!', 'success')
+    flash('Contest rules and end date updated successfully!', 'success')
     return redirect(url_for('main.concurso'))
 
 @main.route('/vote/<submission_id>', methods=['POST'])

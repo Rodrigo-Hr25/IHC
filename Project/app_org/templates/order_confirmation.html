@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/payment.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        .confirmation-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #2a2a2a; /* Dark background matching checkout */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            color: #fff; /* White text to contrast with dark background */
+            text-align: center;
+        }
+        .confirmation-container h1 {
+            font-size: 28px;
+            color: #ff6200; /* Orange color for the header, matching "CHECKOUT" */
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        .confirmation-container p {
+            font-size: 16px;
+            color: #ddd; /* Slightly lighter white for better readability */
+            margin-bottom: 30px;
+        }
+        .store-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #ff6200; /* Orange button color */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 500;
+            text-transform: uppercase;
+            transition: background-color 0.3s;
+        }
+        .store-btn i {
+            margin-right: 8px;
+        }
+        .store-btn:hover {
+            background-color: #e55a00; /* Slightly darker orange on hover */
+        }
+        .alert {
+            margin-bottom: 20px;
+            color: #fff;
+            background-color: #444; /* Darker background for alerts */
+            border: none;
+        }
+        .alert-warning {
+            background-color: #ff6200; /* Orange for warning alerts */
+        }
+        .alert-success {
+            background-color: #28a745; /* Green for success alerts */
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+{% include 'navbar.html' %}
+
+<main class="confirmation-container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <h1>Order Confirmed</h1>
+    <p>Thank you for your purchase. Your order has been successfully placed and will be processed soon.</p>
+    <a href="{{ url_for('main.index') }}" class="store-btn"><i class="bx bx-store"></i> Store</a>
+</main>
+{% endblock %}
