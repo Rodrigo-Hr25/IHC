@@ -402,13 +402,23 @@ def update_contest_rules(contest_id):
     if not user.isAdmin:
         return redirect(url_for('main.index'))
     contest = Contest.query.get_or_404(contest_id)
+    
+    # Retrieve form data
+    contest_name = request.form.get('contest_name')
     rules = request.form.get('rules')
     end_date_str = request.form.get('end_date')
     
+    # Validate contest name
+    if not contest_name:
+        flash('Contest name is required.', 'warning')
+        return redirect(url_for('main.edit_contest_rules', contest_id=contest.id))
+    
+    # Validate rules
     if not rules:
         flash('Rules cannot be empty.', 'warning')
         return redirect(url_for('main.edit_contest_rules', contest_id=contest.id))
     
+    # Validate end date
     if not end_date_str:
         flash('End date is required.', 'warning')
         return redirect(url_for('main.edit_contest_rules', contest_id=contest.id))
@@ -423,9 +433,10 @@ def update_contest_rules(contest_id):
         flash('Invalid date format. Please use YYYY-MM-DD.', 'warning')
         return redirect(url_for('main.edit_contest_rules', contest_id=contest.id))
     
+    contest.name = contest_name
     contest.rules = rules
     db.session.commit()
-    flash('Contest rules and end date updated successfully!', 'success')
+    flash('Contest name, rules, and end date updated successfully!', 'success')
     return redirect(url_for('main.concurso'))
 
 @main.route('/vote/<submission_id>', methods=['POST'])

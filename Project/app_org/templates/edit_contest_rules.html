@@ -9,7 +9,7 @@
 
 <div class="contests-container">
     <header>
-        <h1>Edit Rules for {{ contest.name }}</h1>
+        <h1>Edit Contest: {{ contest.name }}</h1>
     </header>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -21,6 +21,8 @@
     {% endwith %}
 
     <form action="{{ url_for('main.update_contest_rules', contest_id=contest.id) }}" method="POST" class="create-contest-form">
+        <label for="contest_name">Contest Name</label>
+        <input type="text" name="contest_name" id="contest_name" value="{{ contest.name }}" required>
         <label for="rules">Contest Rules</label>
         <textarea name="rules" rows="10" placeholder="Enter contest rules (one per line)" required>{{ contest.rules | default('') }}</textarea>
         <label for="end_date">End Date</label>
