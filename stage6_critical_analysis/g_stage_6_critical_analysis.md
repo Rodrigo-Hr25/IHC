@@ -6,8 +6,8 @@
 
 Nil Silva (25%) - 15
 Luis Pereira (25%) - 16
-Leonardo (25%) - 17
-Rodrigo (25%) - 17
+Leonardo Luís (25%) - 17
+Rodrigo Moço (25%) - 17
 
 
 
