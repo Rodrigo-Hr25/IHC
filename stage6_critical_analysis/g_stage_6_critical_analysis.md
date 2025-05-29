@@ -9,7 +9,6 @@ Luis Pereira (25%) - 16
 
 
 
-
 ---
 [Back to main Logbook Page](../hci_logbook.md)
 
