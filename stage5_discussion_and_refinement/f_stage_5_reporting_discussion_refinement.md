@@ -29,6 +29,8 @@ After users feedback, we understood that we had several refinements to do such a
 
 # Refined Prototype
   
+  ![versao final com os concursos](image.png)
+  ![concurso 2](image-1.png)
 
 ---
 [Back to main Logbook Page](../hci_logbook.md)
