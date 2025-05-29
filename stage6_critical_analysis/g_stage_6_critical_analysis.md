@@ -5,6 +5,8 @@
 # Self-Evaluation and Workload
 
 Nil Silva (25%) - 15
+Luis Pereira (25%) - 16
+
 
 
 
