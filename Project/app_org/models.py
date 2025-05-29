@@ -30,7 +30,7 @@ class User(db.Model, UserMixin):
 
     submissions = db.relationship('Submission', backref='creator', lazy=True, cascade="all, delete-orphan")
     votes = db.relationship('Vote', backref='voter', lazy=True, cascade="all, delete-orphan")    
-    
+
 class Course(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
@@ -65,7 +65,6 @@ class Cart(db.Model):
     product = db.relationship('Product', backref='carts', lazy=True)
     user = db.relationship('User', backref='carts', lazy=True)
 
-
 class Wishlist(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -76,9 +75,8 @@ class Contest(db.Model):
     name = db.Column(db.String(100), nullable=False)
     is_active = db.Column(db.Boolean, default=True)
     rules = db.Column(db.Text, nullable=True, default='') 
-    end_date = db.Column(db.Date, nullable=True)  # 🆕
-    submissions = db.relationship('Submission', backref='contest', lazy=True)
-
+    end_date = db.Column(db.Date, nullable=True)
+    submissions = db.relationship('Submission', backref='contest', lazy=True, cascade="all")
 
 class Submission(db.Model):
     id = db.Column(db.Integer, primary_key=True)

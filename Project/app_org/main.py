@@ -568,6 +568,8 @@ def create_contest():
 @login_required
 def end_contest(contest_id):
     user = User.query.filter_by(id=current_user.id).first()
+    if not user:
+        return redirect(url_for('main.index'))
     if not user.isAdmin:
         return redirect(url_for('main.index'))
 
