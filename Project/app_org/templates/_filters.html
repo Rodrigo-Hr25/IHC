@@ -1,97 +1,108 @@
 <style>
-.filter-form {
+  .filter-wrapper {
+    max-width: 350px;
+    margin: 0 auto;
+  }
+
+  .filter-form {
     background-color: #2a2a2a;
     padding: 1rem;
     border-radius: 10px;
-    max-width: 350px;
     font-family: sans-serif;
     color: #fff;
-    overflow: hidden;
-}
+  }
 
-.filter-form h3 {
-    font-size: 1.1rem; /* título mais pequeno */
-    color: #fff;
+  .filter-form h3 {
+    font-size: 1.1rem;
     margin-bottom: 1rem;
-}
+    user-select: none;
+  }
 
-.toggle-filters {
-    background: none;
-    border: none;
-    color: #ff6600;
-    font-weight: bold;
-    cursor: pointer;
-    padding: 0.5rem 0;
-}
-
-.filter-section {
+  .filter-section {
     background-color: #1e1e1e;
     padding: 0.75rem;
     border-radius: 6px;
     margin-bottom: 1rem;
     box-shadow: inset 0 0 4px rgba(0,0,0,0.3);
-}
+  }
 
-.filter-section h4 {
+  .filter-section h4 {
     color: #ff6600;
     margin-bottom: 0.5rem;
     font-size: 1rem;
-}
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-.filter-option {
+  .filter-option {
     margin: 5px 0;
-}
+  }
 
-.filter-option input {
+  .filter-option input {
     accent-color: #ff6600;
-}
+  }
 
-.price-slider {
+  .filter-section h4 .arrow {
+    border: solid #ff6600;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    margin-left: 8px;
+    transform: rotate(45deg);
+    transition: transform 0.3s ease;
+  }
+
+  .filter-section.expanded h4 .arrow {
+    transform: rotate(-135deg);
+  }
+
+  .collapsible-content {
+    max-height: 90px;
+    overflow: hidden;
+    position: relative;
+    transition: max-height 0.4s ease;
+  }
+
+  .collapsible-content::after {
+    content: '...';
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    color: #ff6600;
+    font-weight: bold;
+    background: linear-gradient(to right, transparent, #1e1e1e 70%);
+    padding-left: 20px;
+  }
+
+  .filter-section.expanded .collapsible-content {
+    max-height: 1000px;
+    overflow: visible;
+  }
+
+  .filter-section.expanded .collapsible-content::after {
+    content: '';
+  }
+
+  .expand-btn {
+    background: none;
+    border: none;
+    color: #ff6600;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 5px;
+    user-select: none;
+    padding: 0;
+    text-align: left;
+  }
+
+  .price-slider {
     display: flex;
     flex-direction: column;
-}
+  }
 
-#filters-scroll {
-    max-height: 400px;
-    overflow-y: auto;
-    padding-right: 0.5rem;
-}
-
-#filters-scroll::-webkit-scrollbar {
-    width: 8px;
-}
-
-#filters-scroll::-webkit-scrollbar-track {
-    background: #1e1e1e;  /* fundo da track */
-    border-radius: 10px;
-}
-
-#filters-scroll::-webkit-scrollbar-thumb {
-    background-color: #555;  /* cor da barra */
-    border-radius: 10px;
-    border: 2px solid #1e1e1e;  /* margem para parecer embutida */
-}
-
-#filters-scroll::-webkit-scrollbar-thumb:hover {
-    background-color: #888;
-}
-
-
-.extra-filters {
-    display: none;
-}
-
-.extra-filters.show {
-    display: block;
-}
-
-.dots {
-    text-align: center;
-    color: #888;
-    font-size: 1.5rem;
-}
-
-.apply-filters {
+  .apply-filters {
     background-color: #ff6600;
     color: white;
     padding: 0.5rem 1rem;
@@ -102,112 +113,208 @@
     width: 100%;
     margin-top: 1rem;
     transition: background 0.3s;
-}
+  }
 
-.apply-filters:hover {
+  .apply-filters:hover {
     background-color: #e65c00;
-}
+  }
 
+  .course-abbrev {
+    font-weight: bold;
+    margin-right: 10px;
+    color: #ff6600;
+    cursor: default;
+    user-select: none;
+  }
 
+  /* Container que limita a altura dos filtros extras e mostra reticências */
+  #extra-filters-container {
+    max-height: 90px;
+    overflow: hidden;
+    position: relative;
+    transition: max-height 0.5s ease;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Reticências removidas no container principal */
+  #extra-filters-container::after {
+    content: none;
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    color: #ff6600;
+    pointer-events: none;
+    user-select: none;
+    transition: opacity 0.3s ease;
+    opacity: 1;
+  }
+
+  /* Retira reticências quando expandido */
+  #extra-filters-container.expanded {
+    max-height: 1200px;
+  }
+  #extra-filters-container.expanded::after {
+    opacity: 0;
+  }
+
+  /* Botão Ver mais grande */
+  .show-more-btn {
+    display: block;
+    width: 100%;
+    background: none;
+    border: none;
+    color: #ff6600;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    padding: 0.3rem 0;
+  }
 </style>
 
-<form method="GET" action="{{ url_for(filter_action) }}" class="filter-form">
+<div class="filter-wrapper">
+  <form method="GET" action="{{ url_for(filter_action) }}" class="filter-form" id="filter-form">
     <h3>Filtrar Produtos</h3>
 
     <div id="filters-scroll">
-        <div class="filter-section">
-            <h4>Stock</h4>
-            <div class="filter-option">
-                <input type="radio" id="stock_in" name="stock" value="in" {% if request.args.get('stock') == 'in' %}checked{% endif %}>
-                <label for="stock_in">Em stock</label>
-            </div>
-            <div class="filter-option">
-                <input type="radio" id="stock_out" name="stock" value="out" {% if request.args.get('stock') == 'out' %}checked{% endif %}>
-                <label for="stock_out">Fora de stock</label>
-            </div>
-            <div class="filter-option">
-                <input type="radio" id="stock_all" name="stock" value="" {% if not request.args.get('stock') %}checked{% endif %}>
-                <label for="stock_all">Todos</label>
-            </div>
+
+      <!-- Sempre visíveis -->
+      <div class="filter-section">
+        <h4>Stock</h4>
+        <div class="filter-option">
+          <input type="radio" id="stock_in" name="stock" value="in" {% if request.args.get('stock') == 'in' %}checked{% endif %}>
+          <label for="stock_in">Em stock</label>
         </div>
-
-        <div class="filter-section">
-            <h4>Preço</h4>
-            <div class="price-slider">
-                <input type="range" name="price_min" id="price-slider" min="0" max="100" step="1"
-                       value="{{ request.args.get('price_min', 15) }}"
-                       oninput="document.getElementById('price-display').innerText = this.value + ' €'">
-                <span id="price-display">{{ request.args.get('price_min', 15) }} €</span>
-            </div>
+        <div class="filter-option">
+          <input type="radio" id="stock_out" name="stock" value="out" {% if request.args.get('stock') == 'out' %}checked{% endif %}>
+          <label for="stock_out">Fora de stock</label>
         </div>
-
-        <div class="dots" id="dots">...</div>
-
-        <div class="extra-filters" id="extra-filters">
-            <div class="filter-section">
-                <h4>Categorias</h4>
-                {% for category in categories %}
-                <div class="filter-option">
-                    <input type="checkbox" id="cat{{ category.id }}" name="categories" value="{{ category.id }}"
-                           {% if category.id|string in request.args.getlist('categories') %}checked{% endif %}>
-                    <label for="cat{{ category.id }}">{{ category.name }}</label>
-                </div>
-                {% endfor %}
-            </div>
-
-            <div class="filter-section">
-                <h4>Cursos</h4>
-                {% for course in courses %}
-                <div class="filter-option">
-                    <input type="checkbox" id="course{{ course.id }}" name="courses" value="{{ course.id }}"
-                           {% if course.id|string in request.args.getlist('courses') %}checked{% endif %}>
-                    <label for="course{{ course.id }}">{{ course.name }}</label>
-                </div>
-                {% endfor %}
-            </div>
-
-            <div class="filter-section">
-                <h4>Tamanhos</h4>
-                {% for size in sizes %}
-                <div class="filter-option">
-                    <input type="checkbox" id="size{{ loop.index }}" name="sizes" value="{{ size }}"
-                           {% if size in request.args.getlist('sizes') %}checked{% endif %}>
-                    <label for="size{{ loop.index }}">{{ size }}</label>
-                </div>
-                {% endfor %}
-            </div>
-
-            <div class="filter-section">
-                <h4>Cores</h4>
-                {% for color in colors %}
-                <div class="filter-option">
-                    <input type="checkbox" id="color{{ loop.index }}" name="colors" value="{{ color }}"
-                           {% if color in request.args.getlist('colors') %}checked{% endif %}>
-                    <label for="color{{ loop.index }}">{{ color }}</label>
-                </div>
-                {% endfor %}
-            </div>
+        <div class="filter-option">
+          <input type="radio" id="stock_all" name="stock" value="" {% if not request.args.get('stock') %}checked{% endif %}>
+          <label for="stock_all">Todos</label>
         </div>
+      </div>
+
+      <div class="filter-section">
+        <h4>Preço</h4>
+        <div class="price-slider">
+          <input type="range" name="price_min" id="price-slider" min="0" max="100" step="1"
+            value="{{ request.args.get('price_min', 15) }}"
+            oninput="document.getElementById('price-display').innerText = this.value + ' €'">
+          <span id="price-display">{{ request.args.get('price_min', 15) }} €</span>
+        </div>
+      </div>
+
+      <!-- Filtros extras limitados -->
+      <div id="extra-filters-container">
+        <div id="extra-filters">
+          <div class="filter-section">
+            <h4>Categorias</h4>
+            {% for category in categories %}
+            <div class="filter-option">
+              <input type="checkbox" id="cat{{ category.id }}" name="categories" value="{{ category.id }}"
+                {% if category.id|string in request.args.getlist('categories') %}checked{% endif %}>
+              <label for="cat{{ category.id }}">{{ category.name }}</label>
+            </div>
+            {% endfor %}
+          </div>
+
+          <div class="filter-section expandable" id="courses-container">
+            <h4>
+              Cursos <i class="arrow"></i>
+            </h4>
+            <div class="collapsible-content" id="courses-content">
+              <div class="filter-option">
+                <span class="course-abbrev">LECI</span>
+                <input type="checkbox" id="course1" name="courses" value="1" 
+                  {% if '1' in request.args.getlist('courses') %}checked{% endif %}>
+                <label for="course1">Engenharia de Computadores e Informática</label>
+              </div>
+              <div class="filter-option">
+                <span class="course-abbrev">LEI</span>
+                <input type="checkbox" id="course2" name="courses" value="2" 
+                  {% if '2' in request.args.getlist('courses') %}checked{% endif %}>
+                <label for="course2">Engenharia Informática</label>
+              </div>
+              <div class="filter-option">
+                <span class="course-abbrev">CC</span>
+                <input type="checkbox" id="course3" name="courses" value="3" 
+                  {% if '3' in request.args.getlist('courses') %}checked{% endif %}>
+                <label for="course3">Ciência da Computação</label>
+              </div>
+            </div>
+            <button type="button" class="expand-btn" onclick="toggleExpand('courses-container')">Ver mais</button>
+          </div>
+
+          <div class="filter-section expandable" id="sizes-container">
+            <h4>
+              Tamanhos <i class="arrow"></i>
+            </h4>
+            <div class="collapsible-content" id="sizes-content">
+              {% set ordered_sizes = ['XS', 'S', 'M', 'L', 'XL'] %}
+              {% for size in ordered_sizes %}
+              <div class="filter-option">
+                <input type="checkbox" id="size{{ loop.index }}" name="sizes" value="{{ size }}"
+                  {% if size in request.args.getlist('sizes') %}checked{% endif %}>
+                <label for="size{{ loop.index }}">{{ size }}</label>
+              </div>
+              {% endfor %}
+            </div>
+            <button type="button" class="expand-btn" onclick="toggleExpand('sizes-container')">Ver mais</button>
+          </div>
+
+          <div class="filter-section expandable" id="colors-container">
+            <h4>
+              Cores <i class="arrow"></i>
+            </h4>
+            <div class="collapsible-content" id="colors-content">
+              {% set extended_colors = colors + ['Blue', 'Orange', 'Purple'] %}
+              {% for color in extended_colors %}
+              <div class="filter-option">
+                <input type="checkbox" id="color{{ loop.index }}" name="colors" value="{{ color }}"
+                  {% if color in request.args.getlist('colors') %}checked{% endif %}>
+                <label for="color{{ loop.index }}">{{ color }}</label>
+              </div>
+              {% endfor %}
+            </div>
+            <button type="button" class="expand-btn" onclick="toggleExpand('colors-container')">Ver mais</button>
+          </div>
+        </div>
+      </div>
+
     </div>
 
-    <button type="button" class="toggle-filters" onclick="toggleFilters()">Ver mais</button>
+    <button type="button" class="show-more-btn" onclick="toggleExtraFilters()" id="show-more-btn">Ver mais</button>
+
     <button type="submit" class="apply-filters">Aplicar Filtros</button>
-</form>
+  </form>
+</div>
 
 <script>
-function toggleFilters() {
-    const extra = document.getElementById("extra-filters");
-    const dots = document.getElementById("dots");
-    const btn = document.querySelector(".toggle-filters");
-
-    if (extra.classList.contains("show")) {
-        extra.classList.remove("show");
-        dots.style.display = "block";
-        btn.textContent = "Ver mais";
+  function toggleExtraFilters() {
+    const container = document.getElementById('extra-filters-container');
+    const btn = document.getElementById('show-more-btn');
+    if (container.classList.contains('expanded')) {
+      container.classList.remove('expanded');
+      btn.textContent = 'Ver mais';
     } else {
-        extra.classList.add("show");
-        dots.style.display = "none";
-        btn.textContent = "Ver menos";
+      container.classList.add('expanded');
+      btn.textContent = 'Ver menos';
+      container.scrollIntoView({ behavior: 'smooth' });
     }
-}
+  }
+
+  function toggleExpand(sectionId) {
+    const container = document.getElementById(sectionId);
+    const isExpanded = container.classList.toggle('expanded');
+    const btn = container.querySelector('.expand-btn');
+    if (isExpanded) {
+      btn.textContent = 'Ver menos';
+    } else {
+      btn.textContent = 'Ver mais';
+    }
+  }
 </script>
