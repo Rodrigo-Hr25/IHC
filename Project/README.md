@@ -18,10 +18,6 @@ or (Windows):
 pip install -r requirements.txt
 ```
 
-(Se não der fazer isto:)
-dos2unix run.sh
-chmod +x run.sh
-
 4. Run the application:
 
 
