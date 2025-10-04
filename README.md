@@ -56,7 +56,6 @@ It includes phases from initial planning and requirements gathering to prototypi
 - Add to cart, view cart, remove items  
 - Simulated checkout process  
 - Visual feedback for user actions (e.g., confirmation, errors)  
-- Responsive design (desktop & mobile)  
 - Accessibility considerations (color contrast, keyboard navigation, labels)  
 
 ---
