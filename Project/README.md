@@ -24,20 +24,13 @@ pip install -r requirements.txt
 ```bash
 ./run.sh app_org 8000
 ```
-or:
-```bash
-./run.sh app_sec <PORT>
-```
 
 &emsp;&emsp;In Windows use instead:
 
 ```bash
 .\run.bat app_org 8000
 ```
-or:
-```bash
-.\run.bat app_sec <PORT>
-```
+
 5. Access the website:
 
 ```bash
