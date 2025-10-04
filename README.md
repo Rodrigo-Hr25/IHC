@@ -14,8 +14,6 @@ Este repositório contém o projeto **IHC** — uma loja online conceptual, dese
 6. [Processo de Desenvolvimento](#processo-de-desenvolvimento)  
 7. [Aprendizagens & Pontos Fortes](#aprendizagens--pontos-fortes)  
 8. [Como Usar / Explorar](#como-usar--explorar)  
-9. [Possíveis Extensões Futuras](#possíveis-extensões-futuras)  
-10. [Autores / Colaboradores](#autores--colaboradores)
 
 ---
 
