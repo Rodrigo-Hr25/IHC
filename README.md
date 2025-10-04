@@ -1,102 +1,104 @@
-# IHC – Loja Online / Projeto de Interfaces Homem-Computador
+# IHC – Online Store / Human-Computer Interaction Project
 
-Este repositório contém o projeto **IHC** — uma loja online conceptual, desenvolvido no âmbito de Interfaces Homem-Computador. O objetivo é demonstrar a tua capacidade de idealização, concepção de interface e prototipagem, assim como organização de requisitos e análise crítica.
-
----
-
-## Índice
-
-1. [Visão Geral](#visão-geral)  
-2. [Objetivos do Projeto](#objetivos-do-projeto)  
-3. [Conteúdo do Repositório](#conteúdo-do-repositório)  
-4. [Funcionalidades Planeadas / Implementadas](#funcionalidades-planeadas--implementadas)  
-5. [Tecnologias & Ferramentas](#tecnologias--ferramentas)  
-6. [Processo de Desenvolvimento](#processo-de-desenvolvimento)  
-7. [Aprendizagens & Pontos Fortes](#aprendizagens--pontos-fortes)  
-8. [Como Usar / Explorar](#como-usar--explorar)  
+This repository contains the **IHC** project — a conceptual online store, developed within the scope of **Human-Computer Interaction (HCI)**.  
+The main goal is to demonstrate skills in ideation, interface design, prototyping, requirements organization, and critical analysis.
 
 ---
 
-## Visão Geral
+## 📑 Table of Contents
 
-O projeto **IHC** simula uma loja online, com foco em usabilidade, experiência do utilizador (UX), interface visual (UI), e estrutura funcional. Inclui desde fases iniciais de planeamento até prototipagem funcional e análise crítica.
-
----
-
-## Objetivos do Projeto
-
-- Entender e aplicar boas práticas de interfaces humano-computador: usabilidade, acessibilidade, layout, navegação, feedback ao utilizador.  
-- Estruturar o ciclo de desenvolvimento: definição de contexto, requisitos, protótipos (baixo e alto detalhe), refinamento e análise.  
-- Demonstrar capacidade de prototipar uma interface funcional (mesmo que não implementada como produto real).  
-- Documentar todo o processo num logbook / relatório técnico para evidenciar o raciocínio.
+1. [Overview](#overview)  
+2. [Project Objectives](#project-objectives)  
+3. [Repository Structure](#repository-structure)  
+4. [Planned / Implemented Features](#planned--implemented-features)  
+5. [Technologies & Tools](#technologies--tools)  
+6. [Development Process](#development-process)  
+7. [Learnings & Strengths](#learnings--strengths)  
+8. [How to Use / Explore](#how-to-use--explore)  
 
 ---
 
-## Conteúdo do Repositório
+## 🔎 Overview
 
-| Pasta / Ficheiro | Descrição |
-|------------------|-----------|
-| `stage0_planning/` | Planeamento inicial do projeto: cronograma, objetivos, escopo. |
-| `stage1_context/` | Contexto do projeto: análise de mercado, utilizadores alvo, personas, cenário de uso. |
-| `stage2_requirements/` | Requisitos funcionais e não-funcionais. |
-| `stage3_low_fidelity/` | Protótipos de baixa fidelidade (sketches, wireframes). |
-| `stage4_functional_prototype/` | Protótipo funcional / de alta fidelidade, com interatividade (dependendo do que estiver implementado). |
-| `stage5_discussion_and_refinement/` | Discussão dos resultados do protótipo, feedback, melhorias. |
-| `stage6_critical_analysis/` | Análise crítica: o que funcionou, o que falhou, lições aprendidas. |
-| `LogBook/` ou `hci_logbook.md` | Registo contínuo do progresso, decisões tomadas, problemas encontrados. |
+The **IHC project** simulates an online store, with a strong focus on **usability**, **user experience (UX)**, **visual interface (UI)**, and **functional structure**.  
+It includes phases from initial planning and requirements gathering to prototyping and critical evaluation.
 
 ---
 
-## Funcionalidades Planeadas / Implementadas
+## 🎯 Project Objectives
 
-- Visualização de produtos (categorias, descrições, imagens)  
-- Sistema de pesquisa / filtragem por características  
-- Adicionar ao carrinho, ver carrinho, remover itens  
-- Processo de checkout simulado  
-- Feedback visual ao utilizador para ações (ex: confirmação, erro)  
-- Responsividade (adaptar a dispositivos móveis)  
-- Cuidados de acessibilidade (contraste de cores, navegação teclado, etiquetas…)
+- Apply **best practices in HCI**: usability, accessibility, layout, navigation, and user feedback.  
+- Structure the development cycle: context definition, requirements gathering, prototypes (low and high fidelity), refinement, and analysis.  
+- Demonstrate the ability to prototype a functional interface (even if not implemented as a real product).  
+- Document the full process in a logbook / technical report to highlight reasoning and decisions.  
 
 ---
 
-## Tecnologias & Ferramentas
+## 📂 Repository Structure
 
-- HTML  
-- CSS  
-- JavaScript  
-- Ferramentas de design ou prototipagem (ex: Figma, Adobe XD, Sketch)  
-- GitHub 
-
----
-
-## Processo de Desenvolvimento
-
-1. Planeamento / definição de escopo  
-2. Investigação de contexto / análise de utilizadores  
-3. Levantamento de requisitos  
-4. Protótipos de baixa fidelidade  
-5. Protótipo funcional  
-6. Feedback, refinamento  
-7. Análise crítica  
+| Folder / File | Description |
+|---------------|-------------|
+| `stage0_planning/` | Initial planning: schedule, goals, scope. |
+| `stage1_context/` | Project context: market analysis, target users, personas, use scenarios. |
+| `stage2_requirements/` | Functional and non-functional requirements. |
+| `stage3_low_fidelity/` | Low-fidelity prototypes. |
+| `stage4_functional_prototype/` | Functional / high-fidelity prototype with interactivity. |
+| `stage5_discussion_and_refinement/` | Prototype evaluation, feedback, and improvements. |
+| `stage6_critical_analysis/` | Critical analysis: what worked, what failed, lessons learned. |
+| `LogBook/` or `hci_logbook.md` | Continuous record of progress, decisions, and issues encountered. |
 
 ---
 
-## Aprendizagens & Pontos Fortes
+## 🛠️ Planned / Implemented Features
 
-- Tomada de decisões de design fundamentadas  
-- Capacidade de organizar um projeto de interface de ponta a ponta  
-- Trabalhar com feedback e iterar versões  
-- Atenção à usabilidade, acessibilidade, boas práticas de interface  
-- Comunicação de ideias através de protótipos  
+- Product visualization (categories, descriptions, images)  
+- Search and filtering system  
+- Add to cart, view cart, remove items  
+- Simulated checkout process  
+- Visual feedback for user actions (e.g., confirmation, errors)  
+- Responsive design (desktop & mobile)  
+- Accessibility considerations (color contrast, keyboard navigation, labels)  
 
 ---
 
-# Como Usar / Explorar
+## 💻 Technologies & Tools
 
+- **HTML**  
+- **CSS**  
+- **JavaScript**  
+- **Prototyping / Design tools** (e.g., Figma, Adobe XD, Sketch)  
+- **GitHub** for version control  
+
+---
+
+## 🔧 Development Process
+
+1. Planning / scope definition  
+2. Context research / user analysis  
+3. Requirements gathering  
+4. Low-fidelity prototypes  
+5. Functional prototype  
+6. Feedback and refinement  
+7. Critical analysis  
+
+---
+
+## 🌟 Learnings & Strengths
+
+- Design decisions based on usability and accessibility principles  
+- Ability to structure and manage an interface project end-to-end  
+- Iterative development with feedback incorporation  
+- Strong focus on usability, accessibility, and user-centered design  
+- Clear communication of ideas through prototypes  
+
+---
+
+## ▶️ How to Run
 
 1. Create the virtual environment:
 ```bash
 python3 -m venv venv
+
 ```
 2. Activate the virtual environment (Every time you open a new terminal you need to do this to make the virtual environment the default Python interpreter of this shell):
 ```bash
