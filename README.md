@@ -51,8 +51,6 @@ O projeto **IHC** simula uma loja online, com foco em usabilidade, experiência 
 
 ## Funcionalidades Planeadas / Implementadas
 
-Aqui irias escrever o que a loja online permite atualmente, ou está planeado permitir, por exemplo:
-
 - Visualização de produtos (categorias, descrições, imagens)  
 - Sistema de pesquisa / filtragem por características  
 - Adicionar ao carrinho, ver carrinho, remover itens  
@@ -61,26 +59,19 @@ Aqui irias escrever o que a loja online permite atualmente, ou está planeado pe
 - Responsividade (adaptar a dispositivos móveis)  
 - Cuidados de acessibilidade (contraste de cores, navegação teclado, etiquetas…)
 
-Poderás indicar o que já está funcional no protótipo ou apenas visualizado nos wireframes.
-
 ---
 
 ## Tecnologias & Ferramentas
 
-Estas são as tecnologias que utilizaste ou estás a usar, ou que pretendes usar:
-
 - HTML  
 - CSS  
-- (Se houver) JavaScript / frameworks de frontend (ex: React, Vue, etc.)  
+- JavaScript  
 - Ferramentas de design ou prototipagem (ex: Figma, Adobe XD, Sketch)  
-- Git / GitHub para versionamento  
-- Qualquer biblioteca ou recurso externo (ícones, fontes, imagens)  
+- GitHub 
 
 ---
 
 ## Processo de Desenvolvimento
-
-Descreve como fizeste o projeto, por fases:
 
 1. Planeamento / definição de escopo  
 2. Investigação de contexto / análise de utilizadores  
@@ -94,8 +85,6 @@ Descreve como fizeste o projeto, por fases:
 
 ## Aprendizagens & Pontos Fortes
 
-Aqui destacas o que aprendeste, o que conseguiste demonstrar:
-
 - Tomada de decisões de design fundamentadas  
 - Capacidade de organizar um projeto de interface de ponta a ponta  
 - Trabalhar com feedback e iterar versões  
@@ -106,23 +95,44 @@ Aqui destacas o que aprendeste, o que conseguiste demonstrar:
 
 # Como Usar / Explorar
 
-1. Abrir os ficheiros de protótipos / wireframes em software de design ou visualizar localmente no browser.  
-2. Se houver protótipo interativo (HTML/CSS/JS), lançar localmente com servidor (ou simplesmente abrir o HTML no browser).  
-3. Ver o logbook para compreender o raciocínio e decisões.  
 
----
+1. Create the virtual environment:
+```bash
+python3 -m venv venv
+```
+2. Activate the virtual environment (Every time you open a new terminal you need to do this to make the virtual environment the default Python interpreter of this shell):
+```bash
+source venv/bin/activate
+```
+or (Windows):
+```bash
+.\venv\Scripts\activate.ps1
+```
 
-# Possíveis Extensões Futuras
+3. Install the requirements:
+```bash
+pip install -r requirements.txt
+```
 
-Algumas ideias para continuar a desenvolver ou adicionar, mostrando ambição:
+4. Run the application:
 
-- Implementação completa frontend + backend, com base de dados para produtos, carrinho, utilizadores.  
-- Integração de pagamento simulado ou APIs externas.  
-- Animações / transições para melhorar experiência.  
-- Internacionalização / multi-idioma.  
-- Melhoramentos de acessibilidade (WCAG).  
-- Testes de usabilidade com utilizadores reais.  
+```bash
+./run.sh app_sec <PORT>
+```
 
-1. Clonar o repositório:  
-   ```bash
-   git clone https://github.com/Rodrigo-Hr25/IHC.git
+&emsp;&emsp;In Windows use instead:
+
+```bash
+.\run.bat app_sec <PORT>
+```
+5. Access the website:
+
+```bash
+http://127.0.0.1:<PORT>
+```
+
+6. To generate the database you need to access the following link:
+
+```bash
+/generate/all
+```
