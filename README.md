@@ -64,7 +64,8 @@ It includes phases from initial planning and requirements gathering to prototypi
 
 - **HTML**  
 - **CSS**  
-- **JavaScript**  
+- **JavaScript**
+- **Python**
 - **Prototyping / Design tools** (e.g., Figma, Adobe XD, Sketch)  
 - **GitHub** for version control  
 
